@@ -11,7 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import Splash from 'react-native-splash-screen';
 
 import logo from '../assets/images/SplashScreen.png';
-import AppScreen from '../navigation/AppScreen';
+import {AppScreen} from '../navigation/AppScreen';
 
 const SplashScreen = () => {
   const navigation = useNavigation();

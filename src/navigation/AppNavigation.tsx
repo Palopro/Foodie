@@ -4,7 +4,7 @@ import React from 'react';
 
 import SplashScreen from '../screens/SplashScreen';
 import AuthNavigation from './AuthNavigation';
-import AppScreen from './AppScreen';
+import {AppScreen} from './AppScreen';
 
 const AppStack = createNativeStackNavigator();
 

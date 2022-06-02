@@ -1,6 +1,7 @@
-enum AppScreen {
+export enum AppScreen {
   SplashScreen = 'SplashScreen',
   AuthNavigation = 'AuthNavigation',
   OnBoardingScreen = 'OnBoardingScreen',
+  LoginScreen = 'LoginScreen',
+  SignUpScreen = 'SignUpScreen',
 }
-export default AppScreen;

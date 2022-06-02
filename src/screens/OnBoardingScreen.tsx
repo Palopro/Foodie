@@ -1,22 +1,17 @@
-import {
-  Image,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import React, {useEffect} from 'react';
+import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
 import bellaLogo from '../assets/images/BellaLogo.png';
 import guys from '../assets/images/Group67.png';
 import RoundButton from '../components/RoundButton';
+import {useNavigation} from '@react-navigation/native';
+import {AppScreen} from '../navigation/AppScreen';
 
 const OnBoardingScreen = () => {
-  useEffect(() => {});
+  const navigation = useNavigation();
 
   const handlePress = () => {
-    console.log('press');
-  }
+    navigation.navigate(AppScreen.AuthNavigation);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
