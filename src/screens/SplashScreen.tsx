@@ -7,17 +7,14 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
 import Splash from 'react-native-splash-screen';
 
 import logo from '../assets/images/SplashScreen.png';
-import AppScreen from '../navigation/AppScreen';
+import {AppScreen} from '../navigation/AppScreen';
 
-const SplashScreen = () => {
+export const SplashScreen = () => {
   const navigation = useNavigation();
-
   useEffect(() => {
-    StatusBar.setBarStyle('light-content', true);
     Splash.hide();
 
     setTimeout(() => {
@@ -26,11 +23,14 @@ const SplashScreen = () => {
   }, [navigation]);
 
   return (
-    <ImageBackground source={logo} style={styles.container}>
-      <View style={{marginTop: 140}}>
-        <ActivityIndicator animating color={'#FF240C'} size={28} />
-      </View>
-    </ImageBackground>
+    <>
+      <StatusBar barStyle={'light-content'} animated />
+      <ImageBackground source={logo} style={styles.container}>
+        <View style={styles.loaderWrapper}>
+          <ActivityIndicator animating color={'#FF240C'} size={28} />
+        </View>
+      </ImageBackground>
+    </>
   );
 };
 
@@ -41,28 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  circle: {
-    backgroundColor: 'rgb(251, 251, 251)',
-    borderRadius: 600,
-    width: 260,
-    height: 260,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    resizeMode: 'cover',
-  },
-  textWrapper: {},
-  text: {
-    color: '#FA4A0C',
-    textAlign: 'center',
-    fontSize: 12,
-    letterSpacing: 0.04,
-    fontWeight: '700',
-  },
-  indicator: {
-    marginTop: 24,
+  loaderWrapper: {
+    marginTop: 140,
   },
 });
-
-export default SplashScreen;

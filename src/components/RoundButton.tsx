@@ -1,18 +1,16 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text} from 'react-native';
 
-type Props = {
+interface Props {
   text: string;
   onPress: () => void;
-};
+}
 
-const RoundButton: React.FC<Props> = ({text, onPress}) => {
-  return (
-    <Pressable onPress={onPress} style={styles.container}>
-      <Text style={styles.text}>{text}</Text>
-    </Pressable>
-  );
-};
+export const RoundButton: React.FC<Props> = ({text, onPress}) => (
+  <Pressable onPress={onPress} style={styles.container}>
+    <Text style={styles.text}>{text}</Text>
+  </Pressable>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -31,5 +29,3 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
-
-export default RoundButton;
