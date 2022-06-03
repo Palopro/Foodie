@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from '../components/TextInput';
 import { RoundButton } from '../components/RoundButton';
+import { useAppDispatch } from '../../hooks/hooks';
+import { loginUser } from '../../domain/stores/reducers/authUserReducer';
 
 export const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
+  const [email, setEmail] = useState('111@222.com');
+  const [pass, setPass] = useState('1234');
+
+  const dispatch = useAppDispatch();
 
   const handleLogin = () => {
     // TODO: login user
+    dispatch(loginUser({ email, password: pass }));
   };
 
   return (

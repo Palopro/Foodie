@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
+
 import { TextInput } from '../components/TextInput';
 import { RoundButton } from '../components/RoundButton';
+import { signUpUser } from '../../domain/stores/reducers/authUserReducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 export const SignUpScreen = () => {
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-  const [repPass, setRepPass] = useState('');
+  const [email, setEmail] = useState('111@222.com');
+  const [pass, setPass] = useState('1234');
+  const [repPass, setRepPass] = useState('1234');
+
+  const isLoading = useAppSelector(state => state.authReducer.isLoading);
+
+  const dispatch = useAppDispatch();
 
   const handleSignUp = () => {
-    // TODO: handle sign up user
+    dispatch(signUpUser({ email, password: pass }));
   };
 
   return (
@@ -40,12 +47,16 @@ export const SignUpScreen = () => {
         />
       </View>
 
-      <View style={{ paddingHorizontal: 24 }}>
-        <RoundButton
-          text={'Sign up'}
-          onPress={handleSignUp}
-          colorType={'orange'}
-        />
+      <View style={styles.buttonWrapper}>
+        {isLoading ? (
+          <ActivityIndicator color={'#FF460A'} animating />
+        ) : (
+          <RoundButton
+            text={'Sign up'}
+            onPress={handleSignUp}
+            colorType={'orange'}
+          />
+        )}
       </View>
     </View>
   );
@@ -59,5 +70,8 @@ const styles = StyleSheet.create({
   fieldWrapper: {
     paddingHorizontal: 24,
     marginVertical: 12,
+  },
+  buttonWrapper: {
+    paddingHorizontal: 24,
   },
 });
