@@ -1,6 +1,10 @@
 module.exports = {
   root: true,
-  extends: '@react-native-community',
+  extends: [
+    'eslint:recommended',
+    '@react-native-community',
+    '@computools/eslint-config-react-native',
+  ],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   overrides: [
@@ -10,6 +14,7 @@ module.exports = {
         '@typescript-eslint/no-shadow': ['error'],
         'no-shadow': 'off',
         'no-undef': 'off',
+        '@typescript-eslint/no-unused-vars-experimental': 'off',
       },
     },
   ],

@@ -1,27 +1,22 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import OnBoardingScreen from '../screens/OnBoardingScreen';
 import React from 'react';
-import {AppScreen} from './AppScreen';
-import {AuthScreen} from '../screens/AuthScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const AuthStack = createNativeStackNavigator();
+import { OnBoardingScreen } from '../screens/OnBoardingScreen';
+import { AppScreen } from './AppScreen';
 
-const AuthNavigation = () => {
-  return (
-    <AuthStack.Navigator
-      screenOptions={{headerShown: false, headerTitle: undefined}}
-      initialRouteName={AppScreen.OnBoardingScreen}>
-      <AuthStack.Screen
-        name={AppScreen.OnBoardingScreen}
-        component={OnBoardingScreen}
-        options={{headerShown: false}}
-      />
-      <AuthStack.Screen
-        name={AppScreen.AuthNavigation}
-        component={AuthScreen}
-      />
-    </AuthStack.Navigator>
-  );
+export type AuthStackParams = {
+  [AppScreen.OnBoardingScreen]: undefined;
 };
 
-export default AuthNavigation;
+const AuthStack = createNativeStackNavigator<AuthStackParams>();
+
+export const AuthNavigation = () => (
+  <AuthStack.Navigator
+    screenOptions={{ headerShown: false }}
+    initialRouteName={AppScreen.OnBoardingScreen}>
+    <AuthStack.Screen
+      name={AppScreen.OnBoardingScreen}
+      component={OnBoardingScreen}
+    />
+  </AuthStack.Navigator>
+);
