@@ -1,9 +1,9 @@
 import React from 'react';
-import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import bellaLogo from '../assets/images/BellaLogo.png';
 import guys from '../assets/images/Group67.png';
-import {RoundButton} from '../components/RoundButton';
+import { RoundButton } from '../components/RoundButton';
 
 export const OnBoardingScreen = () => {
   const handlePress = () => {

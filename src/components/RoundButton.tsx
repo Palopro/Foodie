@@ -1,12 +1,12 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text} from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
 interface Props {
   text: string;
   onPress: () => void;
 }
 
-export const RoundButton: React.FC<Props> = ({text, onPress}) => (
+export const RoundButton: React.FC<Props> = ({ text, onPress }) => (
   <Pressable onPress={onPress} style={styles.container}>
     <Text style={styles.text}>{text}</Text>
   </Pressable>

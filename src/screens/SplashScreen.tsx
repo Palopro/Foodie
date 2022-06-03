@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
   ImageBackground,
@@ -6,11 +6,11 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Splash from 'react-native-splash-screen';
 
 import logo from '../assets/images/SplashScreen.png';
-import {AppScreen} from '../navigation/AppScreen';
+import { AppScreen } from '../navigation/AppScreen';
 
 export const SplashScreen = () => {
   const navigation = useNavigation();

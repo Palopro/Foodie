@@ -1,10 +1,10 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 
-import {SplashScreen} from '../screens/SplashScreen';
-import {AuthNavigation} from './AuthNavigation';
-import {AppScreen} from './AppScreen';
+import { SplashScreen } from '../screens/SplashScreen';
+import { AuthNavigation } from './AuthNavigation';
+import { AppScreen } from './AppScreen';
 
 export type AppStackParams = {
   [AppScreen.SplashScreen]: undefined;
@@ -17,7 +17,7 @@ export const AppNavigation = () => (
   <NavigationContainer>
     <AppStack.Navigator
       initialRouteName={AppScreen.SplashScreen}
-      screenOptions={{headerShown: false}}>
+      screenOptions={{ headerShown: false }}>
       <AppStack.Screen name={AppScreen.SplashScreen} component={SplashScreen} />
       <AppStack.Screen
         name={AppScreen.AuthNavigation}
