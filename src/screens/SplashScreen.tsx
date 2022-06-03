@@ -17,10 +17,8 @@ export const SplashScreen = () => {
   useEffect(() => {
     Splash.hide();
 
-    setTimeout(() => {
-      navigation.navigate(AppScreen.AuthNavigation);
-    }, 3000);
-  }, [navigation]);
+    navigation.navigate(AppScreen.AuthNavigation);
+  });
 
   return (
     <>
