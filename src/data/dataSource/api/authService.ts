@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const baseUrl = 'https://rn-delivery-api.herokuapp.com/api';
+const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
 export const registerUser = async (userCredentials: {
+  username: string;
   email: string;
   password: string;
 }) => {

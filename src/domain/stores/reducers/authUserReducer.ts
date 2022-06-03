@@ -18,7 +18,7 @@ export const reducerName = 'AuthReducer';
 
 export const signUpUser = createAsyncThunk(
   'AuthReducer/SignUp',
-  async (user: { email: string; password: string }, { rejectWithValue }) => {
+  async (user: { username: string, email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await registerUserRepo(user);
 
@@ -35,7 +35,7 @@ export const signUpUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   'AuthReducer/LoginUser',
-  async (user: { email: string; password: string }, { rejectWithValue }) => {
+  async (user: { username: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await loginUserRepo(user);
       return response;

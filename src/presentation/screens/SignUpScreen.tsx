@@ -7,6 +7,7 @@ import { signUpUser } from '../../domain/stores/reducers/authUserReducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 export const SignUpScreen = () => {
+  const [username, setUsername] = useState('TestUser2');
   const [email, setEmail] = useState('111@222.com');
   const [pass, setPass] = useState('1234');
   const [repPass, setRepPass] = useState('1234');
@@ -16,7 +17,7 @@ export const SignUpScreen = () => {
   const dispatch = useAppDispatch();
 
   const handleSignUp = () => {
-    dispatch(signUpUser({ email, password: pass }));
+    dispatch(signUpUser({ username, email, password: pass }));
   };
 
   return (

@@ -6,23 +6,23 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { loginUser } from '../../domain/stores/reducers/authUserReducer';
 
 export const LoginScreen = () => {
-  const [email, setEmail] = useState('111@222.com');
-  const [pass, setPass] = useState('1234');
+  const [username, setUsername] = useState('testUser');
+  const [pass, setPass] = useState('u12345678');
 
   const dispatch = useAppDispatch();
 
   const handleLogin = () => {
     // TODO: login user
-    dispatch(loginUser({ email, password: pass }));
+    dispatch(loginUser({ username, password: pass }));
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.fieldWrapper}>
         <TextInput
-          label={'Email'}
-          value={email}
-          onChangeText={text => setEmail(text)}
+          label={'Username'}
+          value={username}
+          onChangeText={text => setUsername(text)}
         />
       </View>
 

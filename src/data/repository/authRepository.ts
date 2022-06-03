@@ -3,6 +3,7 @@ import { UserEntity } from '../dataSource/api/entity/UserEntity';
 import { registerUser, loginUser } from '../dataSource/api/authService';
 
 export const registerUserRepo = async (user: {
+  username: string;
   email: string;
   password: string;
 }) => {
@@ -19,12 +20,12 @@ export const registerUserRepo = async (user: {
 };
 
 export const loginUserRepo = async (user: {
-  email: string;
+  username: string;
   password: string;
 }) => {
   try {
     const response = await loginUser({
-      identifier: user.email,
+      identifier: user.username,
       password: user.password,
     });
 
