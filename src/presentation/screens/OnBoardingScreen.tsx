@@ -29,7 +29,11 @@ export const OnBoardingScreen = () => {
         <Image source={guys} style={styles.mainImage} />
       </View>
       <View style={styles.buttonWrapper}>
-        <RoundButton colorType={'white'} text={'Get started'} onPress={handlePress} />
+        <RoundButton
+          colorType={'white'}
+          text={'Get started'}
+          onPress={handlePress}
+        />
       </View>
     </SafeAreaView>
   );

@@ -10,15 +10,22 @@ import {
 import { TextInput } from '../../components/TextInput';
 import { RoundButton } from '../../components/RoundButton';
 import { useLoginMutation } from '../../../data/dataSource/api/authService';
+import { useNavigation } from '@react-navigation/native';
+import { AppScreen } from '../../../navigation/AppScreen';
 
 export const LoginScreen = () => {
+  const navigation = useNavigation();
   const [username, setUsername] = useState('testUser');
   const [pass, setPass] = useState('u12345678');
 
-  const [loginUser, { isLoading }] = useLoginMutation();
+  const [loginUser, { isLoading, isSuccess }] = useLoginMutation();
 
-  const handleLogin = () => {
-    loginUser({ userCredentials: { identifier: username, password: pass } });
+  const handleLogin = async () => {
+    await loginUser({
+      userCredentials: { identifier: username, password: pass },
+    });
+
+    navigation.navigate(AppScreen.MainApp);
   };
 
   return (

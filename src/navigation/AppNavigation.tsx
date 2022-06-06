@@ -5,10 +5,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { SplashScreen } from '../presentation/screens/SplashScreen';
 import { AuthNavigation } from './AuthNavigation';
 import { AppScreen } from './AppScreen';
+import { MainNavigation } from './MainNavigation';
 
 export type AppStackParams = {
   [AppScreen.SplashScreen]: undefined;
   [AppScreen.AuthNavigation]: undefined;
+  [AppScreen.MainApp]: undefined;
 };
 
 const AppStack = createNativeStackNavigator<AppStackParams>();
@@ -23,6 +25,7 @@ export const AppNavigation = () => (
         name={AppScreen.AuthNavigation}
         component={AuthNavigation}
       />
+      <AppStack.Screen name={AppScreen.MainApp} component={MainNavigation} />
     </AppStack.Navigator>
   </NavigationContainer>
 );
