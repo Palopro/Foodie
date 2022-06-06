@@ -1,13 +1,27 @@
-import { User } from '../../../domain/model/user';
-import { UserEntity } from './entity/UserEntity';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+import { User } from '../../../domain/model/user';
+import { UserEntity } from './entity/UserEntity';
+import { FoodDTO } from './entity/FoodDTO';
+import { Food } from '../../../domain/model/Food';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
 export const foodieApi = createApi({
   reducerPath: 'FoodieApi',
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({
+    baseUrl,
+    prepareHeaders: async headers => {
+      const token = await AsyncStorage.getItem('jwt');
+
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+
+      return headers;
+    },
+  }),
   tagTypes: ['FoodieApi'],
   endpoints: build => ({
     login: build.mutation<
@@ -21,6 +35,7 @@ export const foodieApi = createApi({
           identifier: userCredentials.identifier,
           password: userCredentials.password,
         },
+        headers: undefined,
       }),
       transformResponse: async (response: {
         user: UserEntity;
@@ -38,6 +53,7 @@ export const foodieApi = createApi({
       query: ({ userCredentials }) => ({
         url: '/auth/local/register',
         method: 'POST',
+        headers: undefined,
         body: {
           username: userCredentials.username,
           email: userCredentials.email,
@@ -52,7 +68,30 @@ export const foodieApi = createApi({
         };
       },
     }),
+    getCategories: build.query<Array<any>, undefined>({
+      query: () => ({
+        url: '/categories',
+      }),
+      transformResponse: (response: { data: any }) => response.data,
+    }),
+    getFoods: build.query<Array<Food>, undefined>({
+      query: () => ({
+        url: '/foods',
+      }),
+      transformResponse: (response: { data: Array<FoodDTO> }) => {
+        const food = response.data.map(FoodDTO.parseFromJSON);
+
+        return {
+          food,
+        };
+      },
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = foodieApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useGetCategoriesQuery,
+  useGetFoodsQuery,
+} = foodieApi;
