@@ -1,7 +1,7 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {AppScreen} from './AppScreen';
-import {SignUpScreen} from '../presentation/screens/SignUpScreen';
-import {LoginScreen} from '../presentation/screens/LoginScreen';
+import {SignUpScreen} from '../presentation/screens/AuthScreen/SignUpScreen';
+import {LoginScreen} from '../presentation/screens/AuthScreen/LoginScreen';
 
 const AuthTab = createMaterialTopTabNavigator();
 

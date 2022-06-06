@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { TextInput } from '../components/TextInput';
-import { RoundButton } from '../components/RoundButton';
-import { useAppDispatch } from '../../hooks/hooks';
-import { loginUser } from '../../domain/stores/reducers/authUserReducer';
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
+import { TextInput } from '../../components/TextInput';
+import { RoundButton } from '../../components/RoundButton';
+import { useLoginMutation } from '../../../data/dataSource/api/authService';
 
 export const LoginScreen = () => {
   const [username, setUsername] = useState('testUser');
   const [pass, setPass] = useState('u12345678');
 
-  const dispatch = useAppDispatch();
+  const [loginUser, { isLoading }] = useLoginMutation();
 
   const handleLogin = () => {
-    // TODO: login user
-    dispatch(loginUser({ username, password: pass }));
+    loginUser({ userCredentials: { identifier: username, password: pass } });
   };
 
   return (
@@ -42,11 +47,17 @@ export const LoginScreen = () => {
       </View>
 
       <View style={styles.buttonWrapper}>
-        <RoundButton
-          text={'Login'}
-          onPress={handleLogin}
-          colorType={'orange'}
-        />
+        {isLoading ? (
+          <View style={styles.loaderWrapper}>
+            <ActivityIndicator color={'#FF460A'} animating hidesWhenStopped />
+          </View>
+        ) : (
+          <RoundButton
+            text={'Login'}
+            onPress={handleLogin}
+            colorType={'orange'}
+          />
+        )}
       </View>
     </View>
   );
@@ -74,5 +85,10 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     paddingHorizontal: 24,
+  },
+  loaderWrapper: {
+    paddingVertical: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

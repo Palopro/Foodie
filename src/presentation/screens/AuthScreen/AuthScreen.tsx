@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
-import {
-  Image,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { Image, StatusBar, StyleSheet, View } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 
-import { LoginScreen } from '../LoginScreen';
-import { SignUpScreen } from '../SignUpScreen';
+import { LoginScreen } from './LoginScreen';
+import { SignUpScreen } from './SignUpScreen';
 import logo from '../../../assets/images/BellaLogo.png';
 import { AuthTabBar } from './AuthTabBar';
 
@@ -31,11 +24,10 @@ const routes = [
 ];
 
 export const AuthScreen = () => {
-  const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar
         translucent
         barStyle={'dark-content'}
@@ -53,11 +45,10 @@ export const AuthScreen = () => {
           onIndexChange={setIndex}
           navigationState={{ index, routes }}
           renderScene={renderScene}
-          initialLayout={{ width: layout.width }}
           swipeEnabled={false}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -83,5 +74,6 @@ const styles = StyleSheet.create({
   },
   tabWrapper: {
     flex: 1,
+    flexGrow: 1,
   },
 });

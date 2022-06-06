@@ -1,95 +1,79 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-  registerUserRepo,
-  loginUserRepo,
-} from '../../../data/repository/authRepository';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { User } from '../../model/user';
+import { foodieApi } from '../../../data/dataSource/api/authService';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 interface AuthState {
   isLoading: boolean;
   error: string | null;
+  user: User | null;
 }
 
 const initialState: AuthState = {
+  user: null,
   isLoading: false,
   error: null,
 };
 
 export const reducerName = 'AuthReducer';
 
-export const signUpUser = createAsyncThunk(
-  'AuthReducer/SignUp',
-  async (user: { username: string, email: string; password: string }, { rejectWithValue }) => {
-    try {
-      const response = await registerUserRepo(user);
-
-      if (response.error) {
-        throw new Error(response.error.message);
-      }
-
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  },
-);
-
-export const loginUser = createAsyncThunk(
-  'AuthReducer/LoginUser',
-  async (user: { username: string; password: string }, { rejectWithValue }) => {
-    try {
-      const response = await loginUserRepo(user);
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  },
-);
-
 const authUserReducer = createSlice({
   name: reducerName,
   initialState,
-  reducers: {
-    // signUpUser: (
-    //   state,
-    //   { payload }: PayloadAction<{ email: string; password: string }>,
-    // ) => {
-    //   const data = {
-    //     email: payload.email,
-    //     password: payload.password,
-    //   };
-    //
-    //   console.log({ data });
-    // },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(signUpUser.pending, (state, action) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(signUpUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload.error;
-      })
-      .addCase(signUpUser.rejected, (state, action: PA) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-      .addCase(loginUser.pending, (state, action) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload.error;
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload.error;
-      });
+      .addMatcher(
+        foodieApi.endpoints.login.matchPending,
+        (state: AuthState, action) => {
+          state.isLoading = true;
+          state.error = null;
+        },
+      )
+      .addMatcher(
+        foodieApi.endpoints.login.matchFulfilled,
+        (state: AuthState, action: PayloadAction<{ user: User }>) => {
+          state.user = action.payload.user;
+          state.isLoading = false;
+          state.error = null;
+        },
+      )
+      .addMatcher(
+        foodieApi.endpoints.login.matchRejected,
+        (
+          state: AuthState,
+          action: PayloadAction<FetchBaseQueryError | undefined>,
+        ) => {
+          state.isLoading = false;
+          state.error = action.payload.data.error.message;
+        },
+      )
+      .addMatcher(
+        foodieApi.endpoints.register.matchPending,
+        (state: AuthState, action) => {
+          state.isLoading = true;
+          state.error = null;
+        },
+      )
+      .addMatcher(
+        foodieApi.endpoints.register.matchFulfilled,
+        (state: AuthState, action) => {
+          state.isLoading = false;
+          state.user = action.payload.user;
+        },
+      )
+      .addMatcher(
+        foodieApi.endpoints.register.matchRejected,
+        (
+          state: AuthState,
+          action: PayloadAction<FetchBaseQueryError | undefined>,
+        ) => {
+          state.isLoading = false;
+          state.error = action.payload.data.error.message;
+        },
+      );
   },
 });
-
-// export const { signUpUser } = authUserReducer.actions;
 
 export const authReducer = authUserReducer.reducer;

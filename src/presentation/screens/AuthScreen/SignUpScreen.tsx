@@ -1,27 +1,32 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 
-import { TextInput } from '../components/TextInput';
-import { RoundButton } from '../components/RoundButton';
-import { signUpUser } from '../../domain/stores/reducers/authUserReducer';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { TextInput } from '../../components/TextInput';
+import { RoundButton } from '../../components/RoundButton';
+import { useAppSelector } from '../../../hooks/hooks';
+import { useRegisterMutation } from '../../../data/dataSource/api/authService';
 
 export const SignUpScreen = () => {
   const [username, setUsername] = useState('TestUser2');
   const [email, setEmail] = useState('111@222.com');
-  const [pass, setPass] = useState('1234');
-  const [repPass, setRepPass] = useState('1234');
+  const [pass, setPass] = useState('u12345678');
 
-  const isLoading = useAppSelector(state => state.authReducer.isLoading);
-
-  const dispatch = useAppDispatch();
+  const [registerUser, { isLoading }] = useRegisterMutation();
 
   const handleSignUp = () => {
-    dispatch(signUpUser({ username, email, password: pass }));
+    registerUser({ userCredentials: { username, email, password: pass } });
   };
 
   return (
     <View style={styles.container}>
+      <View style={styles.fieldWrapper}>
+        <TextInput
+          label={'Username'}
+          value={username}
+          onChangeText={text => setUsername(text)}
+        />
+      </View>
+
       <View style={styles.fieldWrapper}>
         <TextInput
           label={'Email address'}
@@ -39,18 +44,11 @@ export const SignUpScreen = () => {
         />
       </View>
 
-      <View style={styles.fieldWrapper}>
-        <TextInput
-          label={'repeat password'}
-          value={repPass}
-          onChangeText={text => setRepPass(text)}
-          secureTextEntry
-        />
-      </View>
-
       <View style={styles.buttonWrapper}>
         {isLoading ? (
-          <ActivityIndicator color={'#FF460A'} animating />
+          <View style={styles.loaderWrapper}>
+            <ActivityIndicator color={'#FF460A'} animating hidesWhenStopped />
+          </View>
         ) : (
           <RoundButton
             text={'Sign up'}
@@ -74,5 +72,10 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     paddingHorizontal: 24,
+  },
+  loaderWrapper: {
+    paddingVertical: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
