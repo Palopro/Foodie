@@ -17,7 +17,7 @@ export const FoodCard: React.FC<FoodCardProps> = ({ food }) => (
     </View>
     <View style={styles.priceWrapper}>
       <Text numberOfLines={1} style={styles.priceText}>
-        {food.price}
+        {food.price.toFixed(2)}
       </Text>
     </View>
   </View>
@@ -28,30 +28,33 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 30,
     alignItems: 'center',
-    width: 170,
-    // height: 180,
-    marginHorizontal: 12,
+    width: 220,
+    height: 270,
+    marginHorizontal: 17,
   },
   image: {
-    width: 120,
-    height: 140,
+    width: 168,
+    height: 189,
     borderRadius: 12,
-    marginTop: -30,
+    marginTop: -42,
   },
   nameWrapper: {
-    paddingHorizontal: 40,
-    paddingVertical: 10,
+    marginTop: 16,
+    height: 52,
+    paddingHorizontal: 50,
     alignItems: 'center',
     justifyContent: 'center',
   },
   name: {
     fontStyle: 'normal',
     color: '#000000',
+    fontSize: 22,
+    lineHeight: 23,
     fontWeight: '700',
     textAlign: 'center',
   },
   priceWrapper: {
-    // paddingVertical: 14,
+    marginTop: 4,
   },
   priceText: {
     color: '#FF460A',

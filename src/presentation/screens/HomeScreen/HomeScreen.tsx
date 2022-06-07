@@ -13,6 +13,7 @@ import { SearchInput } from '../../components/SearchInput';
 import { foodieApi } from '../../../data/dataSource/api/authService';
 import { FoodCard } from './FoodCard';
 import { Food } from '../../../domain/model/Food';
+import { AppBar } from '../../components/AppBar';
 
 export const HomeScreen: React.FC = () => {
   const [search, setSearch] = useState('');
@@ -25,8 +26,17 @@ export const HomeScreen: React.FC = () => {
 
   reactotron.log({ data, isLoading, isFetching });
 
+  const handleMenu = () => {
+    // TODO: menu press
+  };
+
+  const handleCart = () => {
+    // TODO: cart press
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <AppBar onMenuPress={handleMenu} onCartPress={handleCart} />
       <StatusBar
         barStyle={'dark-content'}
         backgroundColor={'#000000'}
@@ -40,21 +50,23 @@ export const HomeScreen: React.FC = () => {
       <View style={styles.searchWrapper}>
         <SearchInput
           value={search}
-          placeholder={'Search'}
+          placeholder="Search"
           onChangeText={text => setSearch(text)}
         />
       </View>
-      {/*<View style={{ flex: 1 }}>*/}
-      <FlatList
-        horizontal
-        bounces={false}
-        data={data.food}
-        renderItem={({ item }) => <FoodCard food={item} />}
-        keyExtractor={(item: Food) => `food-${item.id}`}
-        contentContainerStyle={{ alignItems: 'center' }}
-        showsHorizontalScrollIndicator={false}
-      />
-      {/*</View>*/}
+      <View style={{ flex: 1 }}>
+        <FlatList
+          horizontal
+          bounces={false}
+          data={data.food}
+          renderItem={({ item }) => <FoodCard food={item} />}
+          keyExtractor={(item: Food) => `food-${item.id}`}
+          contentContainerStyle={{ alignItems: 'center' }}
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={16}
+          ListHeaderComponent={<View style={{ width: 33 }} />}
+        />
+      </View>
     </SafeAreaView>
   );
 };
