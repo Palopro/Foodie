@@ -18,7 +18,7 @@ export const LoginScreen = () => {
   const [username, setUsername] = useState('testUser');
   const [pass, setPass] = useState('u12345678');
 
-  const [loginUser, { isLoading, isSuccess }] = useLoginMutation();
+  const [loginUser, { isLoading }] = useLoginMutation();
 
   const handleLogin = async () => {
     await loginUser({

@@ -9,6 +9,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import Splash from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { AppScreen } from '../../navigation/AppScreen';
 
 import logo from '../../assets/images/SplashScreen.png';

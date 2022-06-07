@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 
 import { TextInput } from '../../components/TextInput';
 import { RoundButton } from '../../components/RoundButton';
-import { useAppSelector } from '../../../hooks/hooks';
 import { useRegisterMutation } from '../../../data/dataSource/api/authService';
 
 export const SignUpScreen = () => {
