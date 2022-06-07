@@ -1,7 +1,8 @@
-import { User } from '../../../domain/model/user';
-import { UserEntity } from './entity/UserEntity';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+import { User } from '../../../domain/model/user';
+import { UserDTO } from './dto/UserDTO';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
@@ -23,11 +24,11 @@ export const foodieApi = createApi({
         },
       }),
       transformResponse: async (response: {
-        user: UserEntity;
+        user: UserDTO;
         jwt: string;
       }) => {
         await AsyncStorage.setItem('jwt', response.jwt);
-        const user: User = UserEntity.parseFromSJON(response.user);
+        const user: User = UserDTO.parseFromSJON(response.user);
         return { user, jwt: response.jwt };
       },
     }),
@@ -44,8 +45,8 @@ export const foodieApi = createApi({
           password: userCredentials.password,
         },
       }),
-      transformResponse: (response: { data: { user: UserEntity } }) => {
-        const user: User = UserEntity.parseFromSJON(response.data.user);
+      transformResponse: (response: { data: { user: UserDTO } }) => {
+        const user: User = UserDTO.parseFromSJON(response.data.user);
 
         return {
           user: user,
@@ -54,5 +55,3 @@ export const foodieApi = createApi({
     }),
   }),
 });
-
-export const { useLoginMutation, useRegisterMutation } = foodieApi;

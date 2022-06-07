@@ -24,7 +24,7 @@ const routes = [
 ];
 
 export const AuthScreen = () => {
-  const [index, setIndex] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   return (
     <View style={styles.container}>
@@ -34,16 +34,15 @@ export const AuthScreen = () => {
         backgroundColor={'#FFFFFF'}
         animated
       />
-      <View style={styles.topContainer}>
-        <View style={styles.imageWrapper}>
-          <Image source={logo} style={styles.image} />
-        </View>
+
+      <View style={styles.imageWrapper}>
+        <Image source={logo} style={styles.image} />
       </View>
       <View style={styles.tabWrapper}>
         <TabView
           renderTabBar={props => <AuthTabBar {...props} />}
-          onIndexChange={setIndex}
-          navigationState={{ index, routes }}
+          onIndexChange={setSelectedTab}
+          navigationState={{ index: selectedTab, routes }}
           renderScene={renderScene}
           swipeEnabled={false}
         />
@@ -55,9 +54,6 @@ export const AuthScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
-  topContainer: {
     backgroundColor: '#FFFFFF',
   },
   imageWrapper: {

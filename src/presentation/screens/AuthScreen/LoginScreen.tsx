@@ -1,61 +1,93 @@
-import React, { useState } from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
 
 import { TextInput } from '../../components/TextInput';
-import { RoundButton } from '../../components/RoundButton';
-import { useLoginMutation } from '../../../data/dataSource/api/authService';
+import { ColorType, RoundButton } from '../../components/RoundButton';
+import { foodieApi } from '../../../data/dataSource/api/foodieApi';
+import { Loader } from './Loader';
+import { ForgotPasswordButton } from './ForgotPasswordButton';
+
+interface LoginFields {
+  username: string;
+  password: string;
+}
 
 export const LoginScreen = () => {
-  const [username, setUsername] = useState('testUser');
-  const [pass, setPass] = useState('u12345678');
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFields>({
+    defaultValues: {
+      username: 'testUser',
+      password: 'u12345678',
+    },
+  });
 
-  const [loginUser, { isLoading }] = useLoginMutation();
+  const [loginUser, { isLoading }] = foodieApi.useLoginMutation();
 
-  const handleLogin = () => {
-    loginUser({ userCredentials: { identifier: username, password: pass } });
+  const handleLogin = (data: LoginFields) => {
+    loginUser({
+      userCredentials: { identifier: data.username, password: data.password },
+    });
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.fieldWrapper}>
-        <TextInput
-          label={'Username'}
-          value={username}
-          onChangeText={text => setUsername(text)}
+        <Controller
+          name={'username'}
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              label="Username"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={errors.username && 'Username is required'}
+            />
+          )}
         />
       </View>
 
       <View style={styles.fieldWrapper}>
-        <TextInput
-          label={'Password'}
-          value={pass}
-          onChangeText={text => setPass(text)}
-          secureTextEntry
+        <Controller
+          name={'password'}
+          control={control}
+          rules={{
+            required: true,
+            minLength: 6,
+            maxLength: 32,
+          }}
+          render={({ field: { value, onChange, onBlur } }) => (
+            <TextInput
+              label="Password"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={errors.password && 'Password must be from 6 to 32 symbols'}
+              secureTextEntry
+            />
+          )}
         />
       </View>
 
       <View style={styles.forgotPassWrapper}>
-        <Pressable>
-          <Text style={styles.forgotPassText}>Forgot password?</Text>
-        </Pressable>
+        <ForgotPasswordButton />
       </View>
 
       <View style={styles.buttonWrapper}>
         {isLoading ? (
-          <View style={styles.loaderWrapper}>
-            <ActivityIndicator color={'#FF460A'} animating hidesWhenStopped />
-          </View>
+          <Loader />
         ) : (
           <RoundButton
-            text={'Login'}
-            onPress={handleLogin}
-            colorType={'orange'}
+            text="Login"
+            onPress={handleSubmit(handleLogin)}
+            colorType={ColorType.Orange}
           />
         )}
       </View>
@@ -76,19 +108,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     marginVertical: 24,
   },
-  forgotPassText: {
-    color: '#FA4A0C',
-    fontWeight: '700',
-    fontStyle: 'normal',
-    fontSize: 16,
-    textAlign: 'left',
-  },
   buttonWrapper: {
     paddingHorizontal: 24,
-  },
-  loaderWrapper: {
-    paddingVertical: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

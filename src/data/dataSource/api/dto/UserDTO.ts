@@ -1,6 +1,6 @@
 import { User } from '../../../../domain/model/user';
 
-export class UserEntity {
+export class UserDTO {
   protected id: number;
   protected username: string;
   protected email: string;
@@ -34,7 +34,7 @@ export class UserEntity {
       this.blocked,
     );
 
-  public static parseFromSJON = (json: UserEntity) =>
+  public static parseFromSJON = (json: UserDTO) =>
     new User(
       json.id,
       json.username,

@@ -2,9 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { TextField, TextFieldProps } from 'react-native-material-textfield';
 
-interface Props extends TextFieldProps {}
-
-export const TextInput: React.FC<Props> = ({
+export const TextInput: React.FC<TextFieldProps> = ({
   value,
   label,
   placeholder,
@@ -12,10 +10,12 @@ export const TextInput: React.FC<Props> = ({
   disabled,
   secureTextEntry,
   formatText,
+  error,
 }) => (
   <TextField
     value={value}
     label={label}
+    error={error}
     placeholder={placeholder}
     onChangeText={onChangeText}
     disabled={disabled}
@@ -23,8 +23,8 @@ export const TextInput: React.FC<Props> = ({
     formatText={formatText}
     style={styles.input}
     lineWidth={0.5}
-    tintColor={'#000000'}
-    baseColor={'#000000'}
+    tintColor="#000000"
+    baseColor="#000000"
   />
 );
 
