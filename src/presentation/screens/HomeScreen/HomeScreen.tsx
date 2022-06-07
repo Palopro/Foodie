@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   FlatList,
   StatusBar,
+  ScrollView,
 } from 'react-native';
 import reactotron from 'reactotron-react-native';
 
@@ -14,17 +15,23 @@ import { foodieApi } from '../../../data/dataSource/api/authService';
 import { FoodCard } from './FoodCard';
 import { Food } from '../../../domain/model/Food';
 import { AppBar } from '../../components/AppBar';
+import { Category } from '../../../domain/model/Category';
 
 export const HomeScreen: React.FC = () => {
   const [search, setSearch] = useState('');
+  const [selectedFilter, setFilter] = useState(0);
 
-  const {
-    data = [],
-    isLoading,
-    isFetching,
-  } = foodieApi.useGetFoodsQuery(undefined, {});
+  const { data: foods } = foodieApi.useGetFoodsQuery(undefined, {});
 
-  reactotron.log({ data, isLoading, isFetching });
+  const { data: categories, isLoading: isLoadCategories } = foodieApi.useGetCategoriesQuery(undefined, {});
+
+  useEffect(() => {
+    if (categories && categories.length > 0) {
+      setFilter(categories[0].id);
+    }
+  }, [categories]);
+
+  reactotron.log({ foods, categories });
 
   const handleMenu = () => {
     // TODO: menu press
@@ -33,6 +40,20 @@ export const HomeScreen: React.FC = () => {
   const handleCart = () => {
     // TODO: cart press
   };
+
+  const renderCategories = () => (
+    <ScrollView horizontal scrollEventThrottle={16}>
+      {categories.map((category: Category) => {
+        const isSelected = 1;
+
+        return (
+          <View>
+            <Text>{category.name}</Text>
+          </View>
+        );
+      })}
+    </ScrollView>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -54,11 +75,12 @@ export const HomeScreen: React.FC = () => {
           onChangeText={text => setSearch(text)}
         />
       </View>
+      {isLoadCategories ? null : renderCategories()}
       <View style={{ flex: 1 }}>
         <FlatList
           horizontal
           bounces={false}
-          data={data.food}
+          data={foods}
           renderItem={({ item }) => <FoodCard food={item} />}
           keyExtractor={(item: Food) => `food-${item.id}`}
           contentContainerStyle={{ alignItems: 'center' }}

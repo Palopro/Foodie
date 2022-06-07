@@ -5,6 +5,7 @@ import { User } from '../../../domain/model/user';
 import { UserEntity } from './entity/UserEntity';
 import { FoodDTO } from './entity/FoodDTO';
 import { Food } from '../../../domain/model/Food';
+import { CategoryDTO } from './entity/CategoryDTO';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
@@ -70,28 +71,19 @@ export const foodieApi = createApi({
     }),
     getCategories: build.query<Array<any>, undefined>({
       query: () => ({
-        url: '/categories',
+        url: '/categories?populate=*',
       }),
-      transformResponse: (response: { data: any }) => response.data,
+      transformResponse: (response: { data: any }) =>
+        response.data.map(CategoryDTO.parseFromJSON),
     }),
     getFoods: build.query<Array<Food>, undefined>({
       query: () => ({
-        url: '/foods',
+        url: '/foods?populate=*',
       }),
-      transformResponse: (response: { data: Array<FoodDTO> }) => {
-        const food = response.data.map(FoodDTO.parseFromJSON);
-
-        return {
-          food,
-        };
-      },
+      transformResponse: (response: { data: Array<FoodDTO> }) =>
+        response.data.map(FoodDTO.parseFromJSON),
     }),
   }),
 });
 
-export const {
-  useLoginMutation,
-  useRegisterMutation,
-  useGetCategoriesQuery,
-  useGetFoodsQuery,
-} = foodieApi;
+export const { useLoginMutation, useRegisterMutation } = foodieApi;
