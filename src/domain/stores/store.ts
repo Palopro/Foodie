@@ -10,7 +10,9 @@ export const store = configureStore({
     [foodieApi.reducerPath]: foodieApi.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(foodieApi.middleware),
+    getDefaultMiddleware({ serializableCheck: false }).concat(
+      foodieApi.middleware,
+    ),
   enhancers: [reactotron.createEnhancer(true)],
 });
 

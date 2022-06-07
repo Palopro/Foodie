@@ -14,7 +14,7 @@ export const SearchInput: React.FC<Props> = ({
   onChangeText,
 }) => (
   <View style={styles.container}>
-    <Icon name={'search'} color={'#000000'} size={24} style={{marginEnd: 12,}} />
+    <Icon name={'search'} color={'#000000'} size={24} style={styles.icon} />
 
     <TextInput
       value={value}
@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingStart: 35,
     paddingEnd: 5,
+  },
+  icon: {
+    marginEnd: 12,
   },
   input: {
     flex: 1,
