@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
 
 import { TextInput } from '../../components/TextInput';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Loader } from './Loader';
-import { useForm, Controller } from 'react-hook-form';
 
 interface RegisterFields {
   username: string;
@@ -42,7 +42,7 @@ export const SignUpScreen = () => {
     <View style={styles.container}>
       <View style={styles.fieldWrapper}>
         <Controller
-          name={'username'}
+          name="username"
           control={control}
           rules={{
             required: true,
@@ -61,7 +61,7 @@ export const SignUpScreen = () => {
 
       <View style={styles.fieldWrapper}>
         <Controller
-          name={'email'}
+          name="email"
           control={control}
           rules={{
             required: true,
@@ -80,7 +80,7 @@ export const SignUpScreen = () => {
 
       <View style={styles.fieldWrapper}>
         <Controller
-          name={'password'}
+          name="password"
           control={control}
           rules={{ required: true, minLength: 6, maxLength: 32 }}
           render={({ field: { value, onBlur, onChange } }) => (

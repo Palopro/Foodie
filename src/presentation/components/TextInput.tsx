@@ -2,25 +2,9 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { TextField, TextFieldProps } from 'react-native-material-textfield';
 
-export const TextInput: React.FC<TextFieldProps> = ({
-  value,
-  label,
-  placeholder,
-  onChangeText,
-  disabled,
-  secureTextEntry,
-  formatText,
-  error,
-}) => (
+export const TextInput: React.FC<TextFieldProps> = props => (
   <TextField
-    value={value}
-    label={label}
-    error={error}
-    placeholder={placeholder}
-    onChangeText={onChangeText}
-    disabled={disabled}
-    secureTextEntry={secureTextEntry}
-    formatText={formatText}
+    {...props}
     style={styles.input}
     lineWidth={0.5}
     tintColor="#000000"

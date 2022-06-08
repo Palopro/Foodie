@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { User } from '../../../domain/model/user';
-import { UserDTO } from './dto/UserDTO';
+import { UserDTO, UserJSON } from './dto/UserDTO';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
@@ -23,12 +23,9 @@ export const foodieApi = createApi({
           password: userCredentials.password,
         },
       }),
-      transformResponse: async (response: {
-        user: UserDTO;
-        jwt: string;
-      }) => {
+      transformResponse: async (response: { user: UserJSON; jwt: string }) => {
         await AsyncStorage.setItem('jwt', response.jwt);
-        const user: User = UserDTO.parseFromSJON(response.user);
+        const user: User = UserDTO.parseFromJSON(response.user);
         return { user, jwt: response.jwt };
       },
     }),
@@ -45,8 +42,8 @@ export const foodieApi = createApi({
           password: userCredentials.password,
         },
       }),
-      transformResponse: (response: { data: { user: UserDTO } }) => {
-        const user: User = UserDTO.parseFromSJON(response.data.user);
+      transformResponse: (response: { data: { user: UserJSON } }) => {
+        const user: User = UserDTO.parseFromJSON(response.data.user);
 
         return {
           user: user,

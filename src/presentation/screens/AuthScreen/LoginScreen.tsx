@@ -37,7 +37,7 @@ export const LoginScreen = () => {
     <View style={styles.container}>
       <View style={styles.fieldWrapper}>
         <Controller
-          name={'username'}
+          name="username"
           control={control}
           rules={{
             required: true,
@@ -56,7 +56,7 @@ export const LoginScreen = () => {
 
       <View style={styles.fieldWrapper}>
         <Controller
-          name={'password'}
+          name="password"
           control={control}
           rules={{
             required: true,

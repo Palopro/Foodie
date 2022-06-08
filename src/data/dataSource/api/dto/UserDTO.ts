@@ -1,5 +1,14 @@
 import { User } from '../../../../domain/model/user';
 
+export interface UserJSON {
+  id: number;
+  username: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+}
+
 export class UserDTO {
   protected id: number;
   protected username: string;
@@ -24,23 +33,6 @@ export class UserDTO {
     this.blocked = blocked;
   }
 
-  public static toUser = () =>
-    new User(
-      this.id,
-      this.username,
-      this.email,
-      this.provider,
-      this.confirmed,
-      this.blocked,
-    );
-
-  public static parseFromSJON = (json: UserDTO) =>
-    new User(
-      json.id,
-      json.username,
-      json.email,
-      json.provider,
-      json.confirmed,
-      json.blocked,
-    );
+  public static parseFromJSON = (json: UserJSON) =>
+    new User(json.id, json.username, json.email);
 }
