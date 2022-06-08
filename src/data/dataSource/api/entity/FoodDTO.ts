@@ -1,6 +1,5 @@
 import { Food } from '../../../../domain/model/Food';
 import { CategoryDTO } from './CategoryDTO';
-import reactotron from 'reactotron-react-native';
 
 export class FoodDTO {
   public id: number;
@@ -29,7 +28,6 @@ export class FoodDTO {
   }
 
   public static parseFromJSON = (json: FoodDTO) => {
-    reactotron.log({ json });
 
     return new Food(
       json.id,
