@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 import { User } from '../../model/user';
-import { foodieApi } from '../../../data/dataSource/api/authService';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 
 interface AuthState {
   isLoading: boolean;
@@ -18,7 +18,7 @@ const initialState: AuthState = {
 
 export const reducerName = 'AuthReducer';
 
-const authUserReducer = createSlice({
+export const authUserReducer = createSlice({
   name: reducerName,
   initialState,
   reducers: {},
@@ -75,5 +75,3 @@ const authUserReducer = createSlice({
       );
   },
 });
-
-export const authReducer = authUserReducer.reducer;

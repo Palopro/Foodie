@@ -1,36 +1,30 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
-type ColorScheme = 'white' | 'orange';
+export enum ColorType {
+  White = 'white',
+  Orange = 'orange',
+}
 
 interface Props {
   text: string;
   onPress: () => void;
-  colorType: ColorScheme;
+  colorType: ColorType;
 }
 
-const colorScheme = (colorType: ColorScheme) => {
-  switch (colorType) {
-    case 'white':
-      return {
-        backgroundColor: '#FFFFFF',
-        color: '#FF460A',
-      };
-    case 'orange':
-      return {
-        backgroundColor: '#FF460A',
-        color: '#FFFFFF',
-      };
-    default:
-      return {
-        backgroundColor: '#FF460A',
-        color: '#FFFFFF',
-      };
-  }
+const colorScheme = {
+  [ColorType.White]: {
+    backgroundColor: '#FFFFFF',
+    color: '#FF460A',
+  },
+  [ColorType.Orange]: {
+    backgroundColor: '#FF460A',
+    color: '#FFFFFF',
+  },
 };
 
 export const RoundButton: React.FC<Props> = ({ text, onPress, colorType }) => {
-  const { color, backgroundColor } = colorScheme(colorType);
+  const { color, backgroundColor } = colorScheme[colorType];
 
   return (
     <Pressable

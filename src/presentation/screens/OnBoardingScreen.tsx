@@ -1,10 +1,10 @@
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import bellaLogo from '../../assets/images/BellaLogo.png';
 import guys from '../../assets/images/Group67.png';
-import { RoundButton } from '../components/RoundButton';
-import { useNavigation } from '@react-navigation/native';
+import { ColorType, RoundButton } from '../components/RoundButton';
 import { AppScreen } from '../../navigation/AppScreen';
 
 export const OnBoardingScreen = () => {
@@ -30,8 +30,8 @@ export const OnBoardingScreen = () => {
       </View>
       <View style={styles.buttonWrapper}>
         <RoundButton
-          colorType={'white'}
-          text={'Get started'}
+          colorType={ColorType.White}
+          text="Get started"
           onPress={handlePress}
         />
       </View>

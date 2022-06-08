@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authReducer } from './reducers/authUserReducer';
-import reactotron from '../../../ReactotronConfig';
-import { foodieApi } from '../../data/dataSource/api/authService';
 import { setupListeners } from '@reduxjs/toolkit/query';
+
+import { reactotron } from '../../../ReactotronConfig';
+import { foodieApi } from '../../data/dataSource/api/foodieApi';
+import { authUserReducer } from './reducers/authUserReducer';
 
 export const store = configureStore({
   reducer: {
-    authReducer,
+    authReducer: authUserReducer.reducer,
     [foodieApi.reducerPath]: foodieApi.reducer,
   },
   middleware: getDefaultMiddleware =>
@@ -19,5 +20,4 @@ export const store = configureStore({
 setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>;
-
 export type AppDispatch = typeof store.dispatch;

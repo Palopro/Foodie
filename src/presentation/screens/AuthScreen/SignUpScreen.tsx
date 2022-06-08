@@ -1,58 +1,113 @@
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
 import React, { useState } from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 
 import { TextInput } from '../../components/TextInput';
+import { ColorType, RoundButton } from '../../components/RoundButton';
+import { foodieApi } from '../../../data/dataSource/api/foodieApi';
+import { Loader } from './Loader';
+
+interface RegisterFields {
+  username: string;
+  email: string;
+  password: string;
+}
 import { RoundButton } from '../../components/RoundButton';
 import { useRegisterMutation } from '../../../data/dataSource/api/authService';
 
 export const SignUpScreen = () => {
-  const [username, setUsername] = useState('TestUser2');
-  const [email, setEmail] = useState('111@222.com');
-  const [pass, setPass] = useState('u12345678');
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFields>({
+    defaultValues: {
+      username: '',
+      email: '',
+      password: '',
+    },
+  });
 
-  const [registerUser, { isLoading }] = useRegisterMutation();
+  const [registerUser, { isLoading }] = foodieApi.useRegisterMutation();
 
-  const handleSignUp = () => {
-    registerUser({ userCredentials: { username, email, password: pass } });
+  const handleSignUp = (data: RegisterFields) => {
+    registerUser({
+      userCredentials: {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      },
+    });
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.fieldWrapper}>
-        <TextInput
-          label={'Username'}
-          value={username}
-          onChangeText={text => setUsername(text)}
+        <Controller
+          name="username"
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { value, onBlur, onChange } }) => (
+            <TextInput
+              label="Username"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={errors.username && 'Username is required'}
+            />
+          )}
         />
       </View>
 
       <View style={styles.fieldWrapper}>
-        <TextInput
-          label={'Email address'}
-          value={email}
-          onChangeText={text => setEmail(text)}
+        <Controller
+          name="email"
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { value, onBlur, onChange } }) => (
+            <TextInput
+              label="Email address"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={errors.email && 'Email is required'}
+            />
+          )}
         />
       </View>
 
       <View style={styles.fieldWrapper}>
-        <TextInput
-          label={'Password'}
-          value={pass}
-          onChangeText={text => setPass(text)}
-          secureTextEntry
+        <Controller
+          name="password"
+          control={control}
+          rules={{ required: true, minLength: 6, maxLength: 32 }}
+          render={({ field: { value, onBlur, onChange } }) => (
+            <TextInput
+              label="Password"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={errors.password && 'Password must be 6 to 32 symbols'}
+              secureTextEntry
+            />
+          )}
         />
       </View>
 
       <View style={styles.buttonWrapper}>
         {isLoading ? (
-          <View style={styles.loaderWrapper}>
-            <ActivityIndicator color={'#FF460A'} animating hidesWhenStopped />
-          </View>
+          <Loader />
         ) : (
           <RoundButton
-            text={'Sign up'}
-            onPress={handleSignUp}
-            colorType={'orange'}
+            text="Sign up"
+            onPress={handleSubmit(handleSignUp)}
+            colorType={ColorType.Orange}
           />
         )}
       </View>
@@ -71,10 +126,5 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     paddingHorizontal: 24,
-  },
-  loaderWrapper: {
-    paddingVertical: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

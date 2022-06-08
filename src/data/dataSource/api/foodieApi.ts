@@ -7,6 +7,9 @@ import { FoodDTO } from './entity/FoodDTO';
 import { Food } from '../../../domain/model/Food';
 import { CategoryDTO } from './entity/CategoryDTO';
 
+import { User } from '../../../domain/model/user';
+import { mapToUser, UserDTO } from './dto/UserDTO';
+
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
 export const foodieApi = createApi({
@@ -38,12 +41,9 @@ export const foodieApi = createApi({
         },
         headers: undefined,
       }),
-      transformResponse: async (response: {
-        user: UserEntity;
-        jwt: string;
-      }) => {
+      transformResponse: async (response: { user: UserDTO; jwt: string }) => {
         await AsyncStorage.setItem('jwt', response.jwt);
-        const user: User = UserEntity.parseFromSJON(response.user);
+        const user: User = mapToUser(response.user);
         return { user, jwt: response.jwt };
       },
     }),
@@ -61,9 +61,8 @@ export const foodieApi = createApi({
           password: userCredentials.password,
         },
       }),
-      transformResponse: (response: { data: { user: UserEntity } }) => {
-        const user: User = UserEntity.parseFromSJON(response.data.user);
-
+      transformResponse: (response: { data: { user: UserDTO } }) => {
+        const user: User = mapToUser(response.data.user);
         return {
           user: user,
         };
@@ -85,5 +84,3 @@ export const foodieApi = createApi({
     }),
   }),
 });
-
-export const { useLoginMutation, useRegisterMutation } = foodieApi;

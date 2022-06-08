@@ -6,13 +6,8 @@ import {
 } from 'react-native-tab-view';
 import { StyleSheet } from 'react-native';
 
-type INavState = NavigationState<{
-  key: string;
-  title: string;
-}>;
-
 interface Props extends SceneRendererProps {
-  navigationState: INavState;
+  navigationState: NavigationState<{ key: string; title: string }>;
 }
 
 export const AuthTabBar: React.FC<Props> = props => (
