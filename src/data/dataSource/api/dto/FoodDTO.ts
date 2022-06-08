@@ -1,9 +1,9 @@
 import { Food } from '../../../../domain/model/Food';
 import { CategoryDTO } from './CategoryDTO';
 
-export class FoodDTO {
-  public id: number;
-  public attributes: {
+export interface FoodDTO {
+  id: number;
+  attributes: {
     name: string;
     price: number;
     photo: string;
@@ -12,27 +12,13 @@ export class FoodDTO {
       data: Array<CategoryDTO>;
     };
   };
-
-  public constructor(
-    id: number,
-    attributes: {
-      name: string;
-      price: number;
-      photo: string;
-      gallery: Array<string>;
-      categories: { data: Array<CategoryDTO> };
-    },
-  ) {
-    this.id = id;
-    this.attributes = attributes;
-  }
-
-  public static parseFromJSON = (json: FoodDTO) =>
-    new Food(
-      json.id,
-      json.attributes.name,
-      json.attributes.price,
-      json.attributes.photo,
-      json.attributes.categories.data.map((cat: CategoryDTO) => cat.id),
-    );
 }
+
+export const mapToFood = (foodDTO: FoodDTO) =>
+  new Food(
+    foodDTO.id,
+    foodDTO.attributes.name,
+    foodDTO.attributes.price,
+    foodDTO.attributes.photo,
+    foodDTO.attributes.categories.data.map((cat: CategoryDTO) => cat.id),
+  );

@@ -1,8 +1,9 @@
 import React from 'react';
-import { AppScreen } from './AppScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeScreen } from '../presentation/screens/HomeScreen/HomeScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import { AppScreen } from './AppScreen';
+import { HomeScreen } from '../presentation/screens/HomeScreen/HomeScreen';
 
 export type MainAppTabParams = {
   [AppScreen.HomeScreen]: undefined;
@@ -15,6 +16,7 @@ export const MainNavigation = () => (
     screenOptions={{
       tabBarStyle: {
         backgroundColor: '#F2F2F2',
+        borderTopWidth: 0,
       },
       headerShown: false,
       tabBarActiveTintColor: '#FA4A0C',

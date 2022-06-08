@@ -7,30 +7,27 @@ import {
   View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Splash from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { AppScreen } from '../../navigation/AppScreen';
-
 import logo from '../../assets/images/SplashScreen.png';
 
 export const SplashScreen = () => {
   const navigation = useNavigation();
   useEffect(() => {
-    async function redirectToScreen() {
-      let redirectScreen = AppScreen.AuthNavigation;
-      const token = await AsyncStorage.getItem('jwt');
-
-      if (token) {
-        redirectScreen = AppScreen.MainApp;
-      }
-
-      Splash.hide();
-      navigation.navigate(redirectScreen);
-    }
-
     redirectToScreen();
   });
+
+  const redirectToScreen = async () => {
+    let redirectScreen = AppScreen.AuthNavigation;
+    const token = await AsyncStorage.getItem('jwt');
+
+    if (token) {
+      redirectScreen = AppScreen.MainApp;
+    }
+
+    navigation.navigate(redirectScreen);
+  };
 
   return (
     <>

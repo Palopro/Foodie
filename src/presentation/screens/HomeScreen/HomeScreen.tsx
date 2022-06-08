@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -6,22 +6,26 @@ import {
   StyleSheet,
   FlatList,
   StatusBar,
-  ListRenderItemInfo,
 } from 'react-native';
-import reactotron from 'reactotron-react-native';
 
 import { SearchInput } from '../../components/SearchInput';
-import { FoodCard } from './FoodCard';
 import { Food } from '../../../domain/model/Food';
 import { AppBar } from '../../components/AppBar';
 import { Category } from '../../../domain/model/Category';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
+import { CategoryList } from './CategoryList';
+import { FoodList } from './FoodList';
 
 export const HomeScreen: React.FC = () => {
   const [search, setSearch] = useState('');
   const [selectedFilter, setFilter] = useState(0);
 
-  const { data: foods } = foodieApi.useGetFoodsQuery(undefined, {});
+  const foodListRef = useRef<FlatList<Food>>();
+
+  const { data: foods, isLoading: isLoadFoods } = foodieApi.useGetFoodsQuery(
+    undefined,
+    {},
+  );
 
   const { data: categories, isLoading: isLoadCategories } =
     foodieApi.useGetCategoriesQuery(undefined, {});
@@ -32,8 +36,6 @@ export const HomeScreen: React.FC = () => {
     }
   }, [categories, foods]);
 
-  reactotron.log({ foods, categories });
-
   const handleMenu = () => {
     // TODO: menu press
   };
@@ -42,31 +44,13 @@ export const HomeScreen: React.FC = () => {
     // TODO: cart press
   };
 
-  const renderCategories = () => (
-    <View style={{ height: 40, paddingStart: 75 }}>
-      <FlatList
-        horizontal
-        data={categories}
-        scrollEventThrottle={16}
-        renderItem={({ item }: ListRenderItemInfo<Category>) => {
-          const isSelected = item.id === selectedFilter;
+  const handleCategorySelect = (category: Category) => {
+    setFilter(category.id);
 
-          return (
-            <View style={{ width: 87, alignItems: 'stretch' }}>
-              <Text style={{ marginStart: 20 }}>{item.name}</Text>
-              <View
-                style={{
-                  height: 3,
-                  backgroundColor: isSelected ? '#FA4A0C' : 'transparent',
-                  borderRadius: 12,
-                }}
-              />
-            </View>
-          );
-        }}
-      />
-    </View>
-  );
+    if (foodListRef && foodListRef.current) {
+      foodListRef.current?.scrollToOffset(0);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -88,20 +72,21 @@ export const HomeScreen: React.FC = () => {
           onChangeText={text => setSearch(text)}
         />
       </View>
-      {isLoadCategories ? null : renderCategories()}
-      <View style={{ flex: 1 }}>
-        <FlatList
-          horizontal
-          bounces={false}
-          data={foods}
-          renderItem={({ item }) => <FoodCard food={item} />}
-          keyExtractor={(item: Food) => `food-${item.id}`}
-          contentContainerStyle={{ alignItems: 'center' }}
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={16}
-          ListHeaderComponent={<View style={{ width: 33 }} />}
+      {isLoadCategories ? null : (
+        <CategoryList
+          data={categories}
+          selectedFilterId={selectedFilter}
+          onPressCategory={handleCategorySelect}
         />
-      </View>
+      )}
+      {isLoadCategories && isLoadFoods ? null : (
+        <View style={styles.flatList}>
+          <FoodList
+            refList={foodListRef}
+            data={foods.filter(f => f.categories.includes(selectedFilter))}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -124,5 +109,8 @@ const styles = StyleSheet.create({
   searchWrapper: {
     paddingHorizontal: 50,
     paddingVertical: 20,
+  },
+  flatList: {
+    flex: 1,
   },
 });

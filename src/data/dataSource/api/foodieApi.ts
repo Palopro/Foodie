@@ -2,10 +2,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { User } from '../../../domain/model/user';
-import { FoodDTO } from './dto/FoodDTO';
+import { FoodDTO, mapToFood } from './dto/FoodDTO';
 import { Food } from '../../../domain/model/Food';
-import { CategoryDTO } from './dto/CategoryDTO';
+import { CategoryDTO, mapToCategory } from './dto/CategoryDTO';
 import { mapToUser, UserDTO } from './dto/UserDTO';
+import { Category } from '../../../domain/model/Category';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
@@ -65,19 +66,19 @@ export const foodieApi = createApi({
         };
       },
     }),
-    getCategories: build.query<Array<any>, undefined>({
+    getCategories: build.query<Array<Category>, undefined>({
       query: () => ({
         url: '/categories?populate=*',
       }),
-      transformResponse: (response: { data: any }) =>
-        response.data.map(CategoryDTO.parseFromJSON),
+      transformResponse: (response: { data: Array<CategoryDTO> }) =>
+        response.data.map(mapToCategory),
     }),
     getFoods: build.query<Array<Food>, undefined>({
       query: () => ({
         url: '/foods?populate=*',
       }),
       transformResponse: (response: { data: Array<FoodDTO> }) =>
-        response.data.map(FoodDTO.parseFromJSON),
+        response.data.map(mapToFood),
     }),
   }),
 });
