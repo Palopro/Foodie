@@ -1,13 +1,17 @@
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import bellaLogo from '../assets/images/BellaLogo.png';
-import guys from '../assets/images/Group67.png';
-import { RoundButton } from '../components/RoundButton';
+import bellaLogo from '../../assets/images/BellaLogo.png';
+import guys from '../../assets/images/Group67.png';
+import { ColorType, RoundButton } from '../components/RoundButton';
+import { AppScreen } from '../../navigation/AppScreen';
 
 export const OnBoardingScreen = () => {
+  const navigation = useNavigation();
+
   const handlePress = () => {
-    //TODO: handle press
+    navigation.navigate(AppScreen.AuthScreen);
   };
 
   return (
@@ -25,7 +29,11 @@ export const OnBoardingScreen = () => {
         <Image source={guys} style={styles.mainImage} />
       </View>
       <View style={styles.buttonWrapper}>
-        <RoundButton text={'Get started'} onPress={handlePress} />
+        <RoundButton
+          colorType={ColorType.White}
+          text="Get started"
+          onPress={handlePress}
+        />
       </View>
     </SafeAreaView>
   );

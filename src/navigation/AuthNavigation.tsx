@@ -1,8 +1,9 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { OnBoardingScreen } from '../screens/OnBoardingScreen';
+import { OnBoardingScreen } from '../presentation/screens/OnBoardingScreen';
 import { AppScreen } from './AppScreen';
+import { AuthScreen } from '../presentation/screens/AuthScreen/AuthScreen';
 
 export type AuthStackParams = {
   [AppScreen.OnBoardingScreen]: undefined;
@@ -18,5 +19,6 @@ export const AuthNavigation = () => (
       name={AppScreen.OnBoardingScreen}
       component={OnBoardingScreen}
     />
+    <AuthStack.Screen name={AppScreen.AuthScreen} component={AuthScreen} />
   </AuthStack.Navigator>
 );
