@@ -80,5 +80,12 @@ export const foodieApi = createApi({
       transformResponse: (response: { data: Array<FoodDTO> }) =>
         response.data.map(mapToFood),
     }),
+    searchFoods: build.query<Array<Food>, string>({
+      query: name => ({
+        url: `/foods?populate=*&filters[name][$containsi]=${name}`,
+      }),
+      transformResponse: (response: { data: Array<FoodDTO> }) =>
+        response.data.map(mapToFood),
+    }),
   }),
 });
