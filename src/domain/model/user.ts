@@ -17,7 +17,4 @@ export class User {
     this.username = username;
     this.email = email;
   }
-
-  public static parseFromJSON = (userDTO: UserDTO) =>
-    new User(userDTO.id, userDTO.username, userDTO.email);
 }

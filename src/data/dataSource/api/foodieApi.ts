@@ -24,7 +24,11 @@ export const foodieApi = createApi({
       }),
       transformResponse: async (response: { user: UserDTO; jwt: string }) => {
         await AsyncStorage.setItem('jwt', response.jwt);
-        const user: User = User.parseFromJSON(response.user);
+        const user: User = new User(
+          response.user.id,
+          response.user.username,
+          response.user.email,
+        );
         return { user, jwt: response.jwt };
       },
     }),
@@ -42,8 +46,11 @@ export const foodieApi = createApi({
         },
       }),
       transformResponse: (response: { data: { user: UserDTO } }) => {
-        const user: User = User.parseFromJSON(response.data.user);
-
+        const user: User = new User(
+          response.data.user.id,
+          response.data.user.username,
+          response.data.user.email,
+        );
         return {
           user: user,
         };
