@@ -1,21 +1,19 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
+import { useNavigation } from '@react-navigation/native';
 
 import { TextInput } from '../../components/TextInput';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Loader } from './Loader';
 import { ForgotPasswordButton } from './ForgotPasswordButton';
+import { AppScreen } from '../../../navigation/AppScreen';
 
 interface LoginFields {
   username: string;
   password: string;
 }
-import { RoundButton } from '../../components/RoundButton';
-import { useLoginMutation } from '../../../data/dataSource/api/authService';
-import { useNavigation } from '@react-navigation/native';
-import { AppScreen } from '../../../navigation/AppScreen';
 
 export const LoginScreen = () => {
   const navigation = useNavigation();

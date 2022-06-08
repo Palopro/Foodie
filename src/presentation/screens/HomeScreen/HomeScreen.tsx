@@ -11,11 +11,11 @@ import {
 import reactotron from 'reactotron-react-native';
 
 import { SearchInput } from '../../components/SearchInput';
-import { foodieApi } from '../../../data/dataSource/api/authService';
 import { FoodCard } from './FoodCard';
 import { Food } from '../../../domain/model/Food';
 import { AppBar } from '../../components/AppBar';
 import { Category } from '../../../domain/model/Category';
+import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 
 export const HomeScreen: React.FC = () => {
   const [search, setSearch] = useState('');

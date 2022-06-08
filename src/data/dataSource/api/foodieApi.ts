@@ -2,12 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { User } from '../../../domain/model/user';
-import { UserEntity } from './entity/UserEntity';
-import { FoodDTO } from './entity/FoodDTO';
+import { FoodDTO } from './dto/FoodDTO';
 import { Food } from '../../../domain/model/Food';
-import { CategoryDTO } from './entity/CategoryDTO';
-
-import { User } from '../../../domain/model/user';
+import { CategoryDTO } from './dto/CategoryDTO';
 import { mapToUser, UserDTO } from './dto/UserDTO';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';

@@ -1,8 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import React, { useState } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
 
 import { TextInput } from '../../components/TextInput';
 import { ColorType, RoundButton } from '../../components/RoundButton';
@@ -14,8 +12,6 @@ interface RegisterFields {
   email: string;
   password: string;
 }
-import { RoundButton } from '../../components/RoundButton';
-import { useRegisterMutation } from '../../../data/dataSource/api/authService';
 
 export const SignUpScreen = () => {
   const {
