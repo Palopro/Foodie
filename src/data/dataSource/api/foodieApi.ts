@@ -25,11 +25,7 @@ export const foodieApi = createApi({
       }),
       transformResponse: async (response: { user: UserDTO; jwt: string }) => {
         await AsyncStorage.setItem('jwt', response.jwt);
-        const user: User = new User(
-          response.user.id,
-          response.user.username,
-          response.user.email,
-        );
+        const user: User = mapToUser(response.user);
         return { user, jwt: response.jwt };
       },
     }),
@@ -47,11 +43,7 @@ export const foodieApi = createApi({
         },
       }),
       transformResponse: (response: { data: { user: UserDTO } }) => {
-        const user: User = new User(
-          response.data.user.id,
-          response.data.user.username,
-          response.data.user.email,
-        );
+        const user: User = mapToUser(response.data.user);
         return {
           user: user,
         };
@@ -59,3 +51,6 @@ export const foodieApi = createApi({
     }),
   }),
 });
+
+const mapToUser = (userDTO: UserDTO) =>
+  new User(userDTO.id, userDTO.username, userDTO.email);
