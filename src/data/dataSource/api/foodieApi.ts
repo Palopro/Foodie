@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { User, UserDTO } from '../../../domain/model/user';
+import { User } from '../../../domain/model/user';
+import { UserDTO } from './dto/UserDTO';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 

@@ -1,12 +1,3 @@
-export interface UserDTO {
-  id: number;
-  username: string;
-  email: string;
-  provider: string;
-  confirmed: boolean;
-  blocked: boolean;
-}
-
 export class User {
   public id: number;
   public username: string;
