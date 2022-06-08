@@ -27,14 +27,12 @@ export class FoodDTO {
     this.attributes = attributes;
   }
 
-  public static parseFromJSON = (json: FoodDTO) => {
-
-    return new Food(
+  public static parseFromJSON = (json: FoodDTO) =>
+    new Food(
       json.id,
       json.attributes.name,
       json.attributes.price,
       json.attributes.photo,
       json.attributes.categories.data.map((cat: CategoryDTO) => cat.id),
     );
-  };
 }

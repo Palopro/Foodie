@@ -6,7 +6,7 @@ import {
   StyleSheet,
   FlatList,
   StatusBar,
-  ScrollView,
+  ListRenderItemInfo,
 } from 'react-native';
 import reactotron from 'reactotron-react-native';
 
@@ -23,13 +23,14 @@ export const HomeScreen: React.FC = () => {
 
   const { data: foods } = foodieApi.useGetFoodsQuery(undefined, {});
 
-  const { data: categories, isLoading: isLoadCategories } = foodieApi.useGetCategoriesQuery(undefined, {});
+  const { data: categories, isLoading: isLoadCategories } =
+    foodieApi.useGetCategoriesQuery(undefined, {});
 
   useEffect(() => {
     if (categories && categories.length > 0) {
       setFilter(categories[0].id);
     }
-  }, [categories]);
+  }, [categories, foods]);
 
   reactotron.log({ foods, categories });
 
@@ -42,17 +43,29 @@ export const HomeScreen: React.FC = () => {
   };
 
   const renderCategories = () => (
-    <ScrollView horizontal scrollEventThrottle={16}>
-      {categories.map((category: Category) => {
-        const isSelected = 1;
+    <View style={{ height: 40, paddingStart: 75 }}>
+      <FlatList
+        horizontal
+        data={categories}
+        scrollEventThrottle={16}
+        renderItem={({ item }: ListRenderItemInfo<Category>) => {
+          const isSelected = item.id === selectedFilter;
 
-        return (
-          <View>
-            <Text>{category.name}</Text>
-          </View>
-        );
-      })}
-    </ScrollView>
+          return (
+            <View style={{ width: 87, alignItems: 'stretch' }}>
+              <Text style={{ marginStart: 20 }}>{item.name}</Text>
+              <View
+                style={{
+                  height: 3,
+                  backgroundColor: isSelected ? '#FA4A0C' : 'transparent',
+                  borderRadius: 12,
+                }}
+              />
+            </View>
+          );
+        }}
+      />
+    </View>
   );
 
   return (
