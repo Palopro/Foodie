@@ -7,6 +7,10 @@ import { Food } from '../../../domain/model/Food';
 import { CategoryDTO } from './dto/CategoryDTO';
 import { UserDTO } from './dto/UserDTO';
 import { Category } from '../../../domain/model/Category';
+import {
+  RegisterUserCredentials,
+  LoginUserCredentials,
+} from './types/UserCredentials';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
@@ -41,10 +45,7 @@ export const foodieApi = createApi({
   }),
   tagTypes: ['FoodieApi'],
   endpoints: build => ({
-    login: build.mutation<
-    { jwt: string; user: User },
-    { userCredentials: { identifier: string; password: string } }
-    >({
+    login: build.mutation<{ jwt: string; user: User }, LoginUserCredentials>({
       query: ({ userCredentials }) => ({
         url: '/auth/local',
         method: 'POST',
@@ -60,10 +61,7 @@ export const foodieApi = createApi({
         return { user, jwt: response.jwt };
       },
     }),
-    register: build.mutation<
-      { user: User },
-      { userCredentials: { username: string; email: string; password: string } }
-    >({
+    register: build.mutation<{ user: User }, RegisterUserCredentials>({
       query: ({ userCredentials }) => ({
         url: '/auth/local/register',
         method: 'POST',
@@ -81,14 +79,14 @@ export const foodieApi = createApi({
         };
       },
     }),
-    getCategories: build.query<Array<Category>, null>({
+    getCategories: build.query<Array<Category>, void>({
       query: () => ({
         url: '/categories?populate=*',
       }),
       transformResponse: (response: { data: Array<CategoryDTO> }) =>
         response.data.map(mapToCategory),
     }),
-    getFoods: build.query<Array<Food>, null>({
+    getFoods: build.query<Array<Food>, void>({
       query: () => ({
         url: '/foods?populate=*',
       }),

@@ -1,11 +1,14 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { TextInput } from '../../components/TextInput';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Loader } from './Loader';
+import { AppStackParams } from '../../../navigation/AppNavigation';
+import { AppScreen } from '../../../navigation/AppScreen';
 
 interface RegisterFields {
   username: string;
@@ -14,6 +17,8 @@ interface RegisterFields {
 }
 
 export const SignUpScreen = () => {
+  const navigation = useNavigation<NavigationProp<AppStackParams>>();
+
   const {
     control,
     handleSubmit,
@@ -28,14 +33,16 @@ export const SignUpScreen = () => {
 
   const [registerUser, { isLoading }] = foodieApi.useRegisterMutation();
 
-  const handleSignUp = (data: RegisterFields) => {
-    registerUser({
+  const handleSignUp = async (data: RegisterFields) => {
+    await registerUser({
       userCredentials: {
         username: data.username,
         email: data.email,
         password: data.password,
       },
     });
+
+    navigation.navigate(AppScreen.MainApp);
   };
 
   return (

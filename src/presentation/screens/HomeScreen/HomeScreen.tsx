@@ -23,12 +23,8 @@ export const HomeScreen: React.FC = () => {
 
   const foodListRef = useRef<FlatList<Food>>();
 
-  const { data: foods = [] } = foodieApi.useGetFoodsQuery(undefined, {});
-
-  const { data: categories = [] } = foodieApi.useGetCategoriesQuery(
-    undefined,
-    {},
-  );
+  const { data: foods = [] } = foodieApi.useGetFoodsQuery();
+  const { data: categories = [] } = foodieApi.useGetCategoriesQuery();
 
   useEffect(() => {
     if (categories && categories.length > 0) {
@@ -48,18 +44,33 @@ export const HomeScreen: React.FC = () => {
     setFilter(category.id);
 
     if (foodListRef && foodListRef.current) {
-      foodListRef.current?.scrollToOffset(0);
+      foodListRef.current?.scrollToOffset({ animated: true, offset: 0 });
     }
   };
+
+  const categoryKey = (category: Category) => `category-${category.id}`;
+
+  const foodKey = (food: Food) => `food-${food.id}`;
+
+  const renderCategory = ({ item }: ListRenderItemInfo<Category>) => (
+    <CategoryRow
+      category={item}
+      isSelected={item.id === selectedFilter}
+      onPress={handleCategorySelect}
+    />
+  );
+
+  const renderFood = ({ item }: ListRenderItemInfo<Food>) => (
+    <FoodCard food={item} />
+  );
+
+  const filteredFoods = () =>
+    foods.filter(f => f.categories.includes(selectedFilter));
 
   return (
     <SafeAreaView style={styles.container}>
       <AppBar onMenuPress={handleMenu} onCartPress={handleCart} />
-      <StatusBar
-        barStyle={'dark-content'}
-        backgroundColor={'#000000'}
-        animated
-      />
+      <StatusBar barStyle="dark-content" backgroundColor="#F2F2F2" animated />
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>Delicious</Text>
         <Text style={styles.title}>food for you</Text>
@@ -78,16 +89,10 @@ export const HomeScreen: React.FC = () => {
           showsHorizontalScrollIndicator={false}
           data={categories}
           scrollEventThrottle={16}
-          keyExtractor={(item: Category) => `category-${item.id}`}
+          keyExtractor={categoryKey}
           ListHeaderComponent={<View style={styles.headerCategory} />}
           ListEmptyComponent={<View />}
-          renderItem={({ item }: ListRenderItemInfo<Category>) => (
-            <CategoryRow
-              category={item}
-              isSelected={item.id === selectedFilter}
-              onPress={handleCategorySelect}
-            />
-          )}
+          renderItem={renderCategory}
         />
       </View>
       <View style={styles.flatList}>
@@ -95,9 +100,9 @@ export const HomeScreen: React.FC = () => {
           ref={foodListRef}
           horizontal
           bounces={false}
-          data={foods.filter(f => f.categories.includes(selectedFilter))}
-          renderItem={({ item }) => <FoodCard food={item} />}
-          keyExtractor={(item: Food) => `food-${item.id}`}
+          data={filteredFoods()}
+          renderItem={renderFood}
+          keyExtractor={foodKey}
           contentContainerStyle={styles.contentList}
           ListEmptyComponent={<View />}
           showsHorizontalScrollIndicator={false}

@@ -6,14 +6,15 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { AppScreen } from '../../navigation/AppScreen';
 import logo from '../../assets/images/SplashScreen.png';
+import { AppStackParams } from '../../navigation/AppNavigation';
 
 export const SplashScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<AppStackParams>>();
   useEffect(() => {
     redirectToScreen();
   });

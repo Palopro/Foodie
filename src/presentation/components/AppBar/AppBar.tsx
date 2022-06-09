@@ -1,26 +1,21 @@
 import React from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, View } from 'react-native';
+
+import { AppBarButton } from './AppBarButton';
 
 interface AppBarProps {
   onMenuPress: () => void;
   onCartPress: () => void;
 }
 
-const SIZE = 24;
-
 export const AppBar: React.FC<AppBarProps> = ({ onMenuPress, onCartPress }) => (
   <View style={styles.container}>
-    <Pressable onPress={onMenuPress}>
-      <MaterialIcon name="menu" size={SIZE} color="#000000" />
-    </Pressable>
-    <Pressable onPress={onCartPress}>
-      <MaterialIcon
-        name="cart-outline"
-        size={SIZE}
-        color="rgba(0, 0, 0, 0.3)"
-      />
-    </Pressable>
+    <AppBarButton name="menu" onPress={onMenuPress} />
+    <AppBarButton
+      name="cart-outline"
+      onPress={onCartPress}
+      color="rgba(0, 0, 0, 0.3)"
+    />
   </View>
 );
 
