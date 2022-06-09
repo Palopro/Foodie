@@ -14,7 +14,7 @@ export const SearchInput: React.FC<Props> = ({
   onChangeText,
 }) => (
   <View style={styles.container}>
-    <Icon name={'search'} color={'#000000'} size={24} style={styles.icon} />
+    <Icon name="search" color="#000000" size={24} style={styles.icon} />
 
     <TextInput
       value={value}

@@ -2,13 +2,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { User } from '../../../domain/model/user';
-import { FoodDTO, mapToFood } from './dto/FoodDTO';
+import { FoodDTO } from './dto/FoodDTO';
 import { Food } from '../../../domain/model/Food';
-import { CategoryDTO, mapToCategory } from './dto/CategoryDTO';
-import { mapToUser, UserDTO } from './dto/UserDTO';
+import { CategoryDTO } from './dto/CategoryDTO';
+import { UserDTO } from './dto/UserDTO';
 import { Category } from '../../../domain/model/Category';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
+
+const mapToUser = (userDTO: UserDTO) =>
+  new User(userDTO.id, userDTO.username, userDTO.email);
+
+const mapToCategory = (categoryDTO: CategoryDTO) =>
+  new Category(categoryDTO.id, categoryDTO.attributes.name);
+
+const mapToFood = (foodDTO: FoodDTO) =>
+  new Food(
+    foodDTO.id,
+    foodDTO.attributes.name,
+    foodDTO.attributes.price,
+    foodDTO.attributes.photo,
+    foodDTO.attributes.categories.data.map((cat: CategoryDTO) => cat.id),
+  );
 
 export const foodieApi = createApi({
   reducerPath: 'FoodieApi',
@@ -66,14 +81,14 @@ export const foodieApi = createApi({
         };
       },
     }),
-    getCategories: build.query<Array<Category>, undefined>({
+    getCategories: build.query<Array<Category>, null>({
       query: () => ({
         url: '/categories?populate=*',
       }),
       transformResponse: (response: { data: Array<CategoryDTO> }) =>
         response.data.map(mapToCategory),
     }),
-    getFoods: build.query<Array<Food>, undefined>({
+    getFoods: build.query<Array<Food>, null>({
       query: () => ({
         url: '/foods?populate=*',
       }),

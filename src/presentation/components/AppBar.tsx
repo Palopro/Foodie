@@ -12,13 +12,13 @@ const SIZE = 24;
 export const AppBar: React.FC<AppBarProps> = ({ onMenuPress, onCartPress }) => (
   <View style={styles.container}>
     <Pressable onPress={onMenuPress}>
-      <MaterialIcon name={'menu'} size={SIZE} color={'#000000'} />
+      <MaterialIcon name="menu" size={SIZE} color="#000000" />
     </Pressable>
     <Pressable onPress={onCartPress}>
       <MaterialIcon
-        name={'cart-outline'}
+        name="cart-outline"
         size={SIZE}
-        color={'rgba(0, 0, 0, 0.3)'}
+        color="rgba(0, 0, 0, 0.3)"
       />
     </Pressable>
   </View>

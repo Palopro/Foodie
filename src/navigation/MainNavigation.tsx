@@ -29,11 +29,7 @@ export const MainNavigation = () => (
       component={HomeScreen}
       options={{
         tabBarIcon: ({ focused }) => (
-          <Icon
-            name={'home'}
-            color={focused ? '#FA4A0C' : '#ADADAF'}
-            size={28}
-          />
+          <Icon name="home" color={focused ? '#FA4A0C' : '#ADADAF'} size={28} />
         ),
       }}
     />

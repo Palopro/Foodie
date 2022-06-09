@@ -12,7 +12,7 @@ if (__DEV__) {
 export const App = () => {
   useEffect(() => {
     Splash.hide();
-  });
+  }, []);
 
   return (
     <Provider store={store}>

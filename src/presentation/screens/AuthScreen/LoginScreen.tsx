@@ -23,16 +23,16 @@ export const LoginScreen = () => {
     formState: { errors },
   } = useForm<LoginFields>({
     defaultValues: {
-      username: 'testUser',
-      password: 'u12345678',
+      username: '',
+      password: '',
     },
   });
 
   const [loginUser, { isLoading }] = foodieApi.useLoginMutation();
 
-  const handleLogin = async () => {
+  const handleLogin = async (data: LoginFields) => {
     await loginUser({
-      userCredentials: { identifier: username, password: pass },
+      userCredentials: { identifier: data.username, password: data.password },
     });
 
     navigation.navigate(AppScreen.MainApp);

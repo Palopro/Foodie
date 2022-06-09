@@ -6,6 +6,7 @@ import {
   StyleSheet,
   FlatList,
   StatusBar,
+  ListRenderItemInfo,
 } from 'react-native';
 
 import { SearchInput } from '../../components/SearchInput';
@@ -13,8 +14,8 @@ import { Food } from '../../../domain/model/Food';
 import { AppBar } from '../../components/AppBar';
 import { Category } from '../../../domain/model/Category';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
-import { CategoryList } from './CategoryList';
-import { FoodList } from './FoodList';
+import { FoodCard } from './FoodCard';
+import { CategoryRow } from './CategoryRow';
 
 export const HomeScreen: React.FC = () => {
   const [search, setSearch] = useState('');
@@ -22,13 +23,12 @@ export const HomeScreen: React.FC = () => {
 
   const foodListRef = useRef<FlatList<Food>>();
 
-  const { data: foods, isLoading: isLoadFoods } = foodieApi.useGetFoodsQuery(
+  const { data: foods = [] } = foodieApi.useGetFoodsQuery(undefined, {});
+
+  const { data: categories = [] } = foodieApi.useGetCategoriesQuery(
     undefined,
     {},
   );
-
-  const { data: categories, isLoading: isLoadCategories } =
-    foodieApi.useGetCategoriesQuery(undefined, {});
 
   useEffect(() => {
     if (categories && categories.length > 0) {
@@ -72,21 +72,39 @@ export const HomeScreen: React.FC = () => {
           onChangeText={text => setSearch(text)}
         />
       </View>
-      {isLoadCategories ? null : (
-        <CategoryList
+      <View style={styles.containerCategory}>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
           data={categories}
-          selectedFilterId={selectedFilter}
-          onPressCategory={handleCategorySelect}
+          scrollEventThrottle={16}
+          keyExtractor={(item: Category) => `category-${item.id}`}
+          ListHeaderComponent={<View style={styles.headerCategory} />}
+          ListEmptyComponent={<View />}
+          renderItem={({ item }: ListRenderItemInfo<Category>) => (
+            <CategoryRow
+              category={item}
+              isSelected={item.id === selectedFilter}
+              onPress={handleCategorySelect}
+            />
+          )}
         />
-      )}
-      {isLoadCategories && isLoadFoods ? null : (
-        <View style={styles.flatList}>
-          <FoodList
-            refList={foodListRef}
-            data={foods.filter(f => f.categories.includes(selectedFilter))}
-          />
-        </View>
-      )}
+      </View>
+      <View style={styles.flatList}>
+        <FlatList
+          ref={foodListRef}
+          horizontal
+          bounces={false}
+          data={foods.filter(f => f.categories.includes(selectedFilter))}
+          renderItem={({ item }) => <FoodCard food={item} />}
+          keyExtractor={(item: Food) => `food-${item.id}`}
+          contentContainerStyle={styles.contentList}
+          ListEmptyComponent={<View />}
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={16}
+          ListHeaderComponent={<View style={styles.header} />}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -112,5 +130,17 @@ const styles = StyleSheet.create({
   },
   flatList: {
     flex: 1,
+  },
+  header: {
+    width: 33,
+  },
+  contentList: {
+    alignItems: 'center',
+  },
+  headerCategory: {
+    width: 75,
+  },
+  containerCategory: {
+    height: 40,
   },
 });
