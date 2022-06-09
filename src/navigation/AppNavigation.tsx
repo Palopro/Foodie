@@ -6,11 +6,13 @@ import { SplashScreen } from '../presentation/screens/SplashScreen';
 import { AuthNavigation } from './AuthNavigation';
 import { AppScreen } from './AppScreen';
 import { MainNavigation } from './MainNavigation';
+import { SearchScreen } from '../presentation/screens/SearchScreen/SearchScreen';
 
 export type AppStackParams = {
   [AppScreen.SplashScreen]: undefined;
   [AppScreen.AuthNavigation]: undefined;
   [AppScreen.MainApp]: undefined;
+  [AppScreen.SearchScreen]: undefined;
 };
 
 const AppStack = createNativeStackNavigator<AppStackParams>();
@@ -26,6 +28,7 @@ export const AppNavigation = () => (
         component={AuthNavigation}
       />
       <AppStack.Screen name={AppScreen.MainApp} component={MainNavigation} />
+      <AppStack.Screen name={AppScreen.SearchScreen} component={SearchScreen} />
     </AppStack.Navigator>
   </NavigationContainer>
 );

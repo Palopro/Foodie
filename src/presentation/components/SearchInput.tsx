@@ -6,15 +6,19 @@ interface Props {
   value: string;
   placeholder?: string;
   onChangeText: (text: string) => void;
+  withoutIcon?: boolean;
 }
 
 export const SearchInput: React.FC<Props> = ({
   value,
   placeholder,
   onChangeText,
+  withoutIcon,
 }) => (
   <View style={styles.container}>
-    <Icon name={'search'} color={'#000000'} size={24} style={styles.icon} />
+    {withoutIcon ? null : (
+      <Icon name={'search'} color={'#000000'} size={24} style={styles.icon} />
+    )}
 
     <TextInput
       value={value}

@@ -7,27 +7,28 @@ import {
   FlatList,
   StatusBar,
 } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
-import { SearchInput } from '../../components/SearchInput';
 import { Food } from '../../../domain/model/Food';
-import { AppBar } from '../../components/AppBar';
+import { AppBar } from '../../components/AppBar/AppBar';
 import { Category } from '../../../domain/model/Category';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { CategoryList } from './CategoryList';
 import { FoodList } from './FoodList';
+import { SearchButton } from './SearchButton';
+import { AppScreen } from '../../../navigation/AppScreen';
+import { AppStackParams } from '../../../navigation/AppNavigation';
 
 export const HomeScreen: React.FC = () => {
-  const [search, setSearch] = useState('');
+  const navigation = useNavigation<NavigationProp<AppStackParams>>();
   const [selectedFilter, setFilter] = useState(0);
 
   const foodListRef = useRef<FlatList<Food>>();
 
-  const { data: foods, isLoading: isLoadFoods } = foodieApi.useGetFoodsQuery(
-    undefined,
-    {},
-  );
+  const { data: foods = [], isLoading: isLoadFoods } =
+    foodieApi.useGetFoodsQuery(undefined, {});
 
-  const { data: categories, isLoading: isLoadCategories } =
+  const { data: categories = [], isLoading: isLoadCategories } =
     foodieApi.useGetCategoriesQuery(undefined, {});
 
   useEffect(() => {
@@ -52,6 +53,10 @@ export const HomeScreen: React.FC = () => {
     }
   };
 
+  const handleSearch = () => {
+    navigation.navigate(AppScreen.SearchScreen);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <AppBar onMenuPress={handleMenu} onCartPress={handleCart} />
@@ -66,11 +71,7 @@ export const HomeScreen: React.FC = () => {
       </View>
 
       <View style={styles.searchWrapper}>
-        <SearchInput
-          value={search}
-          placeholder="Search"
-          onChangeText={text => setSearch(text)}
-        />
+        <SearchButton onPress={handleSearch} />
       </View>
       {isLoadCategories ? null : (
         <CategoryList
