@@ -1,42 +1,65 @@
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  Image,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 
 import { Food } from '../../../domain/model/Food';
 
 interface SearchFoodRowProps {
   food: Food;
+  index: number;
+  style?: StyleProp<ViewStyle>;
 }
 
 const { width } = Dimensions.get('window');
 
-const rowWidth = (width - 17 * 2) / 2 - 10;
+const rowWidth = (width - 17 * 2) / 2 - 10 * 2;
 
 const IMAGE_PADDING = 26;
 
-export const SearchFoodRow: React.FC<SearchFoodRowProps> = ({ food }) => (
-  <View style={[styles.container, { width: rowWidth }]}>
-    <View style={styles.imageWrapper}>
-      <Image
-        source={{ uri: food.photo }}
-        resizeMethod={'resize'}
-        resizeMode={'center'}
-        style={[
-          styles.image,
-          {
-            width: rowWidth - IMAGE_PADDING,
-            height: rowWidth - IMAGE_PADDING,
-          },
-        ]}
-      />
-    </View>
+const DIVIDER = 2;
+const MAX_MARGIN = 55;
+const MIN_MARGIN = 10;
 
-    <View style={styles.nameWrapper}>
-      <Text numberOfLines={2} style={styles.name}>
-        {food.name}
-      </Text>
-    </View>
-    <View style={styles.priceWrapper}>
-      <Text style={styles.price}>{food.price.toFixed(2)}</Text>
+export const SearchFoodRow: React.FC<SearchFoodRowProps> = ({
+  food,
+  index,
+}) => (
+  <View
+    style={{
+      height: 265,
+      marginTop: index % DIVIDER ? MAX_MARGIN : MIN_MARGIN,
+    }}>
+    <View style={[styles.container, { width: rowWidth }]}>
+      <View style={styles.imageWrapper}>
+        <Image
+          source={{ uri: food.photo }}
+          resizeMethod={'resize'}
+          resizeMode={'center'}
+          style={[
+            styles.image,
+            {
+              width: rowWidth - IMAGE_PADDING,
+              height: rowWidth - IMAGE_PADDING,
+            },
+          ]}
+        />
+      </View>
+
+      <View style={styles.nameWrapper}>
+        <Text numberOfLines={2} style={styles.name}>
+          {food.name}
+        </Text>
+      </View>
+      <View style={styles.priceWrapper}>
+        <Text style={styles.price}>{food.price.toFixed(2)}</Text>
+      </View>
     </View>
   </View>
 );
@@ -46,8 +69,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 30,
     marginHorizontal: 17,
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 60,
+    marginTop: 48,
     paddingHorizontal: 16,
 
     shadowColor: '#000',

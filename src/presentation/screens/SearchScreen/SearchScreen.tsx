@@ -1,5 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  ListRenderItemInfo,
+} from 'react-native';
 
 import { SearchInput } from '../../components/SearchInput';
 import { AppBarSearch } from '../../components/AppBar/AppBarSearch';
@@ -7,7 +14,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useAppSelector } from '../../../hooks';
 import { findFoodByName } from '../../../domain/stores/reducers/foodReducer';
 import { Food } from '../../../domain/model/Food';
-import { MasonryList } from './MasonryList';
+import { SearchFoodRow } from './SearchFoodRow';
+import { EmptyList } from './EmptyList';
 
 export const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -37,6 +45,18 @@ export const SearchScreen: React.FC = () => {
     searchFood(text);
   };
 
+  const foodKey = (food: Food) => `food-${food.id}`;
+
+  const renderRow = ({ item, index }: ListRenderItemInfo<Food>) => (
+    <SearchFoodRow food={item} index={index} />
+  );
+
+  const renderHeader = () => (
+    <View style={styles.titleWrapper}>
+      <Text style={styles.title}>{`Found ${foods.length} results`}</Text>
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <AppBarSearch onBackPress={handleGoBack}>
@@ -51,17 +71,18 @@ export const SearchScreen: React.FC = () => {
       </AppBarSearch>
 
       <View style={styles.listContainer}>
-        <View style={styles.titleWrapper}>
-          <Text style={styles.title}>{`Found ${foods.length} results`}</Text>
-        </View>
-
-        <View style={styles.listWrapper}>
-          <MasonryList
-            foods={foods}
-            style={styles.list}
-            contentContainerStyle={styles.contentList}
-          />
-        </View>
+        <FlatList
+          data={foods}
+          numColumns={2}
+          keyExtractor={foodKey}
+          bounces={false}
+          scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}
+          renderItem={renderRow}
+          contentContainerStyle={{ flex: foods.length > 0 ? 0 : 1 }}
+          ListHeaderComponent={foods.length > 0 ? renderHeader : undefined}
+          ListEmptyComponent={EmptyList}
+        />
       </View>
     </SafeAreaView>
   );
@@ -86,7 +107,7 @@ const styles = StyleSheet.create({
   },
   titleWrapper: {
     alignItems: 'center',
-    marginTop: 28,
+    marginVertical: 28,
   },
   title: {
     textAlign: 'center',
