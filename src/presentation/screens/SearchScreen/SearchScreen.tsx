@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
 
 import { SearchInput } from '../../components/SearchInput';
 import { AppBarSearch } from '../../components/AppBar/AppBarSearch';
@@ -51,11 +51,17 @@ export const SearchScreen: React.FC = () => {
       </AppBarSearch>
 
       <View style={styles.listContainer}>
-        <MasonryList
-          foods={foods}
-          style={styles.list}
-          contentContainerStyle={styles.contentList}
-        />
+        <View style={styles.titleWrapper}>
+          <Text style={styles.title}>{`Found ${foods.length} results`}</Text>
+        </View>
+
+        <View style={styles.listWrapper}>
+          <MasonryList
+            foods={foods}
+            style={styles.list}
+            contentContainerStyle={styles.contentList}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -77,6 +83,20 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 30,
     borderTopEndRadius: 30,
     overflow: 'hidden',
+  },
+  titleWrapper: {
+    alignItems: 'center',
+    marginTop: 28,
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 28,
+    lineHeight: 32,
+    fontWeight: '700',
+    color: '#000000',
+  },
+  listWrapper: {
+    flex: 1,
   },
   list: {
     backgroundColor: '#F9F9F9',

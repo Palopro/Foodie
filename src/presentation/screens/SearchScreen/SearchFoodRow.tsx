@@ -15,26 +15,27 @@ const IMAGE_PADDING = 26;
 
 export const SearchFoodRow: React.FC<SearchFoodRowProps> = ({ food }) => (
   <View style={[styles.container, { width: rowWidth }]}>
-    <View style={{ marginTop: -48 }}>
+    <View style={styles.imageWrapper}>
       <Image
         source={{ uri: food.photo }}
         resizeMethod={'resize'}
         resizeMode={'center'}
-        style={{
-          resizeMode: 'center',
-          borderRadius: 100,
-          width: rowWidth - IMAGE_PADDING,
-          height: rowWidth - IMAGE_PADDING,
-        }}
+        style={[
+          styles.image,
+          {
+            width: rowWidth - IMAGE_PADDING,
+            height: rowWidth - IMAGE_PADDING,
+          },
+        ]}
       />
     </View>
 
-    <View style={{ marginTop: 14, height: 45 }}>
+    <View style={styles.nameWrapper}>
       <Text numberOfLines={2} style={styles.name}>
         {food.name}
       </Text>
     </View>
-    <View style={{ marginTop: 18, marginBottom: 30 }}>
+    <View style={styles.priceWrapper}>
       <Text style={styles.price}>{food.price.toFixed(2)}</Text>
     </View>
   </View>
@@ -59,6 +60,17 @@ const styles = StyleSheet.create({
 
     elevation: 2,
   },
+  imageWrapper: {
+    marginTop: -48,
+  },
+  image: {
+    resizeMode: 'center',
+    borderRadius: 100,
+  },
+  nameWrapper: {
+    marginTop: 14,
+    height: 45,
+  },
   name: {
     fontStyle: 'normal',
     color: '#000000',
@@ -66,6 +78,10 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 18,
     lineHeight: 22,
+  },
+  priceWrapper: {
+    marginTop: 18,
+    marginBottom: 30,
   },
   price: {
     color: '#FF460A',
