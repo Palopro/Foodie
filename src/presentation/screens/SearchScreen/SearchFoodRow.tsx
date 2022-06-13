@@ -24,8 +24,8 @@ const rowWidth = (width - 17 * 2) / 2 - 10 * 2;
 const IMAGE_PADDING = 26;
 
 const DIVIDER = 2;
-const MAX_MARGIN = 55;
-const MIN_MARGIN = 10;
+const MAX_MARGIN = 90;
+const MIN_MARGIN = 20;
 
 export const SearchFoodRow: React.FC<SearchFoodRowProps> = ({
   food,
@@ -33,7 +33,7 @@ export const SearchFoodRow: React.FC<SearchFoodRowProps> = ({
 }) => (
   <View
     style={{
-      height: 265,
+      height: 216,
       marginTop: index % DIVIDER ? MAX_MARGIN : MIN_MARGIN,
     }}>
     <View style={[styles.container, { width: rowWidth }]}>
@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 17,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 48,
     paddingHorizontal: 16,
 
     shadowColor: '#000',

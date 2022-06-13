@@ -107,7 +107,8 @@ const styles = StyleSheet.create({
   },
   titleWrapper: {
     alignItems: 'center',
-    marginVertical: 28,
+    marginTop: 28,
+    marginBottom: 60,
   },
   title: {
     textAlign: 'center',
