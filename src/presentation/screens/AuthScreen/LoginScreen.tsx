@@ -32,9 +32,7 @@ export const LoginScreen = () => {
   const [loginUser, { isLoading }] = foodieApi.useLoginMutation();
 
   const handleLogin = async (data: LoginFields) => {
-    await loginUser({
-      userCredentials: { identifier: data.username, password: data.password },
-    });
+    await loginUser({ identifier: data.username, password: data.password });
 
     navigation.navigate(AppScreen.MainApp);
   };

@@ -11,14 +11,13 @@ import {
 
 import { SearchInput } from '../../components/SearchInput';
 import { Food } from '../../../domain/model/Food';
-import { AppBar } from '../../components/AppBar';
+import { AppBar } from '../../components/AppBar/AppBar';
 import { Category } from '../../../domain/model/Category';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { FoodCard } from './FoodCard';
 import { CategoryRow } from './CategoryRow';
 
 export const HomeScreen: React.FC = () => {
-  const [search, setSearch] = useState('');
   const [selectedFilter, setFilter] = useState(0);
 
   const foodListRef = useRef<FlatList<Food>>();
@@ -78,9 +77,9 @@ export const HomeScreen: React.FC = () => {
 
       <View style={styles.searchWrapper}>
         <SearchInput
-          value={search}
+          value={''}
           placeholder="Search"
-          onChangeText={text => setSearch(text)}
+          onChangeText={() => true}
         />
       </View>
       <View style={styles.containerCategory}>

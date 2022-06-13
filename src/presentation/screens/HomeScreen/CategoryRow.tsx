@@ -21,14 +21,7 @@ export const CategoryRow: React.FC<CategoryRowProps> = ({
   return (
     <Pressable onPress={handlePress} style={styles.container}>
       <Text style={styles.name}>{category.name}</Text>
-      <View
-        style={[
-          styles.line,
-          {
-            backgroundColor: bgColor,
-          },
-        ]}
-      />
+      <View style={[styles.line, { backgroundColor: bgColor }]} />
     </Pressable>
   );
 };

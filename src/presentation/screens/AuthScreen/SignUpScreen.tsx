@@ -35,11 +35,9 @@ export const SignUpScreen = () => {
 
   const handleSignUp = async (data: RegisterFields) => {
     await registerUser({
-      userCredentials: {
-        username: data.username,
-        email: data.email,
-        password: data.password,
-      },
+      username: data.username,
+      email: data.email,
+      password: data.password,
     });
 
     navigation.navigate(AppScreen.MainApp);
