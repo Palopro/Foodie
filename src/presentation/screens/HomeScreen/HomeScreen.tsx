@@ -22,14 +22,14 @@ export const HomeScreen: React.FC = () => {
 
   const foodListRef = useRef<FlatList<Food>>();
 
-  const { data: foods = [] } = foodieApi.useGetFoodsQuery();
   const { data: categories = [] } = foodieApi.useGetCategoriesQuery();
+  const { data: foods = [] } = foodieApi.useGetFoodsQuery();
 
   useEffect(() => {
     if (categories && categories.length > 0) {
       setFilter(categories[0].id);
     }
-  }, [categories, foods]);
+  }, [categories]);
 
   const handleMenu = () => {
     // TODO: menu press
