@@ -1,9 +1,16 @@
 import React from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 interface AppBarSearchProps {
   onBackPress: () => void;
+  style?: StyleProp<ViewStyle>;
 }
 
 const SIZE = 24;
@@ -11,8 +18,9 @@ const SIZE = 24;
 export const AppBarSearch: React.FC<AppBarSearchProps> = ({
   onBackPress,
   children,
+  style,
 }) => (
-  <View style={styles.container}>
+  <View style={[styles.container, style]}>
     <Pressable onPress={onBackPress}>
       <MaterialIcon name={'arrow-back-ios'} size={SIZE} color={'#000000'} />
     </Pressable>

@@ -57,6 +57,11 @@ export const HomeScreen: React.FC = () => {
     navigation.navigate(AppScreen.SearchScreen);
   };
 
+  const handleFoodPress = (food: Food) => {
+    console.log(food);
+    navigation.navigate(AppScreen.FoodDetailsScreen, { food });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <AppBar onMenuPress={handleMenu} onCartPress={handleCart} />
@@ -85,6 +90,7 @@ export const HomeScreen: React.FC = () => {
           <FoodList
             refList={foodListRef}
             data={foods.filter(f => f.categories.includes(selectedFilter))}
+            onPressFood={handleFoodPress}
           />
         </View>
       )}

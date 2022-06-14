@@ -1,27 +1,32 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Food } from '../../../domain/model/Food';
 
 interface FoodCardProps {
   food: Food;
+  onFoodPress: (food: Food) => void;
 }
 
-export const FoodCard: React.FC<FoodCardProps> = ({ food }) => (
-  <View style={styles.container}>
-    <Image source={{ uri: food.photo }} style={styles.image} />
-    <View style={styles.nameWrapper}>
-      <Text numberOfLines={2} style={styles.name}>
-        {food.name}
-      </Text>
-    </View>
-    <View style={styles.priceWrapper}>
-      <Text numberOfLines={1} style={styles.priceText}>
-        {food.price.toFixed(2)}
-      </Text>
-    </View>
-  </View>
-);
+export const FoodCard: React.FC<FoodCardProps> = ({ food, onFoodPress }) => {
+  const handlePress = () => onFoodPress(food);
+
+  return (
+    <Pressable style={styles.container} onPress={handlePress}>
+      <Image source={{ uri: food.photo }} style={styles.image} />
+      <View style={styles.nameWrapper}>
+        <Text numberOfLines={2} style={styles.name}>
+          {food.name}
+        </Text>
+      </View>
+      <View style={styles.priceWrapper}>
+        <Text numberOfLines={1} style={styles.priceText}>
+          {food.price.toFixed(2)}
+        </Text>
+      </View>
+    </Pressable>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

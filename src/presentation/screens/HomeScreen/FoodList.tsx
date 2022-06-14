@@ -7,15 +7,22 @@ import { Food } from '../../../domain/model/Food';
 interface FoodListProps {
   refList?: RefObject<FlatList>;
   data: Array<Food>;
+  onPressFood: (food: Food) => void;
 }
 
-export const FoodList: React.FC<FoodListProps> = ({ data, refList }) => (
+export const FoodList: React.FC<FoodListProps> = ({
+  data,
+  refList,
+  onPressFood,
+}) => (
   <FlatList
     ref={refList}
     horizontal
     bounces={false}
     data={data}
-    renderItem={({ item }) => <FoodCard food={item} />}
+    renderItem={({ item }) => (
+      <FoodCard food={item} onFoodPress={onPressFood} />
+    )}
     keyExtractor={(item: Food) => `food-${item.id}`}
     contentContainerStyle={styles.contentList}
     showsHorizontalScrollIndicator={false}
