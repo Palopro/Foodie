@@ -1,11 +1,21 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { AppBarSearch } from '../../components/AppBar/AppBarSearch';
 import { AppStackParams } from '../../../navigation/AppNavigation';
 import { ImageCarousel } from '../../components/ImageCarousel/ImageCarousel';
 import { ColorType, RoundButton } from '../../components/RoundButton';
+import { useAppDispatch } from '../../../hooks';
+import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer';
+import { CartFood } from '../../../domain/model/CartFood';
 
 interface FoodDetailsScreenProps {
   route: RouteProp<AppStackParams>;
@@ -16,6 +26,8 @@ export const FoodDetailsScreen: React.FC<FoodDetailsScreenProps> = ({
   route,
   navigation,
 }) => {
+  const dispatch = useAppDispatch();
+
   const { food } = route.params!;
 
   const handleGoBack = () => {
@@ -23,17 +35,27 @@ export const FoodDetailsScreen: React.FC<FoodDetailsScreenProps> = ({
   };
 
   const handleAddToCard = () => {
-    // TODO: handle add to cart
-    const cartItem = {
-      id: food.id,
-      name: food.name,
-      price: food.price
-    }
+    const cartItem: CartFood = new CartFood(
+      food.id,
+      1,
+      food.name,
+      food.price,
+      food.photo,
+      food.gallery,
+    );
+
+    dispatch(foodCartReducer.actions.addToCart({ cartItem }));
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <AppBarSearch onBackPress={handleGoBack} style={styles.appBar} />
+      <AppBarSearch onBackPress={handleGoBack} style={styles.appBar}>
+        <View style={styles.favContainer}>
+          <TouchableOpacity>
+            <Icon name={'heart-outline'} size={24} color={'#000000'} />
+          </TouchableOpacity>
+        </View>
+      </AppBarSearch>
 
       <ImageCarousel images={food.gallery} />
       <View style={styles.nameWrapper}>
@@ -80,6 +102,12 @@ const styles = StyleSheet.create({
   },
   appBar: {
     backgroundColor: '#F6F6F9',
+  },
+  favContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   nameWrapper: {
     marginTop: 45,

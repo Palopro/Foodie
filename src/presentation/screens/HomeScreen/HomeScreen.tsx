@@ -58,7 +58,6 @@ export const HomeScreen: React.FC = () => {
   };
 
   const handleFoodPress = (food: Food) => {
-    console.log(food);
     navigation.navigate(AppScreen.FoodDetailsScreen, { food });
   };
 

@@ -5,11 +5,13 @@ import { reactotron } from '../../../ReactotronConfig';
 import { foodieApi } from '../../data/dataSource/api/foodieApi';
 import { authUserReducer } from './reducers/authUserReducer';
 import { foodReducer } from './reducers/foodReducer';
+import { foodCartReducer } from './reducers/foodCartReducer';
 
 export const store = configureStore({
   reducer: {
     authReducer: authUserReducer.reducer,
     foodReducer: foodReducer.reducer,
+    cartReducer: foodCartReducer.reducer,
     [foodieApi.reducerPath]: foodieApi.reducer,
   },
   middleware: getDefaultMiddleware =>
