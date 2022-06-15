@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 interface Props {
   value: string;
   placeholder?: string;
-  onChangeText: (text: string) => void;
+  onChangeText?: (text: string) => void;
 }
 
 export const SearchInput: React.FC<Props> = ({

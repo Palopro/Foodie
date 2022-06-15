@@ -63,8 +63,9 @@ export const HomeScreen: React.FC = () => {
     <FoodCard food={item} />
   );
 
-  const filteredFoods = () =>
-    foods.filter(f => f.categories.includes(selectedFilter));
+  const filteredFoods = foods.filter(f =>
+    f.categories.includes(selectedFilter),
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -76,15 +77,12 @@ export const HomeScreen: React.FC = () => {
       </View>
 
       <View style={styles.searchWrapper}>
-        <SearchInput
-          value={''}
-          placeholder="Search"
-          onChangeText={() => true}
-        />
+        <SearchInput value={''} placeholder="Search" />
       </View>
       <View style={styles.containerCategory}>
         <FlatList
           horizontal
+          bounces={false}
           showsHorizontalScrollIndicator={false}
           data={categories}
           scrollEventThrottle={16}
@@ -99,7 +97,7 @@ export const HomeScreen: React.FC = () => {
           ref={foodListRef}
           horizontal
           bounces={false}
-          data={filteredFoods()}
+          data={filteredFoods}
           renderItem={renderFood}
           keyExtractor={foodKey}
           contentContainerStyle={styles.contentList}
