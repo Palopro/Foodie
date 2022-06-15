@@ -42,7 +42,7 @@ export const HomeScreen: React.FC = () => {
   };
 
   const handleCart = () => {
-    // TODO: cart press
+    navigation.navigate(AppScreen.CartScreen);
   };
 
   const handleCategorySelect = (category: Category) => {
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     letterSpacing: -0.03,
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     textAlign: 'left',
   },
   searchWrapper: {

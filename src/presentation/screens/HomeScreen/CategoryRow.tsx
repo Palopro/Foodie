@@ -17,11 +17,14 @@ export const CategoryRow: React.FC<CategoryRowProps> = ({
   const handlePress = () => onPress(category);
 
   const bgColor = isSelected ? '#FA4A0C' : 'transparent';
+  const textColor = isSelected
+    ? 'rgba(250, 74, 12, 1)'
+    : 'rgba(154, 154, 157, 1)';
 
   return (
     <Pressable onPress={handlePress} style={styles.container}>
       <View>
-        <Text style={styles.name}>{category.name}</Text>
+        <Text style={[styles.name, { color: textColor }]}>{category.name}</Text>
         <View
           style={[
             styles.line,
@@ -42,6 +45,11 @@ const styles = StyleSheet.create({
   },
   name: {
     marginStart: 20,
+    fontStyle: 'normal',
+    fontSize: 17,
+    lineHeight: 20,
+    fontWeight: '400',
+    fontFamily: 'RobotoCondensed-Regular',
   },
   line: {
     marginTop: 10,

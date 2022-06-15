@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   input: {
     color: '#000000',
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     fontStyle: 'normal',
     fontSize: 16,
     lineHeight: 19,

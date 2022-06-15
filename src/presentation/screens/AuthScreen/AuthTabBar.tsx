@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     color: 'rgba(0, 0, 0, 0.87)',
     textAlign: 'center',
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     textTransform: 'capitalize',
   },
   indicator: {

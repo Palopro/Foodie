@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     color: 'rgba(0, 0, 0, 1)',
     fontSize: 28,
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     lineHeight: 32,
     fontStyle: 'normal',
   },
@@ -129,6 +130,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 26,
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     fontStyle: 'normal',
   },
 
@@ -143,6 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 20,
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
   },
   infoDesc: {
     marginTop: 3,
@@ -154,6 +157,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 20,
     fontWeight: '400',
+    fontFamily: 'RobotoCondensed-Regular',
   },
   buttonWrapper: {
     marginTop: 30,

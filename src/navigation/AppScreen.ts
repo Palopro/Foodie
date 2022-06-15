@@ -7,4 +7,5 @@ export enum AppScreen {
   HomeScreen = 'HomeScreen',
   SearchScreen = 'SearchScreen',
   FoodDetailsScreen = 'FoodDetailsScreen',
+  CartScreen = 'CartScreen',
 }

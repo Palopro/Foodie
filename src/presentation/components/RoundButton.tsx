@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     fontSize: 16,
     lineHeight: 20,
   },

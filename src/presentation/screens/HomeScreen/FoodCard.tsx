@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 23,
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     textAlign: 'center',
   },
   priceWrapper: {
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     color: '#FF460A',
     fontStyle: 'normal',
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     textAlign: 'center',
   },
 });
