@@ -52,7 +52,6 @@ export const foodieApi = createApi({
         },
       }),
       transformResponse: async (response: { user: UserDTO; jwt: string }) => {
-        // await AsyncStorage.setItem('jwt', response.jwt);
         await storage.setToStorage(StorageKeys.JWT, response.jwt);
         const user: User = mapToUser(response.user);
         return { user, jwt: response.jwt };

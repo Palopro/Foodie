@@ -7,17 +7,17 @@ import {
   View,
 } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { AppScreen } from '../../navigation/AppScreen';
 import logo from '../../assets/images/SplashScreen.png';
 import { AppStackParams } from '../../navigation/AppNavigation';
+import { storage, StorageKeys } from '../../data/dataSource/storage';
 
 export const SplashScreen = () => {
   const navigation = useNavigation<NavigationProp<AppStackParams>>();
 
   const redirectToScreen = async () => {
-    const token = await AsyncStorage.getItem('jwt');
+    const token = await storage.getFromStorage(StorageKeys.JWT);
 
     navigation.navigate(token ? AppScreen.MainApp : AppScreen.AuthNavigation);
   };
