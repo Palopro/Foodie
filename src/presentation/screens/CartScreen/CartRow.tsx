@@ -2,29 +2,51 @@ import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 import { CartFood } from '../../../domain/model/CartFood';
+import { QuantitySelector } from './QuantitySelector';
 
 interface CartRowProps {
   cartFood: CartFood;
+  onIncrementQty: (cartFood: CartFood) => void;
+  onDecrementQty: (cartFood: CartFood) => void;
 }
 
-export const CartRow: React.FC<CartRowProps> = ({ cartFood }) => (
-  <View style={styles.container}>
-    <Image
-      source={{ uri: cartFood.photo }}
-      style={{ width: 77, height: 77, resizeMode: 'center', borderRadius: 100 }}
-    />
-    <View style={{ marginStart: 15 }}>
-      <Text numberOfLines={1} style={styles.name}>
-        {cartFood.name}
-      </Text>
-      <View style={{ marginTop: 12 }}>
-        <Text numberOfLines={1} style={styles.price}>
-          {cartFood.price.toFixed(2)}
+export const CartRow: React.FC<CartRowProps> = ({
+  cartFood,
+  onDecrementQty,
+  onIncrementQty,
+}) => {
+  const handleIncrementQty = () => {
+    onIncrementQty(cartFood);
+  };
+
+  const handleDecrementQty = () => {
+    onDecrementQty(cartFood);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Image source={{ uri: cartFood.photo }} style={styles.photo} />
+      <View style={{ marginStart: 15 }}>
+        <Text numberOfLines={1} style={styles.name}>
+          {cartFood.name}
         </Text>
+        <View style={{ marginTop: 12 }}>
+          <Text numberOfLines={1} style={styles.price}>
+            {cartFood.price.toFixed(2)}
+          </Text>
+        </View>
+      </View>
+
+      <View style={{ position: 'absolute', bottom: 18, right: 24 }}>
+        <QuantitySelector
+          qty={cartFood.qty}
+          onPressDecrement={handleDecrementQty}
+          onPressIncrement={handleIncrementQty}
+        />
       </View>
     </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -36,6 +58,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginHorizontal: 50,
     height: 102,
+  },
+  photo: {
+    width: 77,
+    height: 77,
+    resizeMode: 'center',
+    borderRadius: 100,
   },
   name: {
     textAlign: 'left',

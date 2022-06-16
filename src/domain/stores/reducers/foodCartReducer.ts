@@ -21,5 +21,35 @@ export const foodCartReducer = createSlice({
     ) => {
       state.cart.push(action.payload.cartItem);
     },
+    incrementCartFoodQty: (
+      state: FoodCartState,
+      action: PayloadAction<{ cartItem: CartFood }>,
+    ) => {
+      const itemIndex = state.cart.findIndex(
+        item => item.id === action.payload.cartItem.id,
+      );
+      if (itemIndex !== -1) {
+        const item = state.cart[itemIndex];
+
+        state.cart[itemIndex].qty = action.payload.cartItem.qty + 1;
+
+        state.cart[itemIndex] = { ...item };
+      }
+    },
+    decrementCartFoodQty: (
+      state: FoodCartState,
+      action: PayloadAction<{ cartItem: CartFood }>,
+    ) => {
+      const itemIndex = state.cart.findIndex(
+        item => item.id === action.payload.cartItem.id,
+      );
+      if (itemIndex !== -1) {
+        const item = state.cart[itemIndex];
+
+        item.qty = action.payload.cartItem.qty - 1;
+
+        state.cart[itemIndex] = { ...item };
+      }
+    },
   },
 });
