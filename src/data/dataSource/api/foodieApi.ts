@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { User } from '../../../domain/model/user';
@@ -7,7 +6,8 @@ import { Food } from '../../../domain/model/Food';
 import { CategoryDTO } from './dto/CategoryDTO';
 import { UserDTO } from './dto/UserDTO';
 import { Category } from '../../../domain/model/Category';
-import { RegisterUserCredentials, LoginUserCredentials } from './types';
+import { LoginUserCredentials, RegisterUserCredentials } from './types';
+import { storage, StorageKeys } from '../storage';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
@@ -31,7 +31,7 @@ export const foodieApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl,
     prepareHeaders: async headers => {
-      const token = await AsyncStorage.getItem('jwt');
+      const token = await storage.getFromStorage(StorageKeys.JWT);
 
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
@@ -52,7 +52,8 @@ export const foodieApi = createApi({
         },
       }),
       transformResponse: async (response: { user: UserDTO; jwt: string }) => {
-        await AsyncStorage.setItem('jwt', response.jwt);
+        // await AsyncStorage.setItem('jwt', response.jwt);
+        await storage.setToStorage(StorageKeys.JWT, response.jwt);
         const user: User = mapToUser(response.user);
         return { user, jwt: response.jwt };
       },
