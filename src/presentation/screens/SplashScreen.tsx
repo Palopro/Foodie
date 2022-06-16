@@ -15,20 +15,16 @@ import { AppStackParams } from '../../navigation/AppNavigation';
 
 export const SplashScreen = () => {
   const navigation = useNavigation<NavigationProp<AppStackParams>>();
-  useEffect(() => {
-    redirectToScreen();
-  });
 
   const redirectToScreen = async () => {
-    let redirectScreen = AppScreen.AuthNavigation;
     const token = await AsyncStorage.getItem('jwt');
 
-    if (token) {
-      redirectScreen = AppScreen.MainApp;
-    }
-
-    navigation.navigate(redirectScreen);
+    navigation.navigate(token ? AppScreen.MainApp : AppScreen.AuthNavigation);
   };
+
+  useEffect(() => {
+    redirectToScreen();
+  }, []);
 
   return (
     <>
