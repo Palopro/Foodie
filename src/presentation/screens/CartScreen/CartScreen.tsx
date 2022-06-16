@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
+  Text,
 } from 'react-native';
 import SwipeableFlatList from 'react-native-swipeable-list';
 
@@ -15,6 +16,7 @@ import { CartRow } from './CartRow';
 import reactotron from 'reactotron-react-native';
 import { CartEmpty } from './CartEmpty';
 import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer';
+import { ColorType, RoundButton } from '../../components/RoundButton';
 
 export const CartScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -43,7 +45,21 @@ export const CartScreen: React.FC = () => {
 
   const keyRow = (cartFood: CartFood) => `cart-row-${cartFood.id}`;
 
+  const handleCheckout = () => {};
+
   reactotron.log({ cart });
+
+  const renderActions = ({
+    index,
+    item,
+  }: {
+    index: number;
+    item: CartFood;
+  }) => (
+    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+      <Text>{index}</Text>
+    </View>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -55,13 +71,22 @@ export const CartScreen: React.FC = () => {
         data={cart}
         extraData={cart}
         renderItem={renderRow}
-        renderQuickActions={() => null}
+        renderQuickActions={renderActions}
         scrollEventThrottle={16}
         ItemSeparatorComponent={() => <View style={{ height: 14 }} />}
         ListEmptyComponent={CartEmpty}
         contentContainerStyle={{ flex: cart.length === 0 ? 1 : undefined }}
       />
       {/*</View>*/}
+
+      <View style={{ paddingHorizontal: 50 }}>
+        <RoundButton
+          text="Checkout"
+          disabled={cart.length === 0}
+          onPress={handleCheckout}
+          colorType={ColorType.Orange}
+        />
+      </View>
     </SafeAreaView>
   );
 };
