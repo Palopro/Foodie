@@ -9,7 +9,7 @@ import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Loader } from './Loader';
 import { ForgotPasswordButton } from './ForgotPasswordButton';
 import { AppScreen } from '../../../navigation/AppScreen';
-import { MainAppTabParams } from '../../../navigation/MainNavigation';
+import { RootStackParams } from '../../../navigation/RootNavigation';
 
 interface LoginFields {
   username: string;
@@ -17,7 +17,7 @@ interface LoginFields {
 }
 
 export const LoginScreen = () => {
-  const navigation = useNavigation<NavigationProp<MainAppTabParams>>();
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
   const {
     control,
@@ -35,7 +35,7 @@ export const LoginScreen = () => {
   const handleLogin = async (data: LoginFields) => {
     await loginUser({ identifier: data.username, password: data.password });
 
-    navigation.navigate(AppScreen.HomeScreen);
+    navigation.navigate(AppScreen.MainNavigation);
   };
 
   return (

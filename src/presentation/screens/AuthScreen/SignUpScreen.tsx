@@ -8,7 +8,7 @@ import { ColorType, RoundButton } from '../../components/RoundButton';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Loader } from './Loader';
 import { AppScreen } from '../../../navigation/AppScreen';
-import { MainAppTabParams } from '../../../navigation/MainNavigation';
+import { RootStackParams } from '../../../navigation/RootNavigation';
 
 interface RegisterFields {
   username: string;
@@ -17,7 +17,7 @@ interface RegisterFields {
 }
 
 export const SignUpScreen = () => {
-  const navigation = useNavigation<NavigationProp<MainAppTabParams>>();
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
   const {
     control,
@@ -40,7 +40,7 @@ export const SignUpScreen = () => {
       password: data.password,
     });
 
-    navigation.navigate(AppScreen.HomeScreen);
+    navigation.navigate(AppScreen.MainNavigation);
   };
 
   return (
