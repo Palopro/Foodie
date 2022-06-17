@@ -1,12 +1,15 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { TextInput } from '../../components/TextInput';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Loader } from './Loader';
 import { ForgotPasswordButton } from './ForgotPasswordButton';
+import { AppScreen } from '../../../navigation/AppScreen';
+import { RootStackParams } from '../../../navigation/RootNavigation';
 
 interface LoginFields {
   username: string;
@@ -14,23 +17,25 @@ interface LoginFields {
 }
 
 export const LoginScreen = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
+
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFields>({
     defaultValues: {
-      username: 'testUser',
-      password: 'u12345678',
+      username: '',
+      password: '',
     },
   });
 
   const [loginUser, { isLoading }] = foodieApi.useLoginMutation();
 
-  const handleLogin = (data: LoginFields) => {
-    loginUser({
-      userCredentials: { identifier: data.username, password: data.password },
-    });
+  const handleLogin = async (data: LoginFields) => {
+    await loginUser({ identifier: data.username, password: data.password });
+
+    navigation.navigate(AppScreen.MainNavigation);
   };
 
   return (

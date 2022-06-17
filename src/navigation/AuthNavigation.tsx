@@ -7,6 +7,7 @@ import { AuthScreen } from '../presentation/screens/AuthScreen/AuthScreen';
 
 export type AuthStackParams = {
   [AppScreen.OnBoardingScreen]: undefined;
+  [AppScreen.AuthScreen]: undefined;
 };
 
 const AuthStack = createNativeStackNavigator<AuthStackParams>();

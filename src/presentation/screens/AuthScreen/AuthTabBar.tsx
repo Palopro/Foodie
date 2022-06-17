@@ -15,11 +15,7 @@ export const AuthTabBar: React.FC<Props> = props => (
     {...props}
     style={styles.tabBar}
     labelStyle={styles.label}
-    indicatorStyle={{
-      backgroundColor: '#FA4A0C',
-      height: 3,
-      borderRadius: 12,
-    }}
+    indicatorStyle={styles.indicator}
   />
 );
 
@@ -32,5 +28,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '700',
     textTransform: 'capitalize',
+  },
+  indicator: {
+    backgroundColor: '#FA4A0C',
+    height: 3,
+    borderRadius: 12,
   },
 });

@@ -1,14 +1,15 @@
 import React from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import bellaLogo from '../../assets/images/BellaLogo.png';
 import guys from '../../assets/images/Group67.png';
 import { ColorType, RoundButton } from '../components/RoundButton';
 import { AppScreen } from '../../navigation/AppScreen';
+import { AuthStackParams } from '../../navigation/AuthNavigation';
 
 export const OnBoardingScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<AuthStackParams>>();
 
   const handlePress = () => {
     navigation.navigate(AppScreen.AuthScreen);
