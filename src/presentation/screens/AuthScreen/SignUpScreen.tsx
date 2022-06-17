@@ -1,13 +1,14 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { TextInput } from '../../components/TextInput';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Loader } from './Loader';
 import { AppScreen } from '../../../navigation/AppScreen';
+import { MainAppTabParams } from '../../../navigation/MainNavigation';
 
 interface RegisterFields {
   username: string;
@@ -16,7 +17,7 @@ interface RegisterFields {
 }
 
 export const SignUpScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<MainAppTabParams>>();
 
   const {
     control,
