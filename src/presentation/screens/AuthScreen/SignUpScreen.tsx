@@ -1,13 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { TextInput } from '../../components/TextInput';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Loader } from './Loader';
-import { AppStackParams } from '../../../navigation/AppNavigation';
 import { AppScreen } from '../../../navigation/AppScreen';
 
 interface RegisterFields {
@@ -17,7 +16,7 @@ interface RegisterFields {
 }
 
 export const SignUpScreen = () => {
-  const navigation = useNavigation<NavigationProp<AppStackParams>>();
+  const navigation = useNavigation();
 
   const {
     control,
@@ -40,7 +39,7 @@ export const SignUpScreen = () => {
       password: data.password,
     });
 
-    navigation.navigate(AppScreen.MainApp);
+    navigation.navigate(AppScreen.HomeScreen);
   };
 
   return (
