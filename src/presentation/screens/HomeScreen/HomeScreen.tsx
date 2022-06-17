@@ -14,16 +14,14 @@ import { Food } from '../../../domain/model/Food';
 import { AppBar } from '../../components/AppBar/AppBar';
 import { Category } from '../../../domain/model/Category';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
-import { CategoryList } from './CategoryList';
-import { FoodList } from './FoodList';
 import { SearchButton } from './SearchButton';
 import { AppScreen } from '../../../navigation/AppScreen';
-import { AppStackParams } from '../../../navigation/AppNavigation';
 import { FoodCard } from './FoodCard';
 import { CategoryRow } from './CategoryRow';
+import { HomeStackParams } from '../../../navigation/HomeNavigation';
 
 export const HomeScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<AppStackParams>>();
+  const navigation = useNavigation<NavigationProp<HomeStackParams>>();
   const [selectedFilter, setFilter] = useState(0);
 
   const foodListRef = useRef<FlatList<Food>>();

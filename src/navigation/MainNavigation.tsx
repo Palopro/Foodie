@@ -3,10 +3,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { AppScreen } from './AppScreen';
-import { HomeScreen } from '../presentation/screens/HomeScreen/HomeScreen';
+import { HomeNavigation } from './HomeNavigation';
 
 export type MainAppTabParams = {
-  [AppScreen.HomeScreen]: undefined;
+  [AppScreen.HomeStack]: undefined;
 };
 
 const TabNavigator = createBottomTabNavigator<MainAppTabParams>();
@@ -17,7 +17,7 @@ const renderTabIcon =
       <Icon name={name} color={color} size={28} />;
 
 const tabOptions = {
-  [AppScreen.HomeScreen]: {
+  [AppScreen.HomeStack]: {
     tabBarIcon: renderTabIcon('home'),
   },
 };
@@ -34,11 +34,11 @@ export const MainNavigation = () => (
       tabBarInactiveTintColor: '#ADADAF',
       tabBarShowLabel: false,
     }}
-    initialRouteName={AppScreen.HomeScreen}>
+    initialRouteName={AppScreen.HomeStack}>
     <TabNavigator.Screen
-      name={AppScreen.HomeScreen}
-      component={HomeScreen}
-      options={tabOptions[AppScreen.HomeScreen]}
+      name={AppScreen.HomeStack}
+      component={HomeNavigation}
+      options={tabOptions[AppScreen.HomeStack]}
     />
   </TabNavigator.Navigator>
 );

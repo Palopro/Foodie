@@ -21,8 +21,8 @@ const persistConfig = {
 const reducers = combineReducers({
   authReducer: authUserReducer.reducer,
   foodReducer: foodReducer.reducer,
-    [foodieApi.reducerPath]: foodieApi.reducer,
-  });
+  [foodieApi.reducerPath]: foodieApi.reducer,
+});
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
