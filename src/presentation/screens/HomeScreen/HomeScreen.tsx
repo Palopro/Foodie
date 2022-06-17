@@ -6,6 +6,7 @@ import {
   StyleSheet,
   FlatList,
   StatusBar,
+  ListRenderItemInfo,
 } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
@@ -18,6 +19,8 @@ import { FoodList } from './FoodList';
 import { SearchButton } from './SearchButton';
 import { AppScreen } from '../../../navigation/AppScreen';
 import { AppStackParams } from '../../../navigation/AppNavigation';
+import { FoodCard } from './FoodCard';
+import { CategoryRow } from './CategoryRow';
 
 export const HomeScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<AppStackParams>>();
@@ -25,17 +28,14 @@ export const HomeScreen: React.FC = () => {
 
   const foodListRef = useRef<FlatList<Food>>();
 
-  const { data: foods = [], isLoading: isLoadFoods } =
-    foodieApi.useGetFoodsQuery(undefined, {});
-
-  const { data: categories = [], isLoading: isLoadCategories } =
-    foodieApi.useGetCategoriesQuery(undefined, {});
+  const { data: categories = [] } = foodieApi.useGetCategoriesQuery();
+  const { data: foods = [] } = foodieApi.useGetFoodsQuery();
 
   useEffect(() => {
     if (categories && categories.length > 0) {
       setFilter(categories[0].id);
     }
-  }, [categories, foods]);
+  }, [categories]);
 
   const handleMenu = () => {
     // TODO: menu press
@@ -49,9 +49,29 @@ export const HomeScreen: React.FC = () => {
     setFilter(category.id);
 
     if (foodListRef && foodListRef.current) {
-      foodListRef.current?.scrollToOffset(0);
+      foodListRef.current?.scrollToOffset({ animated: true, offset: 0 });
     }
   };
+
+  const categoryKey = (category: Category) => `category-${category.id}`;
+
+  const foodKey = (food: Food) => `food-${food.id}`;
+
+  const renderCategory = ({ item }: ListRenderItemInfo<Category>) => (
+    <CategoryRow
+      category={item}
+      isSelected={item.id === selectedFilter}
+      onPress={handleCategorySelect}
+    />
+  );
+
+  const renderFood = ({ item }: ListRenderItemInfo<Food>) => (
+    <FoodCard food={item} />
+  );
+
+  const filteredFoods = foods.filter(f =>
+    f.categories.includes(selectedFilter),
+  );
 
   const handleSearch = () => {
     navigation.navigate(AppScreen.SearchScreen);
@@ -60,11 +80,7 @@ export const HomeScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <AppBar onMenuPress={handleMenu} onCartPress={handleCart} />
-      <StatusBar
-        barStyle={'dark-content'}
-        backgroundColor={'#000000'}
-        animated
-      />
+      <StatusBar barStyle="dark-content" backgroundColor="#F2F2F2" animated />
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>Delicious</Text>
         <Text style={styles.title}>food for you</Text>
@@ -73,21 +89,34 @@ export const HomeScreen: React.FC = () => {
       <View style={styles.searchWrapper}>
         <SearchButton onPress={handleSearch} />
       </View>
-      {isLoadCategories ? null : (
-        <CategoryList
+      <View style={styles.containerCategory}>
+        <FlatList
+          horizontal
+          bounces={false}
+          showsHorizontalScrollIndicator={false}
           data={categories}
-          selectedFilterId={selectedFilter}
-          onPressCategory={handleCategorySelect}
+          scrollEventThrottle={16}
+          keyExtractor={categoryKey}
+          ListHeaderComponent={<View style={styles.headerCategory} />}
+          ListEmptyComponent={<View />}
+          renderItem={renderCategory}
         />
-      )}
-      {isLoadCategories && isLoadFoods ? null : (
-        <View style={styles.flatList}>
-          <FoodList
-            refList={foodListRef}
-            data={foods.filter(f => f.categories.includes(selectedFilter))}
-          />
-        </View>
-      )}
+      </View>
+      <View style={styles.flatList}>
+        <FlatList
+          ref={foodListRef}
+          horizontal
+          bounces={false}
+          data={filteredFoods}
+          renderItem={renderFood}
+          keyExtractor={foodKey}
+          contentContainerStyle={styles.contentList}
+          ListEmptyComponent={<View />}
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={16}
+          ListHeaderComponent={<View style={styles.header} />}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -113,5 +142,17 @@ const styles = StyleSheet.create({
   },
   flatList: {
     flex: 1,
+  },
+  header: {
+    width: 33,
+  },
+  contentList: {
+    alignItems: 'center',
+  },
+  headerCategory: {
+    width: 75,
+  },
+  containerCategory: {
+    height: 40,
   },
 });

@@ -11,6 +11,17 @@ export type MainAppTabParams = {
 
 const TabNavigator = createBottomTabNavigator<MainAppTabParams>();
 
+const renderTabIcon =
+  (name: string) =>
+    ({ color }: { color: string }) =>
+      <Icon name={name} color={color} size={28} />;
+
+const tabOptions = {
+  [AppScreen.HomeScreen]: {
+    tabBarIcon: renderTabIcon('home'),
+  },
+};
+
 export const MainNavigation = () => (
   <TabNavigator.Navigator
     screenOptions={{
@@ -27,15 +38,7 @@ export const MainNavigation = () => (
     <TabNavigator.Screen
       name={AppScreen.HomeScreen}
       component={HomeScreen}
-      options={{
-        tabBarIcon: ({ focused }) => (
-          <Icon
-            name={'home'}
-            color={focused ? '#FA4A0C' : '#ADADAF'}
-            size={28}
-          />
-        ),
-      }}
+      options={tabOptions[AppScreen.HomeScreen]}
     />
   </TabNavigator.Navigator>
 );

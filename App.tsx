@@ -1,22 +1,31 @@
-import React, { useEffect } from 'react';
-import { Provider } from 'react-redux';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { PersistGate } from 'redux-persist/integration/react';
+import { ActivityIndicator, View } from 'react-native';
 
-import { AppNavigation } from './src/navigation/AppNavigation';
-import { store } from './src/domain/stores/store';
-import Splash from 'react-native-splash-screen';
+import { persistor } from './src/domain/stores/store';
+import { RootNavigation } from './src/navigation/RootNavigation';
 
 if (__DEV__) {
   import('./ReactotronConfig');
 }
 
-export const App = () => {
-  useEffect(() => {
-    Splash.hide();
-  });
+const Loader = () => (
+  <View
+    style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#FFFFFF',
+    }}>
+    <ActivityIndicator animating color={'#FF460A'} />
+  </View>
+);
 
-  return (
-    <Provider store={store}>
-      <AppNavigation />
-    </Provider>
-  );
-};
+export const App = () => (
+  <PersistGate loading={<Loader />} persistor={persistor}>
+    <NavigationContainer>
+      <RootNavigation />
+    </NavigationContainer>
+  </PersistGate>
+);
