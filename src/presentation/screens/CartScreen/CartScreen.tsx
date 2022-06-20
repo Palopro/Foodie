@@ -16,6 +16,7 @@ import { CartEmpty } from './CartEmpty';
 import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { QuickAction } from './QuickAction';
+import {AppScreen} from '../../../navigation/AppScreen';
 
 export const CartScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -44,7 +45,9 @@ export const CartScreen: React.FC = () => {
 
   const keyRow = (cartFood: CartFood) => `cart-row-${cartFood.id}`;
 
-  const handleCheckout = () => {};
+  const handleCheckout = () => {
+    navigation.navigate(AppScreen.CheckoutScreen);
+  };
 
   const handleDelete = (cartItem: CartFood) => {
     dispatch(foodCartReducer.actions.removeFromCart({ cartItem }));

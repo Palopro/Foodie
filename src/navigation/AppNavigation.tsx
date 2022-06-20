@@ -10,6 +10,7 @@ import { SearchScreen } from '../presentation/screens/SearchScreen/SearchScreen'
 import { FoodDetailsScreen } from '../presentation/screens/FoodDetailsScreen/FoodDetailsScreen';
 import { Food } from '../domain/model/Food';
 import { CartScreen } from '../presentation/screens/CartScreen/CartScreen';
+import { CheckoutScreen } from '../presentation/screens/CheckoutScreen/CheckoutScreen';
 
 export type AppStackParams = {
   [AppScreen.SplashScreen]: undefined;
@@ -18,6 +19,7 @@ export type AppStackParams = {
   [AppScreen.SearchScreen]: undefined;
   [AppScreen.FoodDetailsScreen]: { food: Food };
   [AppScreen.CartScreen]: undefined;
+  [AppScreen.CheckoutScreen]: undefined;
 };
 
 const AppStack = createNativeStackNavigator<AppStackParams>();
@@ -39,6 +41,10 @@ export const AppNavigation = () => (
         component={FoodDetailsScreen}
       />
       <AppStack.Screen name={AppScreen.CartScreen} component={CartScreen} />
+      <AppStack.Screen
+        name={AppScreen.CheckoutScreen}
+        component={CheckoutScreen}
+      />
     </AppStack.Navigator>
   </NavigationContainer>
 );

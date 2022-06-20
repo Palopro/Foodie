@@ -8,4 +8,5 @@ export enum AppScreen {
   SearchScreen = 'SearchScreen',
   FoodDetailsScreen = 'FoodDetailsScreen',
   CartScreen = 'CartScreen',
+  CheckoutScreen = 'CheckoutScreen',
 }

@@ -87,5 +87,11 @@ export const foodieApi = createApi({
       transformResponse: (response: { data: Array<FoodDTO> }) =>
         response.data.map(mapToFood),
     }),
+    me: build.query<User, void>({
+      query: () => ({
+        url: '/users/me',
+      }),
+      transformResponse: (response: UserDTO) => mapToUser(response),
+    }),
   }),
 });
