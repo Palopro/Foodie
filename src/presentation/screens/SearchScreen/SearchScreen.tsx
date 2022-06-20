@@ -64,7 +64,7 @@ export const SearchScreen: React.FC = () => {
           <SearchInput
             value={searchValue}
             onChangeText={handleSearch}
-            placeholder={'Search'}
+            placeholder="Search"
           />
         </View>
       </AppBarSearch>
