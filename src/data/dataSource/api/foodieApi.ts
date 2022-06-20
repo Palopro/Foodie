@@ -96,7 +96,11 @@ export const foodieApi = createApi({
     }),
     searchFoods: build.query<Array<Food>, string>({
       query: name => ({
-        url: `/foods?populate=*&filters[name][$containsi]=${name}`,
+        url: '/foods',
+        params: {
+          populate: '*',
+          ['filters[name][$containsi]']: name,
+        },
       }),
       transformResponse: (response: { data: Array<FoodDTO> }) =>
         response.data.map(mapToFood),
