@@ -8,9 +8,10 @@ import { foodieApi } from '../../data/dataSource/api/foodieApi';
 import { authUserReducer } from './reducers/authUserReducer';
 import { foodReducer } from './reducers/foodReducer';
 import { foodCartReducer } from './reducers/foodCartReducer';
+import { Reducers } from './reducers/reducers';
 
-const blackList = ['navigation'];
-const whiteList = ['authReducer'];
+const blackList = ['navigation', Reducers.FoodReducer, 'FoodieApi'];
+const whiteList = [Reducers.AuthReducer];
 
 const persistConfig = {
   key: 'root',

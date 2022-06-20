@@ -64,7 +64,7 @@ export const HomeScreen: React.FC = () => {
   );
 
   const renderFood = ({ item }: ListRenderItemInfo<Food>) => (
-    <FoodCard food={item} />
+    <FoodCard food={item} onFoodPress={handleFoodPress} />
   );
 
   const filteredFoods = foods.filter(f =>

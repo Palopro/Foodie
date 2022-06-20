@@ -77,6 +77,6 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 50,
   },
 });

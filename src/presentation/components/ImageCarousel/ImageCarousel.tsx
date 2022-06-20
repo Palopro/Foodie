@@ -16,6 +16,9 @@ interface ImageCarouselProps {
 
 const DEFAULT_INDEX = 0;
 
+const bgColor = (index: number, activeImg: number) =>
+  index === activeImg ? 'rgb(250, 74, 12)' : 'rgb(196, 196, 196)';
+
 export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   const [activeImg, setActiveImg] = useState(DEFAULT_INDEX);
 
@@ -38,7 +41,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <>
       <Animated.FlatList
         horizontal
         pagingEnabled
@@ -55,25 +58,21 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
 
       <View style={styles.dotView}>
         {images.map((img, index: number) => {
-          let color =
-            index === activeImg
-              ? 'rgba(250, 74, 12, 1)'
-              : 'rgba(196, 196, 196, 1)';
+          let backgroundColor = bgColor(index, activeImg);
 
           return (
             <Animated.View
               key={index}
-              style={[styles.dot, { backgroundColor: color || '#C4C4C4' }]}
+              style={[styles.dot, { backgroundColor }]}
             />
           );
         })}
       </View>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
   dotView: {
     flexDirection: 'row',
     justifyContent: 'center',

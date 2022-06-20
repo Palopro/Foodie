@@ -44,8 +44,8 @@ export const SearchFoodRow: React.FC<SearchFoodRowProps> = ({
       <View style={styles.imageWrapper}>
         <Image
           source={{ uri: food.photo }}
-          resizeMethod={'resize'}
-          resizeMode={'center'}
+          resizeMethod="resize"
+          resizeMode="center"
           style={[
             styles.image,
             {

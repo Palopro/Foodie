@@ -25,7 +25,7 @@ export const SearchInput: React.FC<Props> = ({
       placeholder={placeholder}
       onChangeText={onChangeText}
       style={styles.input}
-      placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
+      placeholderTextColor="rgba(0, 0, 0, 0.5)"
     />
   </View>
 );

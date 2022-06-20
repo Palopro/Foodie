@@ -18,7 +18,7 @@ const Loader = () => (
       alignItems: 'center',
       backgroundColor: '#FFFFFF',
     }}>
-    <ActivityIndicator animating color={'#FF460A'} />
+    <ActivityIndicator animating color="#FF460A" />
   </View>
 );
 
