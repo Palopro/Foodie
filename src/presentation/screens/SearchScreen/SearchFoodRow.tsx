@@ -19,13 +19,17 @@ interface SearchFoodRowProps {
 
 const { width } = Dimensions.get('window');
 
-const rowWidth = (width - 17 * 2) / 2 - 10 * 2;
-
 const IMAGE_PADDING = 26;
 
 const DIVIDER = 2;
 const MAX_MARGIN = 90;
 const MIN_MARGIN = 20;
+
+const SIDES = 2;
+const PADDING = 10 * SIDES;
+const MARGIN = 17 * SIDES;
+
+const rowWidth = (width - MARGIN) / 2 - PADDING;
 
 export const SearchFoodRow: React.FC<SearchFoodRowProps> = ({
   food,

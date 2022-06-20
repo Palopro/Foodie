@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Food } from '../../model/Food';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
+import { Reducers } from './reducers';
 
 interface FoodState {
   isLoading: boolean;
@@ -13,7 +14,7 @@ const initialState: FoodState = {
   foods: [],
 };
 
-export const reducerName = 'FoodReducer';
+export const reducerName = Reducers.FoodReducer;
 
 export const foodReducer = createSlice({
   name: reducerName,

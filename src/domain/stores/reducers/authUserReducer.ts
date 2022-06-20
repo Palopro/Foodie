@@ -3,6 +3,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 import { User } from '../../model/user';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
+import { Reducers } from './reducers';
 
 interface AuthState {
   isLoading: boolean;
@@ -16,7 +17,7 @@ const initialState: AuthState = {
   error: null,
 };
 
-export const reducerName = 'AuthReducer';
+export const reducerName = Reducers.AuthReducer;
 
 export const authUserReducer = createSlice({
   name: reducerName,
