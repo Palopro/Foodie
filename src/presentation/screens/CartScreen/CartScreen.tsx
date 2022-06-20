@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
-  Text,
 } from 'react-native';
 import SwipeableFlatList from 'react-native-swipeable-list';
 
@@ -13,10 +12,10 @@ import { AppBarWithTitle } from '../../components/AppBar/AppBarWithTitle';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { CartFood } from '../../../domain/model/CartFood';
 import { CartRow } from './CartRow';
-import reactotron from 'reactotron-react-native';
 import { CartEmpty } from './CartEmpty';
 import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer';
 import { ColorType, RoundButton } from '../../components/RoundButton';
+import { QuickAction } from './QuickAction';
 
 export const CartScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -47,17 +46,21 @@ export const CartScreen: React.FC = () => {
 
   const handleCheckout = () => {};
 
-  reactotron.log({ cart });
+  const handleDelete = (cartFood: CartFood) => {};
 
-  const renderActions = ({
-    index,
-    item,
-  }: {
-    index: number;
-    item: CartFood;
-  }) => (
-    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-      <Text>{index}</Text>
+  const handleFavorite = (cartFood: CartFood) => {};
+
+  const renderActions = ({ item }: { item: CartFood }) => (
+    <View style={styles.actionContainer}>
+      <QuickAction
+        iconName={'heart-outline'}
+        onPress={() => handleFavorite(item)}
+      />
+      <View style={styles.divider} />
+      <QuickAction
+        iconName={'delete-outline'}
+        onPress={() => handleDelete(item)}
+      />
     </View>
   );
 
@@ -73,13 +76,17 @@ export const CartScreen: React.FC = () => {
         renderItem={renderRow}
         renderQuickActions={renderActions}
         scrollEventThrottle={16}
-        ItemSeparatorComponent={() => <View style={{ height: 14 }} />}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
         ListEmptyComponent={CartEmpty}
-        contentContainerStyle={{ flex: cart.length === 0 ? 1 : undefined }}
+        contentContainerStyle={[
+          styles.contentContainer,
+          { flex: cart.length === 0 ? 1 : undefined },
+        ]}
+        maxSwipeDistance={150}
       />
       {/*</View>*/}
 
-      <View style={{ paddingHorizontal: 50 }}>
+      <View style={styles.buttonWrapper}>
         <RoundButton
           text="Checkout"
           disabled={cart.length === 0}
@@ -101,5 +108,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgba(245, 245, 248, 1)',
+  },
+  actionContainer: {
+    height: 102,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginHorizontal: 50,
+  },
+  divider: {
+    width: 15,
+  },
+  separator: {
+    height: 14,
+  },
+  buttonWrapper: {
+    paddingHorizontal: 50,
+  },
+  contentContainer: {
+    flexGrow: 1,
   },
 });
