@@ -46,7 +46,9 @@ export const CartScreen: React.FC = () => {
 
   const handleCheckout = () => {};
 
-  const handleDelete = (cartFood: CartFood) => {};
+  const handleDelete = (cartItem: CartFood) => {
+    dispatch(foodCartReducer.actions.removeFromCart({ cartItem }));
+  };
 
   const handleFavorite = (cartFood: CartFood) => {};
 

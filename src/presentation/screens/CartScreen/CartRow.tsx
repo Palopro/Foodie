@@ -26,18 +26,18 @@ export const CartRow: React.FC<CartRowProps> = ({
   return (
     <View style={styles.container}>
       <Image source={{ uri: cartFood.photo }} style={styles.photo} />
-      <View style={{ marginStart: 15 }}>
+      <View style={styles.content}>
         <Text numberOfLines={1} style={styles.name}>
           {cartFood.name}
         </Text>
-        <View style={{ marginTop: 12 }}>
+        <View style={styles.priceWrapper}>
           <Text numberOfLines={1} style={styles.price}>
             {cartFood.price.toFixed(2)}
           </Text>
         </View>
       </View>
 
-      <View style={{ position: 'absolute', bottom: 18, right: 24 }}>
+      <View style={styles.qtyContainer}>
         <QuantitySelector
           qty={cartFood.qty}
           onPressDecrement={handleDecrementQty}
@@ -65,6 +65,9 @@ const styles = StyleSheet.create({
     resizeMode: 'center',
     borderRadius: 100,
   },
+  content: {
+    marginStart: 15,
+  },
   name: {
     textAlign: 'left',
     color: 'rgba(0, 0, 0, 1)',
@@ -74,6 +77,9 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontFamily: 'RobotoCondensed-Bold',
   },
+  priceWrapper: {
+    marginTop: 12,
+  },
   price: {
     textAlign: 'left',
     color: 'rgba(250, 74, 12, 1)',
@@ -82,5 +88,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 18,
     fontFamily: 'RobotoCondensed-Bold',
+  },
+  qtyContainer: {
+    position: 'absolute',
+    bottom: 18,
+    right: 24,
   },
 });

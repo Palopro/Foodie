@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { CartFood } from '../../model/CartFood';
 
 interface FoodCartState {
@@ -20,6 +21,12 @@ export const foodCartReducer = createSlice({
       action: PayloadAction<{ cartItem: CartFood }>,
     ) => {
       state.cart.push(action.payload.cartItem);
+    },
+    removeFromCart: (
+      state: FoodCartState,
+      action: PayloadAction<{ cartItem: CartFood }>,
+    ) => {
+      state.cart = state.cart.filter(food => food.id !== action.payload.cartItem.id);
     },
     incrementCartFoodQty: (
       state: FoodCartState,
