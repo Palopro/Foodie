@@ -8,16 +8,20 @@ import {
   StatusBar,
   ListRenderItemInfo,
 } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
-import { SearchInput } from '../../components/SearchInput';
 import { Food } from '../../../domain/model/Food';
 import { AppBar } from '../../components/AppBar/AppBar';
 import { Category } from '../../../domain/model/Category';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
+import { SearchButton } from './SearchButton';
+import { AppScreen } from '../../../navigation/AppScreen';
 import { FoodCard } from './FoodCard';
 import { CategoryRow } from './CategoryRow';
+import { HomeStackParams } from '../../../navigation/HomeNavigation';
 
 export const HomeScreen: React.FC = () => {
+  const navigation = useNavigation<NavigationProp<HomeStackParams>>();
   const [selectedFilter, setFilter] = useState(0);
 
   const foodListRef = useRef<FlatList<Food>>();
@@ -67,6 +71,10 @@ export const HomeScreen: React.FC = () => {
     f.categories.includes(selectedFilter),
   );
 
+  const handleSearch = () => {
+    navigation.navigate(AppScreen.SearchScreen);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <AppBar onMenuPress={handleMenu} onCartPress={handleCart} />
@@ -77,7 +85,7 @@ export const HomeScreen: React.FC = () => {
       </View>
 
       <View style={styles.searchWrapper}>
-        <SearchInput value={''} placeholder="Search" />
+        <SearchButton onPress={handleSearch} />
       </View>
       <View style={styles.containerCategory}>
         <FlatList

@@ -6,6 +6,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import { reactotron } from '../../../ReactotronConfig';
 import { foodieApi } from '../../data/dataSource/api/foodieApi';
 import { authUserReducer } from './reducers/authUserReducer';
+import { foodReducer } from './reducers/foodReducer';
 
 const blackList = ['navigation'];
 const whiteList = ['authReducer'];
@@ -19,6 +20,7 @@ const persistConfig = {
 
 const reducers = combineReducers({
   authReducer: authUserReducer.reducer,
+  foodReducer: foodReducer.reducer,
   [foodieApi.reducerPath]: foodieApi.reducer,
 });
 
