@@ -5,19 +5,19 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 interface Props {
   value: string;
   placeholder?: string;
-  onChangeText: (text: string) => void;
-  withoutIcon?: boolean;
+  onChangeText?: (text: string) => void;
+  withIcon?: boolean;
 }
 
 export const SearchInput: React.FC<Props> = ({
   value,
   placeholder,
   onChangeText,
-  withoutIcon,
+  withIcon,
 }) => (
   <View style={styles.container}>
-    {withoutIcon ? null : (
-      <Icon name={'search'} color={'#000000'} size={24} style={styles.icon} />
+    {withIcon && (
+      <Icon name="search" color="#000000" size={24} style={styles.icon} />
     )}
 
     <TextInput

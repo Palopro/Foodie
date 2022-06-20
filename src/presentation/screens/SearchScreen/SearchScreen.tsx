@@ -7,10 +7,10 @@ import {
   FlatList,
   ListRenderItemInfo,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { SearchInput } from '../../components/SearchInput';
 import { AppBarSearch } from '../../components/AppBar/AppBarSearch';
-import { useNavigation } from '@react-navigation/native';
 import { useAppSelector } from '../../../hooks';
 import { findFoodByName } from '../../../domain/stores/reducers/foodReducer';
 import { Food } from '../../../domain/model/Food';
@@ -64,8 +64,7 @@ export const SearchScreen: React.FC = () => {
           <SearchInput
             value={searchValue}
             onChangeText={handleSearch}
-            placeholder={'Search'}
-            withoutIcon
+            placeholder="Search"
           />
         </View>
       </AppBarSearch>

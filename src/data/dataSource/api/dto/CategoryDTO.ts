@@ -1,5 +1,3 @@
-import { Category } from '../../../../domain/model/Category';
-
 export interface CategoryDTO {
   id: number;
   attributes: {
@@ -9,6 +7,3 @@ export interface CategoryDTO {
     publishedAt: string;
   };
 }
-
-export const mapToCategory = (categoryDTO: CategoryDTO) =>
-  new Category(categoryDTO.id, categoryDTO.attributes.name);
