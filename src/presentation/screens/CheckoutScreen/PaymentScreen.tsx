@@ -1,60 +1,70 @@
 import React, { useState } from 'react';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { AppBarWithTitle } from '../../components/AppBar/AppBarWithTitle';
-import { foodieApi } from '../../../data/dataSource/api/foodieApi';
+import { PaymentOptions } from './PaymentOptions';
 import { OptionSelect } from '../../components/OptionSelect/OptionSelect';
-import { totalInCart } from '../../../domain/stores/reducers/foodCartReducer';
+import cardIcon from '../../../assets/images/creditCard.png';
+import bankIcon from '../../../assets/images/bank.png';
+import paypalIcon from '../../../assets/images/paypal.png';
 import { ColorType, RoundButton } from '../../components/RoundButton';
-import { AppScreen } from '../../../navigation/AppScreen';
-import { AppStackParams } from '../../../navigation/AppNavigation';
+import { totalInCart } from '../../../domain/stores/reducers/foodCartReducer';
 
-const options = [
+interface OptionValue {
+  id: number;
+  name: string;
+  image: string;
+  bgColor: string;
+}
+
+const deliveryOptions = [
   { id: 1, name: 'Door delivery' },
   { id: 2, name: 'Pick up' },
 ];
 
-export const CheckoutScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<AppStackParams>>();
-  const [deliveryMethod, setDeliveryMethod] = useState(options[0]);
+const paymentOptions = [
+  { id: 1, name: 'Card', image: cardIcon, bgColor: '#F47B0A' },
+  { id: 2, name: 'Bank account', image: bankIcon, bgColor: '#EB4796' },
+  { id: 3, name: 'Paypal', image: paypalIcon, bgColor: '#0038FF' },
+];
+
+export const PaymentScreen: React.FC = () => {
+  const navigation = useNavigation();
+  const [delivery, setDelivery] = useState(deliveryOptions[0]);
+  const [payment, setPayment] = useState(paymentOptions[0]);
 
   const total = useSelector(totalInCart);
-
-  const { data: user } = foodieApi.useMeQuery();
 
   const handleGoBack = () => {
     navigation.goBack();
   };
 
-  const handleChangeOption = (optionValue: { id: number; name: string }) => {
-    setDeliveryMethod(optionValue);
+  const handleChangeDelivery = (optionValue: { id: number; name: string }) => {
+    setDelivery(optionValue);
   };
 
-  const handlePayment = () => {
-    navigation.navigate(AppScreen.PaymentScreen);
+  const handleChangePayment = (option: { id: number; name: string }) => {
+    setPayment(option);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <AppBarWithTitle title="Checkout" onBackPress={handleGoBack} />
-
+      <AppBarWithTitle onBackPress={handleGoBack} title="Checkout" />
       <View style={styles.titleWrapper}>
-        <Text style={styles.title}>Delivery</Text>
+        <Text style={styles.title}>Payment</Text>
       </View>
 
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Address details</Text>
+      <View style={[styles.infoContainer, { marginTop: 20 }]}>
+        <Text style={styles.infoTitle}>Payment method</Text>
 
-        <View style={styles.infoBox}>
-          <Text style={styles.username}>{user?.username}</Text>
-          <View style={styles.divider} />
-          <Text style={styles.text}>
-            Km 5 refinery road oppsite re public road, effurun, delta state
-          </Text>
-          <View style={styles.divider} />
-          <Text style={styles.phoneNumber}>+234 9011039271</Text>
+        <View style={[styles.infoBox, { paddingVertical: 5 }]}>
+          <PaymentOptions
+            options={paymentOptions}
+            selectedOption={payment}
+            onChangeOption={handleChangePayment}
+          />
         </View>
       </View>
 
@@ -62,9 +72,9 @@ export const CheckoutScreen: React.FC = () => {
         <Text style={styles.infoTitle}>Delivery method</Text>
         <View style={[styles.infoBox, { paddingVertical: 5 }]}>
           <OptionSelect
-            options={options}
-            selectedOption={deliveryMethod}
-            onChangeOption={handleChangeOption}
+            options={deliveryOptions}
+            selectedOption={delivery}
+            onChangeOption={handleChangeDelivery}
           />
         </View>
       </View>
@@ -77,7 +87,7 @@ export const CheckoutScreen: React.FC = () => {
       <View style={styles.buttonWrapper}>
         <RoundButton
           text="Proceed to payment"
-          onPress={handlePayment}
+          onPress={() => true}
           colorType={ColorType.Orange}
         />
       </View>
@@ -103,7 +113,7 @@ const styles = StyleSheet.create({
     fontFamily: 'RobotoCondensed-Bold',
   },
   infoContainer: {
-    marginTop: 42,
+    marginTop: 20,
     paddingHorizontal: 50,
   },
   infoTitle: {
@@ -122,39 +132,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     marginTop: 20,
   },
-  username: {
-    fontSize: 17,
-    lineHeight: 20,
-    color: '#000000',
-    textAlign: 'left',
-    fontStyle: 'normal',
-    fontWeight: '700',
-    fontFamily: 'RobotoCondensed-Bold',
-    marginBottom: 8,
-  },
   divider: {
     height: 0.5,
     backgroundColor: 'rgba(0, 0, 0, 0.3))',
-  },
-  text: {
-    fontSize: 15,
-    lineHeight: 18,
-    color: '#000000',
-    textAlign: 'left',
-    fontStyle: 'normal',
-    fontWeight: '400',
-    fontFamily: 'RobotoCondensed-Regular',
-    marginVertical: 8,
-  },
-  phoneNumber: {
-    fontSize: 15,
-    lineHeight: 18,
-    color: '#000000',
-    textAlign: 'left',
-    fontStyle: 'normal',
-    fontWeight: '400',
-    fontFamily: 'RobotoCondensed-Regular',
-    marginTop: 8,
   },
   totalRow: {
     flexDirection: 'row',

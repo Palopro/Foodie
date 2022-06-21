@@ -2,15 +2,16 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
+import { Food } from '../domain/model/Food';
+import { AppScreen } from './AppScreen';
 import { SplashScreen } from '../presentation/screens/SplashScreen';
 import { AuthNavigation } from './AuthNavigation';
-import { AppScreen } from './AppScreen';
 import { MainNavigation } from './MainNavigation';
 import { SearchScreen } from '../presentation/screens/SearchScreen/SearchScreen';
 import { FoodDetailsScreen } from '../presentation/screens/FoodDetailsScreen/FoodDetailsScreen';
-import { Food } from '../domain/model/Food';
 import { CartScreen } from '../presentation/screens/CartScreen/CartScreen';
 import { CheckoutScreen } from '../presentation/screens/CheckoutScreen/CheckoutScreen';
+import { PaymentScreen } from '../presentation/screens/CheckoutScreen/PaymentScreen';
 
 export type AppStackParams = {
   [AppScreen.SplashScreen]: undefined;
@@ -20,6 +21,7 @@ export type AppStackParams = {
   [AppScreen.FoodDetailsScreen]: { food: Food };
   [AppScreen.CartScreen]: undefined;
   [AppScreen.CheckoutScreen]: undefined;
+  [AppScreen.PaymentScreen]: undefined;
 };
 
 const AppStack = createNativeStackNavigator<AppStackParams>();
@@ -44,6 +46,10 @@ export const AppNavigation = () => (
       <AppStack.Screen
         name={AppScreen.CheckoutScreen}
         component={CheckoutScreen}
+      />
+      <AppStack.Screen
+        name={AppScreen.PaymentScreen}
+        component={PaymentScreen}
       />
     </AppStack.Navigator>
   </NavigationContainer>
