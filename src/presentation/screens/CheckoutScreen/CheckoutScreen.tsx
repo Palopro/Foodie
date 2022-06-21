@@ -1,17 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import { AppBarWithTitle } from '../../components/AppBar/AppBarWithTitle';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
+import { OptionSelect } from '../../components/OptionSelect/OptionSelect';
+import { totalInCart } from '../../../domain/stores/reducers/foodCartReducer';
+import { ColorType, RoundButton } from '../../components/RoundButton';
+
+const options = [
+  { id: 1, name: 'Door delivery' },
+  { id: 2, name: 'Pick up' },
+];
 
 export const CheckoutScreen: React.FC = () => {
   const navigation = useNavigation();
+  const [deliveryMethod, setDeliveryMethod] = useState(options[0]);
+
+  const total = useSelector(totalInCart);
 
   const { data: user } = foodieApi.useMeQuery();
 
   const handleGoBack = () => {
     navigation.goBack();
+  };
+
+  const handleChangeOption = (optionValue: { id: number; name: string }) => {
+    setDeliveryMethod(optionValue);
   };
 
   return (
@@ -34,6 +50,30 @@ export const CheckoutScreen: React.FC = () => {
           <View style={styles.divider} />
           <Text style={styles.phoneNumber}>+234 9011039271</Text>
         </View>
+      </View>
+
+      <View style={styles.infoContainer}>
+        <Text style={styles.infoTitle}>Delivery method</Text>
+        <View style={[styles.infoBox, { paddingVertical: 5 }]}>
+          <OptionSelect
+            options={options}
+            selectedOption={deliveryMethod}
+            onChangeOption={handleChangeOption}
+          />
+        </View>
+      </View>
+
+      <View style={styles.totalRow}>
+        <Text style={styles.totalText}>Total</Text>
+        <Text style={styles.totalValue}>{total.toFixed(2)}</Text>
+      </View>
+
+      <View style={styles.buttonWrapper}>
+        <RoundButton
+          text="Proceed to payment"
+          onPress={() => true}
+          colorType={ColorType.Orange}
+        />
       </View>
     </SafeAreaView>
   );
@@ -109,5 +149,31 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: 'RobotoCondensed-Regular',
     marginTop: 8,
+  },
+  totalRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingStart: 50,
+    paddingEnd: 65,
+    // marginTop: 70,
+    flex: 1,
+  },
+  totalText: {
+    textAlign: 'left',
+    fontWeight: '400',
+    fontFamily: 'RobotoCondensed-Regular',
+    fontSize: 17,
+    lineHeight: 20,
+  },
+  totalValue: {
+    textAlign: 'right',
+    fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
+    fontSize: 22,
+    lineHeight: 25,
+  },
+  buttonWrapper: {
+    paddingHorizontal: 50,
   },
 });
