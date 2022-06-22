@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
   ListRenderItemInfo,
   SafeAreaView,
@@ -16,10 +16,11 @@ import { CartEmpty } from './CartEmpty';
 import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { QuickAction } from './QuickAction';
-import {AppScreen} from '../../../navigation/AppScreen';
+import { AppScreen } from '../../../navigation/AppScreen';
+import { HomeStackParams } from '../../../navigation/HomeNavigation';
 
 export const CartScreen: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<HomeStackParams>>();
   const cart = useAppSelector(state => state.cartReducer.cart);
   const dispatch = useAppDispatch();
 
@@ -58,12 +59,12 @@ export const CartScreen: React.FC = () => {
   const renderActions = ({ item }: { item: CartFood }) => (
     <View style={styles.actionContainer}>
       <QuickAction
-        iconName={'heart-outline'}
+        iconName="heart-outline"
         onPress={() => handleFavorite(item)}
       />
       <View style={styles.divider} />
       <QuickAction
-        iconName={'delete-outline'}
+        iconName="delete-outline"
         onPress={() => handleDelete(item)}
       />
     </View>
@@ -73,7 +74,6 @@ export const CartScreen: React.FC = () => {
     <SafeAreaView style={styles.container}>
       <AppBarWithTitle onBackPress={handleGoBack} title="Cart" />
 
-      {/*<View style={{ flex: 1 }}>*/}
       <SwipeableFlatList
         keyExtractor={keyRow}
         data={cart}
@@ -89,7 +89,6 @@ export const CartScreen: React.FC = () => {
         ]}
         maxSwipeDistance={150}
       />
-      {/*</View>*/}
 
       <View style={styles.buttonWrapper}>
         <RoundButton

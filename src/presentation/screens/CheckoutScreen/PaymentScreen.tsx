@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -15,20 +15,45 @@ import { NoteModal } from './NoteModal/NoteModal';
 import { useAppSelector } from '../../../hooks';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Order } from '../../../domain/model/Order';
+import { HomeStackParams } from '../../../navigation/HomeNavigation';
+
+interface OptionValue {
+  id: number;
+  name: string;
+  value: string;
+}
 
 const deliveryOptions = [
-  { id: 1, name: 'Door delivery' },
-  { id: 2, name: 'Pick up' },
+  { id: 1, name: 'Door delivery', value: 'DoorDelivery' },
+  { id: 2, name: 'Pick up', value: 'pickUp' },
 ];
 
 const paymentOptions = [
-  { id: 1, name: 'Card', image: cardIcon, bgColor: '#F47B0A' },
-  { id: 2, name: 'Bank account', image: bankIcon, bgColor: '#EB4796' },
-  { id: 3, name: 'Paypal', image: paypalIcon, bgColor: '#0038FF' },
+  {
+    id: 1,
+    name: 'Card',
+    value: 'card',
+    image: cardIcon,
+    bgColor: '#F47B0A',
+  },
+  {
+    id: 2,
+    name: 'Bank account',
+    value: 'bank',
+    image: bankIcon,
+    bgColor: '#EB4796',
+  },
+  {
+    id: 3,
+    name: 'Paypal',
+    value: 'paypal',
+    image: paypalIcon,
+    bgColor: '#0038FF',
+  },
 ];
 
 export const PaymentScreen: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<HomeStackParams>>();
   const [delivery, setDelivery] = useState(deliveryOptions[0]);
   const [payment, setPayment] = useState(paymentOptions[0]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -43,11 +68,11 @@ export const PaymentScreen: React.FC = () => {
     navigation.goBack();
   };
 
-  const handleChangeDelivery = (optionValue: { id: number; name: string }) => {
+  const handleChangeDelivery = (optionValue: OptionValue) => {
     setDelivery(optionValue);
   };
 
-  const handleChangePayment = (option: { id: number; name: string }) => {
+  const handleChangePayment = (option: OptionValue) => {
     setPayment(option);
   };
 
@@ -59,13 +84,17 @@ export const PaymentScreen: React.FC = () => {
     const order = new Order(
       'Test order Address',
       '+380999999999',
-      'DoorDelivery',
-      'card',
+      delivery.value,
+      payment.value,
       user!.id,
       cart,
     );
 
     createOrder({ order });
+  };
+
+  const handleToPayment = () => {
+    setModalVisible(true);
   };
 
   return (
@@ -75,7 +104,7 @@ export const PaymentScreen: React.FC = () => {
         <Text style={styles.title}>Payment</Text>
       </View>
 
-      <View style={[styles.infoContainer, { marginTop: 20 }]}>
+      <View style={styles.infoContainer}>
         <Text style={styles.infoTitle}>Payment method</Text>
 
         <View style={styles.infoBox}>
@@ -106,7 +135,7 @@ export const PaymentScreen: React.FC = () => {
       <View style={styles.buttonWrapper}>
         <RoundButton
           text="Proceed to payment"
-          onPress={() => setModalVisible(true)}
+          onPress={handleToPayment}
           colorType={ColorType.Orange}
         />
       </View>

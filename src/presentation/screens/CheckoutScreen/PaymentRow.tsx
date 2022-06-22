@@ -11,6 +11,7 @@ import {
 interface OptionValue {
   id: number;
   name: string;
+  value: string;
   image: ImageSourcePropType;
   bgColor: string;
 }

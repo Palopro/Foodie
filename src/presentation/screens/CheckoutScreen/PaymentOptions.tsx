@@ -11,6 +11,7 @@ import { PaymentRow } from './PaymentRow';
 interface OptionValue {
   id: number;
   name: string;
+  value: string;
   image: ImageSourcePropType;
   bgColor: string;
 }
@@ -18,7 +19,11 @@ interface OptionValue {
 interface PaymentOptionsProps {
   options: Array<OptionValue>;
   selectedOption: OptionValue;
-  onChangeOption: (optionValue: { id: number; name: string }) => void;
+  onChangeOption: (optionValue: {
+    id: number;
+    name: string;
+    value: string;
+  }) => void;
 }
 
 export const PaymentOptions: React.FC<PaymentOptionsProps> = ({

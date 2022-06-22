@@ -7,6 +7,7 @@ import { Option } from './Option';
 interface OptionValue {
   id: number;
   name: string;
+  value: string;
 }
 
 interface OptionSelectProps {

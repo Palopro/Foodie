@@ -9,15 +9,15 @@ import { OptionSelect } from '../../components/OptionSelect/OptionSelect';
 import { totalInCart } from '../../../domain/stores/reducers/foodCartReducer';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { AppScreen } from '../../../navigation/AppScreen';
-import { AppStackParams } from '../../../navigation/AppNavigation';
+import { HomeStackParams } from '../../../navigation/HomeNavigation';
 
 const options = [
-  { id: 1, name: 'Door delivery' },
-  { id: 2, name: 'Pick up' },
+  { id: 1, name: 'Door delivery', value: 'DoorDelivery' },
+  { id: 2, name: 'Pick up', value: 'pickUp' },
 ];
 
 export const CheckoutScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<AppStackParams>>();
+  const navigation = useNavigation<NavigationProp<HomeStackParams>>();
   const [deliveryMethod, setDeliveryMethod] = useState(options[0]);
 
   const total = useSelector(totalInCart);

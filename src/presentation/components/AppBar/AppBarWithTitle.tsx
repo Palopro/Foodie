@@ -16,7 +16,7 @@ export const AppBarWithTitle: React.FC<AppBarWithTitleProps> = ({
   <View style={styles.container}>
     <View style={styles.backButton}>
       <Pressable onPress={onBackPress}>
-        <MaterialIcon name={'arrow-back-ios'} size={SIZE} color={'#000000'} />
+        <MaterialIcon name="arrow-back-ios" size={SIZE} color="#000000" />
       </Pressable>
     </View>
     <View style={styles.titleContainer}>
