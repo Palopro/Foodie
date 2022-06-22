@@ -12,6 +12,9 @@ import paypalIcon from '../../../assets/images/paypal.png';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { totalInCart } from '../../../domain/stores/reducers/foodCartReducer';
 import { NoteModal } from './NoteModal/NoteModal';
+import { useAppSelector } from '../../../hooks';
+import { foodieApi } from '../../../data/dataSource/api/foodieApi';
+import { Order } from '../../../domain/model/Order';
 
 const deliveryOptions = [
   { id: 1, name: 'Door delivery' },
@@ -31,6 +34,10 @@ export const PaymentScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const total = useSelector(totalInCart);
+  const cart = useAppSelector(state => state.cartReducer.cart);
+  const user = useAppSelector(state => state.authReducer.user);
+
+  const [createOrder] = foodieApi.useCreateOrderMutation();
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -42,6 +49,23 @@ export const PaymentScreen: React.FC = () => {
 
   const handleChangePayment = (option: { id: number; name: string }) => {
     setPayment(option);
+  };
+
+  const handleCancel = () => setModalVisible(false);
+
+  const handleProceed = () => {
+    setModalVisible(false);
+
+    const order = new Order(
+      'Test order Address',
+      '+380999999999',
+      'DoorDelivery',
+      'card',
+      user!.id,
+      cart,
+    );
+
+    createOrder({ order });
   };
 
   return (
@@ -89,8 +113,8 @@ export const PaymentScreen: React.FC = () => {
 
       <NoteModal
         modalVisible={modalVisible}
-        onCancel={() => setModalVisible(false)}
-        onProceed={() => setModalVisible(false)}
+        onCancel={handleCancel}
+        onProceed={handleProceed}
       />
     </SafeAreaView>
   );
