@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, ListRenderItemInfo } from 'react-native';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 
 import { Divider } from './Divider';
 import { Option } from './Option';
@@ -34,15 +34,13 @@ export const OptionSelect: React.FC<OptionSelectProps> = ({
   );
 
   return (
-    <View>
-      <FlatList
-        data={options}
-        scrollEnabled={false}
-        bounces={false}
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        ItemSeparatorComponent={Divider}
-      />
-    </View>
+    <FlatList
+      data={options}
+      scrollEnabled={false}
+      bounces={false}
+      renderItem={renderItem}
+      keyExtractor={keyExtractor}
+      ItemSeparatorComponent={Divider}
+    />
   );
 };

@@ -60,7 +60,7 @@ export const CheckoutScreen: React.FC = () => {
 
       <View style={styles.infoContainer}>
         <Text style={styles.infoTitle}>Delivery method</Text>
-        <View style={[styles.infoBox, { paddingVertical: 5 }]}>
+        <View style={styles.infoBox}>
           <OptionSelect
             options={options}
             selectedOption={deliveryMethod}
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   infoBox: {
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
-    paddingVertical: 25,
+    paddingVertical: 5,
     paddingHorizontal: 30,
     marginTop: 20,
   },
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontFamily: 'RobotoCondensed-Bold',
     marginBottom: 8,
+    marginTop: 20,
   },
   divider: {
     height: 0.5,
@@ -155,6 +156,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: 'RobotoCondensed-Regular',
     marginTop: 8,
+    marginBottom: 20,
   },
   totalRow: {
     flexDirection: 'row',
