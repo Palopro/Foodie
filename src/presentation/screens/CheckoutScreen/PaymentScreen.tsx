@@ -11,13 +11,7 @@ import bankIcon from '../../../assets/images/bank.png';
 import paypalIcon from '../../../assets/images/paypal.png';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { totalInCart } from '../../../domain/stores/reducers/foodCartReducer';
-
-interface OptionValue {
-  id: number;
-  name: string;
-  image: string;
-  bgColor: string;
-}
+import { NoteModal } from './NoteModal/NoteModal';
 
 const deliveryOptions = [
   { id: 1, name: 'Door delivery' },
@@ -34,6 +28,7 @@ export const PaymentScreen: React.FC = () => {
   const navigation = useNavigation();
   const [delivery, setDelivery] = useState(deliveryOptions[0]);
   const [payment, setPayment] = useState(paymentOptions[0]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const total = useSelector(totalInCart);
 
@@ -59,7 +54,7 @@ export const PaymentScreen: React.FC = () => {
       <View style={[styles.infoContainer, { marginTop: 20 }]}>
         <Text style={styles.infoTitle}>Payment method</Text>
 
-        <View style={[styles.infoBox, { paddingVertical: 5 }]}>
+        <View style={styles.infoBox}>
           <PaymentOptions
             options={paymentOptions}
             selectedOption={payment}
@@ -70,7 +65,7 @@ export const PaymentScreen: React.FC = () => {
 
       <View style={styles.infoContainer}>
         <Text style={styles.infoTitle}>Delivery method</Text>
-        <View style={[styles.infoBox, { paddingVertical: 5 }]}>
+        <View style={styles.infoBox}>
           <OptionSelect
             options={deliveryOptions}
             selectedOption={delivery}
@@ -87,10 +82,16 @@ export const PaymentScreen: React.FC = () => {
       <View style={styles.buttonWrapper}>
         <RoundButton
           text="Proceed to payment"
-          onPress={() => true}
+          onPress={() => setModalVisible(true)}
           colorType={ColorType.Orange}
         />
       </View>
+
+      <NoteModal
+        modalVisible={modalVisible}
+        onCancel={() => setModalVisible(false)}
+        onProceed={() => setModalVisible(false)}
+      />
     </SafeAreaView>
   );
 };
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   infoBox: {
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
-    paddingVertical: 25,
+    paddingVertical: 5,
     paddingHorizontal: 30,
     marginTop: 20,
   },
@@ -142,7 +143,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingStart: 50,
     paddingEnd: 65,
-    // marginTop: 70,
     flex: 1,
   },
   totalText: {
