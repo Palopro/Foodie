@@ -1,4 +1,3 @@
-import { Food } from '../../../../domain/model/Food';
 import { CategoryDTO } from './CategoryDTO';
 
 export interface FoodDTO {
@@ -13,13 +12,3 @@ export interface FoodDTO {
     };
   };
 }
-
-export const mapToFood = (foodDTO: FoodDTO) =>
-  new Food(
-    foodDTO.id,
-    foodDTO.attributes.name,
-    foodDTO.attributes.price,
-    foodDTO.attributes.photo,
-    foodDTO.attributes.categories.data.map((cat: CategoryDTO) => cat.id),
-    foodDTO.attributes.gallery,
-  );

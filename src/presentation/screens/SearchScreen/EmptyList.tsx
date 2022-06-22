@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
+
 import search from '../../../assets/images/search.png';
 
 export const EmptyList: React.FC = () => (
   <View style={styles.container}>
-    <Image source={search} style={{ width: 122, height: 122, resizeMode:'contain' }} />
+    <Image source={search} style={styles.image} />
 
     <View style={styles.titleWrapper}>
       <Text style={styles.title}>Item not found</Text>
@@ -26,6 +27,11 @@ const styles = StyleSheet.create({
   titleWrapper: {
     marginTop: 40,
     paddingHorizontal: 100,
+  },
+  image: {
+    width: 122,
+    height: 122,
+    resizeMode: 'contain',
   },
   title: {
     textAlign: 'center',

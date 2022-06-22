@@ -8,7 +8,7 @@ interface SearchButtonProps {
 
 export const SearchButton: React.FC<SearchButtonProps> = ({ onPress }) => (
   <Pressable style={styles.container} onPress={onPress}>
-    <Icon name={'search'} color={'#000000'} size={24} style={styles.icon} />
+    <Icon name="search" color="#000000" size={24} style={styles.icon} />
 
     <View style={styles.textWrapper}>
       <Text style={styles.text}>Search</Text>

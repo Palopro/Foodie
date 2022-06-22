@@ -3,13 +3,24 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { AppScreen } from './AppScreen';
-import { HomeScreen } from '../presentation/screens/HomeScreen/HomeScreen';
+import { HomeNavigation } from './HomeNavigation';
 
 export type MainAppTabParams = {
-  [AppScreen.HomeScreen]: undefined;
+  [AppScreen.HomeStack]: undefined;
 };
 
 const TabNavigator = createBottomTabNavigator<MainAppTabParams>();
+
+const renderTabIcon =
+  (name: string) =>
+    ({ color }: { color: string }) =>
+      <Icon name={name} color={color} size={28} />;
+
+const tabOptions = {
+  [AppScreen.HomeStack]: {
+    tabBarIcon: renderTabIcon('home'),
+  },
+};
 
 export const MainNavigation = () => (
   <TabNavigator.Navigator
@@ -23,19 +34,11 @@ export const MainNavigation = () => (
       tabBarInactiveTintColor: '#ADADAF',
       tabBarShowLabel: false,
     }}
-    initialRouteName={AppScreen.HomeScreen}>
+    initialRouteName={AppScreen.HomeStack}>
     <TabNavigator.Screen
-      name={AppScreen.HomeScreen}
-      component={HomeScreen}
-      options={{
-        tabBarIcon: ({ focused }) => (
-          <Icon
-            name={'home'}
-            color={focused ? '#FA4A0C' : '#ADADAF'}
-            size={28}
-          />
-        ),
-      }}
+      name={AppScreen.HomeStack}
+      component={HomeNavigation}
+      options={tabOptions[AppScreen.HomeStack]}
     />
   </TabNavigator.Navigator>
 );

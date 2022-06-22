@@ -10,16 +10,17 @@ import { NavigationProp, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { AppBarSearch } from '../../components/AppBar/AppBarSearch';
-import { AppStackParams } from '../../../navigation/AppNavigation';
 import { ImageCarousel } from '../../components/ImageCarousel/ImageCarousel';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { useAppDispatch } from '../../../hooks';
 import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer';
 import { CartFood } from '../../../domain/model/CartFood';
+import { HomeStackParams } from '../../../navigation/HomeNavigation';
+import reactotron from 'reactotron-react-native';
 
 interface FoodDetailsScreenProps {
-  route: RouteProp<AppStackParams>;
-  navigation: NavigationProp<AppStackParams>;
+  route: RouteProp<HomeStackParams>;
+  navigation: NavigationProp<HomeStackParams>;
 }
 
 export const FoodDetailsScreen: React.FC<FoodDetailsScreenProps> = ({
@@ -47,12 +48,14 @@ export const FoodDetailsScreen: React.FC<FoodDetailsScreenProps> = ({
     dispatch(foodCartReducer.actions.addToCart({ cartItem }));
   };
 
+  reactotron.log({food});
+
   return (
     <SafeAreaView style={styles.container}>
       <AppBarSearch onBackPress={handleGoBack} style={styles.appBar}>
         <View style={styles.favContainer}>
           <TouchableOpacity>
-            <Icon name={'heart-outline'} size={24} color={'#000000'} />
+            <Icon name="heart-outline" size={24} color="#000000" />
           </TouchableOpacity>
         </View>
       </AppBarSearch>

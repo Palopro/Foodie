@@ -22,7 +22,7 @@ export const AppBarSearch: React.FC<AppBarSearchProps> = ({
 }) => (
   <View style={[styles.container, style]}>
     <Pressable onPress={onBackPress}>
-      <MaterialIcon name={'arrow-back-ios'} size={SIZE} color={'#000000'} />
+      <MaterialIcon name="arrow-back-ios" size={SIZE} color="#000000" />
     </Pressable>
     {children}
   </View>
