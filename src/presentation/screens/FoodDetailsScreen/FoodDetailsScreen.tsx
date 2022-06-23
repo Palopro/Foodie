@@ -16,7 +16,6 @@ import { useAppDispatch } from '../../../hooks';
 import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer';
 import { CartFood } from '../../../domain/model/CartFood';
 import { HomeStackParams } from '../../../navigation/HomeNavigation';
-import reactotron from 'reactotron-react-native';
 
 interface FoodDetailsScreenProps {
   route: RouteProp<HomeStackParams>;
@@ -47,8 +46,6 @@ export const FoodDetailsScreen: React.FC<FoodDetailsScreenProps> = ({
 
     dispatch(foodCartReducer.actions.addToCart({ cartItem }));
   };
-
-  reactotron.log({food});
 
   return (
     <SafeAreaView style={styles.container}>

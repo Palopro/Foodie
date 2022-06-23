@@ -15,9 +15,11 @@ interface ImageCarouselProps {
 }
 
 const DEFAULT_INDEX = 0;
+const ACTIVE_COLOR = 'rgb(250, 74, 12)';
+const DEFAULT_COLOR = 'rgb(196, 196, 196)';
 
 const bgColor = (index: number, activeImg: number) =>
-  index === activeImg ? 'rgb(250, 74, 12)' : 'rgb(196, 196, 196)';
+  index === activeImg ? ACTIVE_COLOR : DEFAULT_COLOR;
 
 export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
   const [activeImg, setActiveImg] = useState(DEFAULT_INDEX);
@@ -40,6 +42,15 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
     }
   };
 
+  const renderDots = () =>
+    images.map((img, index: number) => {
+      let backgroundColor = bgColor(index, activeImg);
+
+      return (
+        <Animated.View key={index} style={[styles.dot, { backgroundColor }]} />
+      );
+    });
+
   return (
     <>
       <Animated.FlatList
@@ -56,18 +67,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
         onScroll={handleScroll}
       />
 
-      <View style={styles.dotView}>
-        {images.map((img, index: number) => {
-          let backgroundColor = bgColor(index, activeImg);
-
-          return (
-            <Animated.View
-              key={index}
-              style={[styles.dot, { backgroundColor }]}
-            />
-          );
-        })}
-      </View>
+      <View style={styles.dotView}>{renderDots()}</View>
     </>
   );
 };
