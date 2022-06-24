@@ -7,8 +7,8 @@ interface DotProps {
   index: number;
 }
 
-const ACTIVE_COLOR = 'rgb(250, 74, 12)';
-const DEFAULT_COLOR = 'rgb(196, 196, 196)';
+const ACTIVE_COLOR = 'rgba(250, 74, 12, 1)';
+const DEFAULT_COLOR = 'rgba(196, 196, 196, 1)';
 
 export const Dot: React.FC<DotProps> = ({ index, currentIndexAnimated }) => {
   const animatedStyle = useAnimatedStyle(() => ({

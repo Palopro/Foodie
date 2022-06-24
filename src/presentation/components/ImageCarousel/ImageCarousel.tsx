@@ -28,8 +28,8 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
 
   const currentIndex = useDerivedValue(() => x.value / width);
 
-  const renderImage = (item: string) => (
-    <CarouselItem key={item} imageSource={item} />
+  const renderImage = (img: string) => (
+    <CarouselItem key={img} imageSource={img} />
   );
   const renderDot = (img: string, index: number) => (
     <Dot key={index} index={index} currentIndexAnimated={currentIndex} />
