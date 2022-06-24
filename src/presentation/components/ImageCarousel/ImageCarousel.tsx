@@ -1,71 +1,55 @@
-import React, { useState } from 'react';
-import {
-  ListRenderItemInfo,
-  StyleSheet,
-  View,
-  Animated,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-} from 'react-native';
+import React from 'react';
+import { StyleSheet, Dimensions, View } from 'react-native';
+import Animated, {
+  useAnimatedScrollHandler,
+  useDerivedValue,
+  useSharedValue,
+} from 'react-native-reanimated';
 
 import { CarouselItem } from './CarouselItem';
+import { Dot } from './Dot';
 
 interface ImageCarouselProps {
   images: Array<string>;
 }
 
 const DEFAULT_INDEX = 0;
-const ACTIVE_COLOR = 'rgb(250, 74, 12)';
-const DEFAULT_COLOR = 'rgb(196, 196, 196)';
+
+const { width } = Dimensions.get('window');
 
 export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
-  const [activeImg, setActiveImg] = useState(DEFAULT_INDEX);
+  const scroll = React.useRef<Animated.ScrollView>(null);
 
-  const keyExtractor = (img: string, index: number) => `img-${index}`;
+  const x = useSharedValue(DEFAULT_INDEX);
 
-  const renderImage = ({ item }: ListRenderItemInfo<string>) => (
-    <CarouselItem imageSource={item} />
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: ({ contentOffset }) => (x.value = contentOffset.x),
+  });
+
+  const currentIndex = useDerivedValue(() => x.value / width);
+
+  const renderImage = (item: string) => (
+    <CarouselItem key={item} imageSource={item} />
   );
-
-  const handleScroll = ({
-    nativeEvent,
-  }: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const slideIndex = Math.ceil(
-      nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width,
-    );
-
-    if (slideIndex !== activeImg) {
-      setActiveImg(slideIndex);
-    }
-  };
-
-  const renderDot = (index: number) => {
-    const backgroundColor = index === activeImg ? ACTIVE_COLOR : DEFAULT_COLOR;
-
-    return (
-      <Animated.View key={index} style={[styles.dot, { backgroundColor }]} />
-    );
-  };
+  const renderDot = (img: string, index: number) => (
+    <Dot key={index} index={index} currentIndexAnimated={currentIndex} />
+  );
 
   return (
     <>
-      <Animated.FlatList
+      <Animated.ScrollView
+        ref={scroll}
         horizontal
-        pagingEnabled
         showsHorizontalScrollIndicator={false}
         bounces={false}
-        snapToAlignment="center"
-        data={images}
-        keyExtractor={keyExtractor}
-        renderItem={renderImage}
         scrollEventThrottle={16}
         decelerationRate="fast"
-        onScroll={handleScroll}
-      />
+        snapToInterval={width}
+        onScroll={onScroll}>
+        {images.map(renderImage)}
+      </Animated.ScrollView>
 
-      <View style={styles.dotView}>
-        {images.map((img: string, index: number) => renderDot(index))}
-      </View>
+      <View style={styles.dotView}>{images.map(renderDot)}</View>
     </>
   );
 };

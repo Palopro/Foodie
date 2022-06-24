@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Dimensions, Image, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, Image } from 'react-native';
 
 interface CarouselItemProps {
   imageSource: string;
