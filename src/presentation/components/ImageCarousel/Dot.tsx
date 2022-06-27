@@ -1,5 +1,8 @@
 import React from 'react';
-import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 import { StyleSheet } from 'react-native';
 
 interface DotProps {
@@ -12,8 +15,11 @@ const DEFAULT_COLOR = 'rgba(196, 196, 196, 1)';
 
 export const Dot: React.FC<DotProps> = ({ index, currentIndexAnimated }) => {
   const animatedStyle = useAnimatedStyle(() => ({
-    backgroundColor:
-      index === currentIndexAnimated.value ? ACTIVE_COLOR : DEFAULT_COLOR,
+    backgroundColor: interpolateColor(
+      currentIndexAnimated.value,
+      [index - 1, index, index + 1],
+      [DEFAULT_COLOR, ACTIVE_COLOR, DEFAULT_COLOR],
+    ),
   }));
 
   return <Animated.View key={index} style={[styles.dot, animatedStyle]} />;
