@@ -24,6 +24,7 @@ const mapToFood = (foodDTO: FoodDTO) =>
     foodDTO.attributes.price,
     foodDTO.attributes.photo,
     foodDTO.attributes.categories.data.map((cat: CategoryDTO) => cat.id),
+    foodDTO.attributes.gallery,
   );
 
 export const foodieApi = createApi({

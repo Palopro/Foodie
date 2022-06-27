@@ -64,7 +64,7 @@ export const HomeScreen: React.FC = () => {
   );
 
   const renderFood = ({ item }: ListRenderItemInfo<Food>) => (
-    <FoodCard food={item} />
+    <FoodCard food={item} onFoodPress={handleFoodPress} />
   );
 
   const filteredFoods = foods.filter(f =>
@@ -73,6 +73,10 @@ export const HomeScreen: React.FC = () => {
 
   const handleSearch = () => {
     navigation.navigate(AppScreen.SearchScreen);
+  };
+
+  const handleFoodPress = (food: Food) => {
+    navigation.navigate(AppScreen.FoodDetailsScreen, { food });
   };
 
   return (

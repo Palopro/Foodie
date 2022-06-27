@@ -6,4 +6,5 @@ export enum AppScreen {
   HomeStack = 'HomeStack',
   HomeScreen = 'HomeScreen',
   SearchScreen = 'SearchScreen',
+  FoodDetailsScreen = 'FoodDetailsScreen',
 }

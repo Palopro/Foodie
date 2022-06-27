@@ -30,8 +30,8 @@ export const AuthScreen = () => {
     <View style={styles.container}>
       <StatusBar
         translucent
-        barStyle={'dark-content'}
-        backgroundColor={'#FFFFFF'}
+        barStyle="dark-content"
+        backgroundColor="#FFFFFF"
         animated
       />
 
