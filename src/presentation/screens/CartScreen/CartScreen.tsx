@@ -17,16 +17,12 @@ import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { QuickAction } from './QuickAction';
 import { AppScreen } from '../../../navigation/AppScreen';
-import { HomeStackParams } from '../../../navigation/HomeNavigation';
+import { RootStackParams } from '../../../navigation/RootNavigation';
 
 export const CartScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<HomeStackParams>>();
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
   const cart = useAppSelector(state => state.cartReducer.cart);
   const dispatch = useAppDispatch();
-
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
 
   const handleIncrementQty = (cartItem: CartFood) => {
     dispatch(foodCartReducer.actions.incrementCartFoodQty({ cartItem }));
@@ -54,7 +50,9 @@ export const CartScreen: React.FC = () => {
     dispatch(foodCartReducer.actions.removeFromCart({ cartItem }));
   };
 
-  const handleFavorite = (cartFood: CartFood) => {};
+  const handleFavorite = (cartFood: CartFood) => {
+    //TODO: favorite feature
+  };
 
   const renderActions = ({ item }: { item: CartFood }) => (
     <View style={styles.actionContainer}>
@@ -72,7 +70,7 @@ export const CartScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <AppBarWithTitle onBackPress={handleGoBack} title="Cart" />
+      <AppBarWithTitle onBackPress={navigation.goBack} title="Cart" />
 
       <SwipeableFlatList
         keyExtractor={keyRow}

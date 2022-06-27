@@ -9,34 +9,31 @@ interface QuantitySelectorProps {
 }
 
 const hitSlop: Insets = { top: 8, right: 8, bottom: 8, left: 8 };
+const MIN_QTY = 1;
 
 export const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   qty,
   onPressDecrement,
   onPressIncrement,
-  minQty = 1,
-}) => {
-  const disabledMin = qty <= minQty;
-
-  return (
-    <View style={styles.container}>
-      <Pressable
-        hitSlop={hitSlop}
-        onPress={onPressDecrement}
-        disabled={disabledMin}>
-        <Text style={styles.buttonText}>-</Text>
-      </Pressable>
-      <View style={styles.textWrapper}>
-        <Text style={styles.text} numberOfLines={1}>
-          {qty}
-        </Text>
-      </View>
-      <Pressable hitSlop={hitSlop} onPress={onPressIncrement}>
-        <Text style={styles.buttonText}>+</Text>
-      </Pressable>
+  minQty = MIN_QTY,
+}) => (
+  <View style={styles.container}>
+    <Pressable
+      hitSlop={hitSlop}
+      onPress={onPressDecrement}
+      disabled={qty <= minQty}>
+      <Text style={styles.buttonText}>-</Text>
+    </Pressable>
+    <View style={styles.textWrapper}>
+      <Text style={styles.text} numberOfLines={1}>
+        {qty}
+      </Text>
     </View>
-  );
-};
+    <Pressable hitSlop={hitSlop} onPress={onPressIncrement}>
+      <Text style={styles.buttonText}>+</Text>
+    </Pressable>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -18,10 +18,10 @@ import { SearchButton } from './SearchButton';
 import { AppScreen } from '../../../navigation/AppScreen';
 import { FoodCard } from './FoodCard';
 import { CategoryRow } from './CategoryRow';
-import { HomeStackParams } from '../../../navigation/HomeNavigation';
+import { MainAppTabParams } from '../../../navigation/MainNavigation';
 
 export const HomeScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<HomeStackParams>>();
+  const navigation = useNavigation<NavigationProp<MainAppTabParams>>();
   const [selectedFilter, setFilter] = useState(0);
 
   const foodListRef = useRef<FlatList<Food>>();

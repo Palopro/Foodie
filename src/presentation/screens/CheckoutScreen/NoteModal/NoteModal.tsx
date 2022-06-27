@@ -3,13 +3,13 @@ import {
   FlatList,
   ListRenderItemInfo,
   Modal,
-  Pressable,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import { Divider } from './Divider';
 import { NoteRow } from './NoteRow';
+import { RoundlessButton, Type } from './RoundlessButton';
 
 interface NoteModalProps {
   modalVisible: boolean;
@@ -55,13 +55,17 @@ export const NoteModal: React.FC<NoteModalProps> = ({
               />
 
               <View style={styles.buttonRow}>
-                <Pressable onPress={onCancel}>
-                  <Text style={styles.cancel}>Cancel</Text>
-                </Pressable>
+                <RoundlessButton
+                  onPress={onCancel}
+                  text="Cancel"
+                  type={Type.Cancel}
+                />
 
-                <Pressable style={styles.proceedButton} onPress={onProceed}>
-                  <Text style={styles.proceedText}>Proceed</Text>
-                </Pressable>
+                <RoundlessButton
+                  onPress={onProceed}
+                  type={Type.Proceed}
+                  text="Proceed"
+                />
               </View>
             </View>
           </View>
@@ -104,25 +108,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  cancel: {
-    color: 'rgba(0, 0, 0, 0.5)',
-    fontWeight: '600',
-    fontStyle: 'normal',
-    textAlign: 'center',
-    fontSize: 17,
-    lineHeight: 25,
-  },
-  proceedButton: {
-    backgroundColor: '#FA4A0C',
-    paddingHorizontal: 44,
-    paddingVertical: 17,
-    borderRadius: 30,
-  },
-  proceedText: {
-    color: '#FFFFFF',
-    fontWeight: '600',
-    fontStyle: 'normal',
-    textAlign: 'center',
   },
 });

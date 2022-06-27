@@ -15,7 +15,7 @@ import { NoteModal } from './NoteModal/NoteModal';
 import { useAppSelector } from '../../../hooks';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Order } from '../../../domain/model/Order';
-import { HomeStackParams } from '../../../navigation/HomeNavigation';
+import { RootStackParams } from '../../../navigation/RootNavigation';
 
 interface OptionValue {
   id: number;
@@ -53,7 +53,7 @@ const paymentOptions = [
 ];
 
 export const PaymentScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<HomeStackParams>>();
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
   const [delivery, setDelivery] = useState(deliveryOptions[0]);
   const [payment, setPayment] = useState(paymentOptions[0]);
   const [modalVisible, setModalVisible] = useState(false);

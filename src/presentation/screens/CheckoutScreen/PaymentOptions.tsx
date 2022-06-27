@@ -35,17 +35,13 @@ export const PaymentOptions: React.FC<PaymentOptionsProps> = ({
 
   const handlePressOption = (option: OptionValue) => onChangeOption(option);
 
-  const renderItem = ({ item }: ListRenderItemInfo<OptionValue>) => {
-    const isSelected = item.id === selectedOption.id;
-
-    return (
-      <PaymentRow
-        paymentOption={item}
-        isSelected={isSelected}
-        onPress={handlePressOption}
-      />
-    );
-  };
+  const renderItem = ({ item }: ListRenderItemInfo<OptionValue>) => (
+    <PaymentRow
+      paymentOption={item}
+      isSelected={item.id === selectedOption.id}
+      onPress={handlePressOption}
+    />
+  );
 
   return (
     <FlatList

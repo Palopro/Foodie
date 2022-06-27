@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 import { AppBarSearch } from '../../components/AppBar/AppBarSearch';
@@ -8,12 +8,13 @@ import { ColorType, RoundButton } from '../../components/RoundButton';
 import { useAppDispatch } from '../../../hooks';
 import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer';
 import { CartFood } from '../../../domain/model/CartFood';
-import { HomeStackParams } from '../../../navigation/HomeNavigation';
 import { FavoriteButton } from './FavoriteButton';
+import { StylingText, TextType } from '../../components/StylingText';
+import { RootStackParams } from '../../../navigation/RootNavigation';
 
 interface FoodDetailsScreenProps {
-  route: RouteProp<HomeStackParams>;
-  navigation: NavigationProp<HomeStackParams>;
+  route: RouteProp<RootStackParams>;
+  navigation: NavigationProp<RootStackParams>;
 }
 
 export const FoodDetailsScreen: React.FC<FoodDetailsScreenProps> = ({
@@ -47,28 +48,36 @@ export const FoodDetailsScreen: React.FC<FoodDetailsScreenProps> = ({
 
       <ImageCarousel images={food.gallery} />
       <View style={styles.nameWrapper}>
-        <Text style={styles.name}>{food.name}</Text>
+        <StylingText textType={TextType.Bold} style={styles.name}>
+          {food.name}
+        </StylingText>
       </View>
       <View style={styles.priceWrapper}>
-        <Text style={styles.price}>{food.price}</Text>
+        <StylingText textType={TextType.Bold} style={styles.price}>
+          {food.price}
+        </StylingText>
       </View>
 
       <View style={styles.infoView}>
-        <Text style={styles.infoTitle}>Delivery info</Text>
+        <StylingText textType={TextType.Bold} style={styles.infoTitle}>
+          Delivery info
+        </StylingText>
         <View style={styles.infoDesc}>
-          <Text style={styles.infoDescText}>
+          <StylingText textType={TextType.Regular}>
             Delivered between monday aug and thursday 20 from 8pm to 91:32 pm
-          </Text>
+          </StylingText>
         </View>
       </View>
 
       <View style={styles.infoView}>
-        <Text style={styles.infoTitle}>Return policy</Text>
+        <StylingText textType={TextType.Bold} style={styles.infoTitle}>
+          Return policy
+        </StylingText>
         <View style={styles.infoDesc}>
-          <Text style={styles.infoDescText}>
+          <StylingText textType={TextType.Regular}>
             All our foods are double checked before leaving our stores so by any
             case you found a broken food please contact our hotline immediately.
-          </Text>
+          </StylingText>
         </View>
       </View>
 
@@ -104,10 +113,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'rgba(0, 0, 0, 1)',
     fontSize: 28,
-    fontWeight: '700',
-    fontFamily: 'RobotoCondensed-Bold',
     lineHeight: 32,
-    fontStyle: 'normal',
   },
   priceWrapper: {
     marginTop: 12,
@@ -117,9 +123,6 @@ const styles = StyleSheet.create({
     color: 'rgba(250, 74, 12, 1)',
     fontSize: 22,
     lineHeight: 26,
-    fontWeight: '700',
-    fontFamily: 'RobotoCondensed-Bold',
-    fontStyle: 'normal',
   },
 
   infoView: {
@@ -127,25 +130,11 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   infoTitle: {
-    textAlign: 'left',
-    fontStyle: 'normal',
-    color: 'rgba(0, 0, 0, 1)',
     fontSize: 17,
     lineHeight: 20,
-    fontWeight: '700',
-    fontFamily: 'RobotoCondensed-Bold',
   },
   infoDesc: {
     marginTop: 3,
-  },
-  infoDescText: {
-    textAlign: 'left',
-    fontStyle: 'normal',
-    color: 'rgba(0, 0, 0, 0.5)',
-    fontSize: 15,
-    lineHeight: 20,
-    fontWeight: '400',
-    fontFamily: 'RobotoCondensed-Regular',
   },
   buttonWrapper: {
     marginTop: 30,

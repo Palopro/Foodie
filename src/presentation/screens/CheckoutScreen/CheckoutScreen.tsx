@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import { AppBarWithTitle } from '../../components/AppBar/AppBarWithTitle';
@@ -9,7 +9,8 @@ import { OptionSelect } from '../../components/OptionSelect/OptionSelect';
 import { totalInCart } from '../../../domain/stores/reducers/foodCartReducer';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { AppScreen } from '../../../navigation/AppScreen';
-import { HomeStackParams } from '../../../navigation/HomeNavigation';
+import { StylingText, TextType } from '../../components/StylingText';
+import { RootStackParams } from '../../../navigation/RootNavigation';
 
 const options = [
   { id: 1, name: 'Door delivery', value: 'DoorDelivery' },
@@ -17,7 +18,7 @@ const options = [
 ];
 
 export const CheckoutScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<HomeStackParams>>();
+  const navigation = useNavigation<NavigationProp<RootStackParams>>();
   const [deliveryMethod, setDeliveryMethod] = useState(options[0]);
 
   const total = useSelector(totalInCart);
@@ -41,25 +42,35 @@ export const CheckoutScreen: React.FC = () => {
       <AppBarWithTitle title="Checkout" onBackPress={handleGoBack} />
 
       <View style={styles.titleWrapper}>
-        <Text style={styles.title}>Delivery</Text>
+        <StylingText textType={TextType.Bold} style={styles.title}>
+          Delivery
+        </StylingText>
       </View>
 
       <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Address details</Text>
+        <StylingText textType={TextType.Bold} style={styles.infoTitle}>
+          Address details
+        </StylingText>
 
         <View style={styles.infoBox}>
-          <Text style={styles.username}>{user?.username}</Text>
+          <StylingText textType={TextType.Bold} style={styles.username}>
+            {user?.username}
+          </StylingText>
           <View style={styles.divider} />
-          <Text style={styles.text}>
+          <StylingText textType={TextType.Regular} style={styles.text}>
             Km 5 refinery road oppsite re public road, effurun, delta state
-          </Text>
+          </StylingText>
           <View style={styles.divider} />
-          <Text style={styles.phoneNumber}>+234 9011039271</Text>
+          <StylingText textType={TextType.Regular} style={styles.phoneNumber}>
+            +234 9011039271
+          </StylingText>
         </View>
       </View>
 
       <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Delivery method</Text>
+        <StylingText textType={TextType.Bold} style={styles.infoTitle}>
+          Delivery method
+        </StylingText>
         <View style={styles.infoBox}>
           <OptionSelect
             options={options}
@@ -70,8 +81,12 @@ export const CheckoutScreen: React.FC = () => {
       </View>
 
       <View style={styles.totalRow}>
-        <Text style={styles.totalText}>Total</Text>
-        <Text style={styles.totalValue}>{total.toFixed(2)}</Text>
+        <StylingText textType={TextType.Regular} style={styles.totalText}>
+          Total
+        </StylingText>
+        <StylingText textType={TextType.Bold} style={styles.totalValue}>
+          {total.toFixed(2)}
+        </StylingText>
       </View>
 
       <View style={styles.buttonWrapper}>
@@ -96,11 +111,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 34,
     lineHeight: 40,
-    color: '#000000',
-    textAlign: 'left',
-    fontStyle: 'normal',
-    fontWeight: '700',
-    fontFamily: 'RobotoCondensed-Bold',
   },
   infoContainer: {
     marginTop: 42,
@@ -109,11 +119,6 @@ const styles = StyleSheet.create({
   infoTitle: {
     fontSize: 17,
     lineHeight: 20,
-    color: '#000000',
-    textAlign: 'left',
-    fontStyle: 'normal',
-    fontWeight: '700',
-    fontFamily: 'RobotoCondensed-Bold',
   },
   infoBox: {
     backgroundColor: '#FFFFFF',
@@ -125,11 +130,6 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 17,
     lineHeight: 20,
-    color: '#000000',
-    textAlign: 'left',
-    fontStyle: 'normal',
-    fontWeight: '700',
-    fontFamily: 'RobotoCondensed-Bold',
     marginBottom: 8,
     marginTop: 20,
   },
@@ -140,21 +140,11 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     lineHeight: 18,
-    color: '#000000',
-    textAlign: 'left',
-    fontStyle: 'normal',
-    fontWeight: '400',
-    fontFamily: 'RobotoCondensed-Regular',
     marginVertical: 8,
   },
   phoneNumber: {
     fontSize: 15,
     lineHeight: 18,
-    color: '#000000',
-    textAlign: 'left',
-    fontStyle: 'normal',
-    fontWeight: '400',
-    fontFamily: 'RobotoCondensed-Regular',
     marginTop: 8,
     marginBottom: 20,
   },
@@ -164,20 +154,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingStart: 50,
     paddingEnd: 65,
-    // marginTop: 70,
     flex: 1,
   },
   totalText: {
-    textAlign: 'left',
-    fontWeight: '400',
-    fontFamily: 'RobotoCondensed-Regular',
     fontSize: 17,
     lineHeight: 20,
   },
   totalValue: {
     textAlign: 'right',
-    fontWeight: '700',
-    fontFamily: 'RobotoCondensed-Bold',
     fontSize: 22,
     lineHeight: 25,
   },
