@@ -4,9 +4,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { AppScreen } from './AppScreen';
 import { HomeNavigation } from './HomeNavigation';
+import { FavoritesScreen } from '../presentation/screens/FavoritesScreen/FavoritesScreen';
 
 export type MainAppTabParams = {
   [AppScreen.HomeStack]: undefined;
+  [AppScreen.FavoritesScreen]: undefined;
 };
 
 const TabNavigator = createBottomTabNavigator<MainAppTabParams>();
@@ -19,6 +21,9 @@ const renderTabIcon =
 const tabOptions = {
   [AppScreen.HomeStack]: {
     tabBarIcon: renderTabIcon('home'),
+  },
+  [AppScreen.FavoritesScreen]: {
+    tabBarIcon: renderTabIcon('favorite-outline'),
   },
 };
 
@@ -39,6 +44,11 @@ export const MainNavigation = () => (
       name={AppScreen.HomeStack}
       component={HomeNavigation}
       options={tabOptions[AppScreen.HomeStack]}
+    />
+    <TabNavigator.Screen
+      name={AppScreen.FavoritesScreen}
+      component={FavoritesScreen}
+      options={tabOptions[AppScreen.FavoritesScreen]}
     />
   </TabNavigator.Navigator>
 );
