@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { AppBarSearch } from '../../components/AppBar/AppBarSearch';
 import { ImageCarousel } from '../../components/ImageCarousel/ImageCarousel';
@@ -16,7 +9,7 @@ import { useAppDispatch } from '../../../hooks';
 import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer';
 import { CartFood } from '../../../domain/model/CartFood';
 import { HomeStackParams } from '../../../navigation/HomeNavigation';
-import reactotron from 'reactotron-react-native';
+import { FavoriteButton } from './FavoriteButton';
 
 interface FoodDetailsScreenProps {
   route: RouteProp<HomeStackParams>;
@@ -31,10 +24,6 @@ export const FoodDetailsScreen: React.FC<FoodDetailsScreenProps> = ({
 
   const { food } = route.params!;
 
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
-
   const handleAddToCard = () => {
     const cartItem: CartFood = new CartFood(
       food.id,
@@ -48,15 +37,11 @@ export const FoodDetailsScreen: React.FC<FoodDetailsScreenProps> = ({
     dispatch(foodCartReducer.actions.addToCart({ cartItem }));
   };
 
-  reactotron.log({food});
-
   return (
     <SafeAreaView style={styles.container}>
-      <AppBarSearch onBackPress={handleGoBack} style={styles.appBar}>
+      <AppBarSearch onBackPress={navigation.goBack} style={styles.appBar}>
         <View style={styles.favContainer}>
-          <TouchableOpacity>
-            <Icon name="heart-outline" size={24} color="#000000" />
-          </TouchableOpacity>
+          <FavoriteButton />
         </View>
       </AppBarSearch>
 

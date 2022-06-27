@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 24,
-    // paddingHorizontal: 112,
   },
   text: {
     textAlign: 'center',

@@ -10,6 +10,12 @@ import { foodReducer } from './reducers/foodReducer';
 import { foodCartReducer } from './reducers/foodCartReducer';
 import { Reducers } from './reducers/reducers';
 
+enum Reducer {
+  AuthReducer = 'authReducer',
+  FoodReducer = 'foodReducer',
+  CartReducer = 'cartReducer',
+}
+
 const blackList = ['navigation', Reducers.FoodReducer, 'FoodieApi'];
 const whiteList = [Reducers.AuthReducer];
 
@@ -21,9 +27,9 @@ const persistConfig = {
 };
 
 const reducers = combineReducers({
-  authReducer: authUserReducer.reducer,
-  foodReducer: foodReducer.reducer,
-  cartReducer: foodCartReducer.reducer,
+  [Reducer.AuthReducer]: authUserReducer.reducer,
+  [Reducer.FoodReducer]: foodReducer.reducer,
+  [Reducer.CartReducer]: foodCartReducer.reducer,
   [foodieApi.reducerPath]: foodieApi.reducer,
 });
 
