@@ -1,7 +1,8 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
 import cart from '../../../assets/images/cart.png';
+import { StylingText, TextType } from '../../components/StylingText';
 
 export const CartEmpty: React.FC = () => (
   <View style={styles.container}>
@@ -9,9 +10,13 @@ export const CartEmpty: React.FC = () => (
       <Image source={cart} style={styles.image} />
     </View>
     <View style={styles.titleWrapper}>
-      <Text style={styles.title}>Cart is empty</Text>
+      <StylingText textType={TextType.Bold} style={styles.title}>
+        Cart is empty
+      </StylingText>
     </View>
-    <Text style={styles.subTitle}>Add new items to cart</Text>
+    <StylingText textType={TextType.Regular} style={styles.subTitle}>
+      Add new items to cart
+    </StylingText>
   </View>
 );
 
@@ -33,20 +38,13 @@ const styles = StyleSheet.create({
     marginBottom: 17,
   },
   title: {
-    color: 'rgba(0, 0, 0, 1)',
     textAlign: 'center',
-    fontStyle: 'normal',
-    fontWeight: '700',
-    fontFamily: 'RobotoCondensed-Bold',
     fontSize: 28,
     lineHeight: 32,
   },
   subTitle: {
     color: 'rgba(0, 0, 0, 0.57)',
     textAlign: 'center',
-    fontStyle: 'normal',
-    fontWeight: '400',
-    fontFamily: 'RobotoCondensed-Regular',
     fontSize: 17,
     lineHeight: 20,
   },

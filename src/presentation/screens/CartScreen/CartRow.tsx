@@ -1,8 +1,9 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
 import { CartFood } from '../../../domain/model/CartFood';
 import { QuantitySelector } from './QuantitySelector';
+import { StylingText, TextType } from '../../components/StylingText';
 
 interface CartRowProps {
   cartFood: CartFood;
@@ -27,13 +28,19 @@ export const CartRow: React.FC<CartRowProps> = ({
     <View style={styles.container}>
       <Image source={{ uri: cartFood.photo }} style={styles.photo} />
       <View style={styles.content}>
-        <Text numberOfLines={1} style={styles.name}>
+        <StylingText
+          textType={TextType.Bold}
+          numberOfLines={1}
+          style={styles.name}>
           {cartFood.name}
-        </Text>
+        </StylingText>
         <View style={styles.priceWrapper}>
-          <Text numberOfLines={1} style={styles.price}>
+          <StylingText
+            textType={TextType.Regular}
+            numberOfLines={1}
+            style={styles.price}>
             {cartFood.price.toFixed(2)}
-          </Text>
+          </StylingText>
         </View>
       </View>
 
@@ -69,25 +76,16 @@ const styles = StyleSheet.create({
     marginStart: 15,
   },
   name: {
-    textAlign: 'left',
-    color: 'rgba(0, 0, 0, 1)',
-    fontStyle: 'normal',
-    fontWeight: '700',
     fontSize: 17,
     lineHeight: 20,
-    fontFamily: 'RobotoCondensed-Bold',
   },
   priceWrapper: {
     marginTop: 12,
   },
   price: {
-    textAlign: 'left',
     color: 'rgba(250, 74, 12, 1)',
-    fontStyle: 'normal',
-    fontWeight: '700',
     fontSize: 15,
     lineHeight: 18,
-    fontFamily: 'RobotoCondensed-Bold',
   },
   qtyContainer: {
     position: 'absolute',
