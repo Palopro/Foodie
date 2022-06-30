@@ -7,6 +7,5 @@ const styles = StyleSheet.create({
   divider: {
     height: 0.5,
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    // marginStart: 30,
   },
 });

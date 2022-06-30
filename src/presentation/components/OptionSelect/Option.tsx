@@ -1,16 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-interface OptionValue {
-  id: number;
-  name: string;
-  value: string;
-}
+import { DeliveryNote } from '../../../domain/model/DeliveryNote';
 
 interface OptionProps {
-  option: OptionValue;
+  option: DeliveryNote;
   isSelected: boolean;
-  onPress: (option: OptionValue) => void;
+  onPress: (option: DeliveryNote) => void;
 }
 
 export const Option: React.FC<OptionProps> = ({

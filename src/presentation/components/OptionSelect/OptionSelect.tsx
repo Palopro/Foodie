@@ -3,17 +3,12 @@ import { FlatList, ListRenderItemInfo } from 'react-native';
 
 import { Divider } from './Divider';
 import { Option } from './Option';
-
-interface OptionValue {
-  id: number;
-  name: string;
-  value: string;
-}
+import { DeliveryNote } from '../../../domain/model/DeliveryNote';
 
 interface OptionSelectProps {
-  options: Array<OptionValue>;
-  selectedOption: OptionValue;
-  onChangeOption: (optionValue: OptionValue) => void;
+  options: Array<DeliveryNote>;
+  selectedOption: DeliveryNote;
+  onChangeOption: (optionValue: DeliveryNote) => void;
 }
 
 export const OptionSelect: React.FC<OptionSelectProps> = ({
@@ -21,13 +16,14 @@ export const OptionSelect: React.FC<OptionSelectProps> = ({
   selectedOption,
   onChangeOption,
 }) => {
-  const handleChangeOption = (optionValue: OptionValue) =>
+  const handleChangeOption = (optionValue: DeliveryNote) =>
     onChangeOption(optionValue);
 
-  const keyExtractor = (option: OptionValue) => `Option-${option.id}`;
+  const keyExtractor = (option: DeliveryNote) => `Option-${option.id}`;
 
-  const renderItem = ({ item }: ListRenderItemInfo<OptionValue>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<DeliveryNote>) => (
     <Option
+      key={`opt-${item.id}`}
       option={item}
       isSelected={item.id === selectedOption.id}
       onPress={handleChangeOption}

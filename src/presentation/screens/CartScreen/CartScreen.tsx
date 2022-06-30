@@ -1,32 +1,22 @@
 import React from 'react';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import {
-  ListRenderItemInfo,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from 'react-native';
-import SwipeableFlatList from 'react-native-swipeable-list';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { AppBarWithTitle } from '../../components/AppBar/AppBarWithTitle';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { CartFood } from '../../../domain/model/CartFood';
-import { CartRow } from './CartRow';
-import { CartEmpty } from './CartEmpty';
 import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer';
 import { ColorType, RoundButton } from '../../components/RoundButton';
-import { QuickAction } from './QuickAction';
 import { AppScreen } from '../../../navigation/AppScreen';
-import { HomeStackParams } from '../../../navigation/HomeNavigation';
+import { RootStackParams } from '../../../navigation/RootNavigation';
+import { SwipeableList } from './SwipeableList/SwipeableList';
+import { CartEmpty } from './CartEmpty';
 
-export const CartScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<HomeStackParams>>();
+export const CartScreen: React.FC<NativeStackScreenProps<RootStackParams>> = ({
+  navigation,
+}) => {
   const cart = useAppSelector(state => state.cartReducer.cart);
   const dispatch = useAppDispatch();
-
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
 
   const handleIncrementQty = (cartItem: CartFood) => {
     dispatch(foodCartReducer.actions.incrementCartFoodQty({ cartItem }));
@@ -36,16 +26,6 @@ export const CartScreen: React.FC = () => {
     dispatch(foodCartReducer.actions.decrementCartFoodQty({ cartItem }));
   };
 
-  const renderRow = ({ item }: ListRenderItemInfo<CartFood>) => (
-    <CartRow
-      cartFood={item}
-      onIncrementQty={handleIncrementQty}
-      onDecrementQty={handleDecrementQty}
-    />
-  );
-
-  const keyRow = (cartFood: CartFood) => `cart-row-${cartFood.id}`;
-
   const handleCheckout = () => {
     navigation.navigate(AppScreen.CheckoutScreen);
   };
@@ -54,40 +34,27 @@ export const CartScreen: React.FC = () => {
     dispatch(foodCartReducer.actions.removeFromCart({ cartItem }));
   };
 
-  const handleFavorite = (cartFood: CartFood) => {};
-
-  const renderActions = ({ item }: { item: CartFood }) => (
-    <View style={styles.actionContainer}>
-      <QuickAction
-        iconName="heart-outline"
-        onPress={() => handleFavorite(item)}
-      />
-      <View style={styles.divider} />
-      <QuickAction
-        iconName="delete-outline"
-        onPress={() => handleDelete(item)}
-      />
-    </View>
-  );
+  const handleFavorite = (cartFood: CartFood) => {
+    //TODO: favorite feature
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <AppBarWithTitle onBackPress={handleGoBack} title="Cart" />
+      <AppBarWithTitle onBackPress={navigation.goBack} title="Cart" />
 
-      <SwipeableFlatList
-        keyExtractor={keyRow}
+      <SwipeableList
         data={cart}
-        extraData={cart}
-        renderItem={renderRow}
-        renderQuickActions={renderActions}
+        onFavorite={handleFavorite}
+        onDelete={handleDelete}
+        onDecrementQty={handleDecrementQty}
+        onIncrementQty={handleIncrementQty}
         scrollEventThrottle={16}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        showsVerticalScrollIndicator={false}
         ListEmptyComponent={CartEmpty}
         contentContainerStyle={[
           styles.contentContainer,
           { flex: cart.length === 0 ? 1 : undefined },
         ]}
-        maxSwipeDistance={150}
       />
 
       <View style={styles.buttonWrapper}>
@@ -112,16 +79,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgba(245, 245, 248, 1)',
-  },
-  actionContainer: {
-    height: 102,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  divider: {
-    width: 15,
   },
   separator: {
     height: 14,

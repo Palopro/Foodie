@@ -6,10 +6,10 @@ import { Food } from '../../../domain/model/Food';
 import { CategoryDTO } from './dto/CategoryDTO';
 import { UserDTO } from './dto/UserDTO';
 import { Category } from '../../../domain/model/Category';
-import { OrderDTO } from './dto/OrderDTO';
 import { storage, StorageKeys } from '../storage';
 import { LoginUserCredentials, RegisterUserCredentials } from './types';
 import { Order } from '../../../domain/model/Order';
+import { CartFood } from '../../../domain/model/CartFood';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
@@ -29,22 +29,24 @@ const mapToFood = (foodDTO: FoodDTO) =>
     foodDTO.attributes.gallery,
   );
 
-const orderToDTO = (order: Order): OrderDTO => ({
+const mapToFoodDTO = (cartFood: CartFood) => ({
+  id: cartFood.id,
+  qty: cartFood.qty,
+  attributes: {
+    name: cartFood.name,
+    photo: cartFood.photo,
+    price: cartFood.price,
+    gallery: cartFood.gallery,
+  },
+});
+
+const mapToCreateOrderReq = (order: Order) => ({
   address: order.address,
   phone: order.phone,
   delivery_method: order.deliveryMethod,
   payment: order.paymentMethod,
   users_permissions_user: order.userPermissionUser,
-  items: order.items.map(it => ({
-    id: it.id,
-    qty: it.qty,
-    attributes: {
-      name: it.name,
-      photo: it.photo,
-      price: it.price,
-      gallery: it.gallery,
-    },
-  })),
+  items: order.items.map(mapToFoodDTO),
 });
 
 export const foodieApi = createApi({
@@ -126,7 +128,7 @@ export const foodieApi = createApi({
       transformResponse: (response: { data: Array<FoodDTO> }) =>
         response.data.map(mapToFood),
     }),
-    me: build.query<User, void>({
+    aboutMe: build.query<User, void>({
       query: () => ({
         url: '/users/me',
       }),
@@ -140,7 +142,7 @@ export const foodieApi = createApi({
           populate: '*',
         },
         body: {
-          data: orderToDTO(order),
+          data: mapToCreateOrderReq(order),
         },
       }),
     }),

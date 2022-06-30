@@ -3,13 +3,16 @@ import {
   FlatList,
   ListRenderItemInfo,
   Modal,
-  Pressable,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import { Divider } from './Divider';
+
 import { NoteRow } from './NoteRow';
+import { RoundlessButton, Type } from './RoundlessButton';
+import { useAppSelector } from '../../../../hooks';
+import { DeliveryNote } from '../../../../domain/model/DeliveryNote';
+import { Divider } from './Divider';
 
 interface NoteModalProps {
   modalVisible: boolean;
@@ -17,24 +20,20 @@ interface NoteModalProps {
   onProceed: () => void;
 }
 
-const noteList = [
-  { id: 1, title: 'Delivery to Mainland', desc: 'N1000 - N2000' },
-  { id: 2, title: 'Delivery to island', desc: 'N2000 - N3000' },
-];
-
 export const NoteModal: React.FC<NoteModalProps> = ({
   modalVisible,
   onCancel,
   onProceed,
 }) => {
-  const renderItem = ({
-    item,
-  }: ListRenderItemInfo<{ id: number; title: string; desc: string }>) => (
+  const deliveryNotes = useAppSelector(
+    state => state.cartReducer.deliveryNotes,
+  );
+
+  const renderItem = ({ item }: ListRenderItemInfo<DeliveryNote>) => (
     <NoteRow note={item} />
   );
 
-  const keyExtractor = (note: { id: number; title: string; desc: string }) =>
-    `note-row-${note.id}`;
+  const keyExtractor = (note: DeliveryNote) => `note-row-${note.id}`;
 
   return (
     <Modal visible={modalVisible} transparent>
@@ -48,20 +47,23 @@ export const NoteModal: React.FC<NoteModalProps> = ({
               <FlatList
                 scrollEnabled={false}
                 bounces={false}
-                data={noteList}
+                data={deliveryNotes}
                 renderItem={renderItem}
                 ItemSeparatorComponent={Divider}
                 keyExtractor={keyExtractor}
               />
 
               <View style={styles.buttonRow}>
-                <Pressable onPress={onCancel}>
-                  <Text style={styles.cancel}>Cancel</Text>
-                </Pressable>
-
-                <Pressable style={styles.proceedButton} onPress={onProceed}>
-                  <Text style={styles.proceedText}>Proceed</Text>
-                </Pressable>
+                <RoundlessButton
+                  onPress={onCancel}
+                  text="Cancel"
+                  buttonType={Type.Cancel}
+                />
+                <RoundlessButton
+                  onPress={onProceed}
+                  buttonType={Type.Proceed}
+                  text="Proceed"
+                />
               </View>
             </View>
           </View>
@@ -104,25 +106,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  cancel: {
-    color: 'rgba(0, 0, 0, 0.5)',
-    fontWeight: '600',
-    fontStyle: 'normal',
-    textAlign: 'center',
-    fontSize: 17,
-    lineHeight: 25,
-  },
-  proceedButton: {
-    backgroundColor: '#FA4A0C',
-    paddingHorizontal: 44,
-    paddingVertical: 17,
-    borderRadius: 30,
-  },
-  proceedText: {
-    color: '#FFFFFF',
-    fontWeight: '600',
-    fontStyle: 'normal',
-    textAlign: 'center',
   },
 });
