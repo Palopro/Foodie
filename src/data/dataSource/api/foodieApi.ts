@@ -41,14 +41,12 @@ const mapToFoodDTO = (cartFood: CartFood) => ({
 });
 
 const mapToCreateOrderReq = (order: Order) => ({
-  data: {
-    address: order.address,
-    phone: order.phone,
-    delivery_method: order.deliveryMethod,
-    payment: order.paymentMethod,
-    users_permissions_user: order.userPermissionUser,
-    items: order.items.map(mapToFoodDTO),
-  },
+  address: order.address,
+  phone: order.phone,
+  delivery_method: order.deliveryMethod,
+  payment: order.paymentMethod,
+  users_permissions_user: order.userPermissionUser,
+  items: order.items.map(mapToFoodDTO),
 });
 
 export const foodieApi = createApi({
@@ -143,7 +141,9 @@ export const foodieApi = createApi({
         params: {
           populate: '*',
         },
-        body: mapToCreateOrderReq(order),
+        body: {
+          data: mapToCreateOrderReq(order),
+        },
       }),
     }),
   }),
