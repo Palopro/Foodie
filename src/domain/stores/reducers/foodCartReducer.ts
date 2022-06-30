@@ -3,13 +3,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartFood } from '../../model/CartFood';
 import { Reducers } from './reducers';
 import { RootState } from '../store';
+import { DeliveryNote } from '../../model/DeliveryNote';
 
 interface FoodCartState {
   cart: Array<CartFood>;
+  deliveryNotes: Array<DeliveryNote>;
 }
 
 const initialState: FoodCartState = {
   cart: [],
+  deliveryNotes: [
+    { id: 1, name: 'Delivery to Mainland', desc: 'N1000 - N2000' },
+    { id: 2, name: 'Delivery to island', desc: 'N2000 - N3000' },
+  ],
 };
 
 export const reducerName = Reducers.FoodCartReducer;
@@ -46,13 +52,14 @@ export const foodCartReducer = createSlice({
       const itemIndex = state.cart.findIndex(
         item => item.id === action.payload.cartItem.id,
       );
-      if (itemIndex !== -1) {
-        const item = state.cart[itemIndex];
-
-        state.cart[itemIndex].qty = action.payload.cartItem.qty + 1;
-
-        state.cart[itemIndex] = { ...item };
+      if (itemIndex === -1) {
+        return;
       }
+      const item = state.cart[itemIndex];
+
+      state.cart[itemIndex].qty = action.payload.cartItem.qty + 1;
+
+      state.cart[itemIndex] = { ...item };
     },
     decrementCartFoodQty: (
       state: FoodCartState,
@@ -61,13 +68,14 @@ export const foodCartReducer = createSlice({
       const itemIndex = state.cart.findIndex(
         item => item.id === action.payload.cartItem.id,
       );
-      if (itemIndex !== -1) {
-        const item = state.cart[itemIndex];
-
-        item.qty = action.payload.cartItem.qty - 1;
-
-        state.cart[itemIndex] = { ...item };
+      if (itemIndex === -1) {
+        return;
       }
+      const item = state.cart[itemIndex];
+
+      item.qty = action.payload.cartItem.qty - 1;
+
+      state.cart[itemIndex] = { ...item };
     },
   },
 });

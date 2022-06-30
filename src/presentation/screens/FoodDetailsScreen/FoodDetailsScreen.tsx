@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-import { NavigationProp, RouteProp } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { AppBarSearch } from '../../components/AppBar/AppBarSearch';
 import { ImageCarousel } from '../../components/ImageCarousel/ImageCarousel';
@@ -12,18 +12,12 @@ import { FavoriteButton } from './FavoriteButton';
 import { StylingText, TextType } from '../../components/StylingText';
 import { RootStackParams } from '../../../navigation/RootNavigation';
 
-interface FoodDetailsScreenProps {
-  route: RouteProp<RootStackParams>;
-  navigation: NavigationProp<RootStackParams>;
-}
-
-export const FoodDetailsScreen: React.FC<FoodDetailsScreenProps> = ({
-  route,
-  navigation,
-}) => {
+export const FoodDetailsScreen: React.FC<
+  NativeStackScreenProps<RootStackParams>
+> = ({ route, navigation }) => {
   const dispatch = useAppDispatch();
 
-  const { food } = route.params!;
+  const { food } = route.params;
 
   const handleAddToCard = () => {
     const cartItem: CartFood = new CartFood(

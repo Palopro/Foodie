@@ -9,30 +9,20 @@ export enum Type {
 interface RoundlessButtonProps {
   onPress: () => void;
   text: string;
-  type: Type;
+  buttonType: Type;
 }
 
 export const RoundlessButton: React.FC<RoundlessButtonProps> = ({
   onPress,
-  type,
+  buttonType,
   text,
-}) => {
-  let t = 0;
-
-  return (
-    <Pressable
-      style={type === Type.Proceed ? styles.proceedButton : undefined}
-      onPress={onPress}>
-      <Text
-        style={[
-          styles.proceedText,
-          { color: type === Type.Proceed ? '#FFFFFF' : 'rgba(0, 0, 0, 0.5)' },
-        ]}>
-        {text}
-      </Text>
-    </Pressable>
-  );
-};
+}) => (
+  <Pressable style={buttonStyles[buttonType]} onPress={onPress}>
+    <Text style={[styles.proceedText, { color: textStyles[buttonType] }]}>
+      {text}
+    </Text>
+  </Pressable>
+);
 
 const styles = StyleSheet.create({
   proceedButton: {
@@ -58,3 +48,12 @@ const styles = StyleSheet.create({
     lineHeight: 25,
   },
 });
+
+const buttonStyles = {
+  [Type.Cancel]: undefined,
+  [Type.Proceed]: styles.proceedButton,
+};
+const textStyles = {
+  [Type.Cancel]: 'rgba(0, 0, 0, 0.5)',
+  [Type.Proceed]: '#FFFFFF',
+};

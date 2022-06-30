@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -11,25 +11,23 @@ import { ColorType, RoundButton } from '../../components/RoundButton';
 import { AppScreen } from '../../../navigation/AppScreen';
 import { StylingText, TextType } from '../../components/StylingText';
 import { RootStackParams } from '../../../navigation/RootNavigation';
+import { useAppSelector } from '../../../hooks';
+import { DeliveryNote } from '../../../domain/model/DeliveryNote';
 
-const options = [
-  { id: 1, name: 'Door delivery', value: 'DoorDelivery' },
-  { id: 2, name: 'Pick up', value: 'pickUp' },
-];
+export const CheckoutScreen: React.FC<
+  NativeStackScreenProps<RootStackParams>
+> = ({ navigation }) => {
+  const deliveryNotes = useAppSelector(
+    state => state.cartReducer.deliveryNotes,
+  );
 
-export const CheckoutScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<RootStackParams>>();
-  const [deliveryMethod, setDeliveryMethod] = useState(options[0]);
+  const [deliveryMethod, setDeliveryMethod] = useState(deliveryNotes[0]);
 
   const total = useSelector(totalInCart);
 
   const { data: user } = foodieApi.useMeQuery();
 
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
-
-  const handleChangeOption = (optionValue: { id: number; name: string }) => {
+  const handleChangeOption = (optionValue: DeliveryNote) => {
     setDeliveryMethod(optionValue);
   };
 
@@ -39,7 +37,7 @@ export const CheckoutScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <AppBarWithTitle title="Checkout" onBackPress={handleGoBack} />
+      <AppBarWithTitle title="Checkout" onBackPress={navigation.goBack} />
 
       <View style={styles.titleWrapper}>
         <StylingText textType={TextType.Bold} style={styles.title}>
@@ -73,7 +71,7 @@ export const CheckoutScreen: React.FC = () => {
         </StylingText>
         <View style={styles.infoBox}>
           <OptionSelect
-            options={options}
+            options={deliveryNotes}
             selectedOption={deliveryMethod}
             onChangeOption={handleChangeOption}
           />

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Insets, Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+
+import { QuantityButton } from './QuantityButton';
 
 interface QuantitySelectorProps {
   qty: number;
@@ -8,7 +10,6 @@ interface QuantitySelectorProps {
   minQty?: number;
 }
 
-const hitSlop: Insets = { top: 8, right: 8, bottom: 8, left: 8 };
 const MIN_QTY = 1;
 
 export const QuantitySelector: React.FC<QuantitySelectorProps> = ({
@@ -18,20 +19,18 @@ export const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   minQty = MIN_QTY,
 }) => (
   <View style={styles.container}>
-    <Pressable
-      hitSlop={hitSlop}
+    <QuantityButton
+      disabled={qty <= minQty}
       onPress={onPressDecrement}
-      disabled={qty <= minQty}>
-      <Text style={styles.buttonText}>-</Text>
-    </Pressable>
+      text="-"
+    />
     <View style={styles.textWrapper}>
       <Text style={styles.text} numberOfLines={1}>
         {qty}
       </Text>
     </View>
-    <Pressable hitSlop={hitSlop} onPress={onPressIncrement}>
-      <Text style={styles.buttonText}>+</Text>
-    </Pressable>
+
+    <QuantityButton onPress={onPressIncrement} text="+" />
   </View>
 );
 
@@ -49,15 +48,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 9,
   },
   text: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-    fontStyle: 'normal',
-    fontWeight: '700',
-    fontFamily: 'RobotoCondensed-Bold',
-    fontSize: 13,
-    lineHeight: 15,
-  },
-  buttonText: {
     color: '#FFFFFF',
     textAlign: 'center',
     fontStyle: 'normal',

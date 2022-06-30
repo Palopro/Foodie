@@ -1,24 +1,12 @@
 import React from 'react';
-import {
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-interface OptionValue {
-  id: number;
-  name: string;
-  value: string;
-  image: ImageSourcePropType;
-  bgColor: string;
-}
+import { PaymentOption } from '../../../domain/model/PaymentOption';
+
 interface PaymentRowProps {
-  paymentOption: OptionValue;
+  paymentOption: PaymentOption;
   isSelected: boolean;
-  onPress: (paymentOption: OptionValue) => void;
+  onPress: (paymentOption: PaymentOption) => void;
 }
 
 export const PaymentRow: React.FC<PaymentRowProps> = ({

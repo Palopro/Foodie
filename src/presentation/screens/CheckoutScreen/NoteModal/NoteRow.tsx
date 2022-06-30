@@ -1,14 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { DeliveryNote } from '../../../../domain/model/DeliveryNote';
+
 interface NoteRowProps {
-  note: { id: number; title: string; desc: string };
+  note: DeliveryNote;
 }
 
 export const NoteRow: React.FC<NoteRowProps> = ({ note }) => (
   <View style={styles.container}>
     <Text numberOfLines={1} style={styles.title}>
-      {note.title}
+      {note.name}
     </Text>
     <Text numberOfLines={1} style={styles.desc}>
       {note.desc}

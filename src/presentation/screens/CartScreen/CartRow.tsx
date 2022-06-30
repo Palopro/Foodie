@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 import { CartFood } from '../../../domain/model/CartFood';
-import { QuantitySelector } from './QuantitySelector';
+import { QuantitySelector } from './QuantitySelector/QuantitySelector';
 import { StylingText, TextType } from '../../components/StylingText';
 
 interface CartRowProps {

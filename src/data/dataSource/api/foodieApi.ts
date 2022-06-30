@@ -9,6 +9,7 @@ import { Category } from '../../../domain/model/Category';
 import { storage, StorageKeys } from '../storage';
 import { LoginUserCredentials, RegisterUserCredentials } from './types';
 import { Order } from '../../../domain/model/Order';
+import { CartFood } from '../../../domain/model/CartFood';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
@@ -27,6 +28,17 @@ const mapToFood = (foodDTO: FoodDTO) =>
     foodDTO.attributes.categories.data.map((cat: CategoryDTO) => cat.id),
     foodDTO.attributes.gallery,
   );
+
+const mapToFoodDTO = (cartFood: CartFood) => ({
+  id: cartFood.id,
+  qty: cartFood.qty,
+  attributes: {
+    name: cartFood.name,
+    photo: cartFood.photo,
+    price: cartFood.price,
+    gallery: cartFood.gallery,
+  },
+});
 
 export const foodieApi = createApi({
   reducerPath: 'FoodieApi',
@@ -127,16 +139,7 @@ export const foodieApi = createApi({
             delivery_method: order.deliveryMethod,
             payment: order.paymentMethod,
             users_permissions_user: order.userPermissionUser,
-            items: order.items.map(it => ({
-              id: it.id,
-              qty: it.qty,
-              attributes: {
-                name: it.name,
-                photo: it.photo,
-                price: it.price,
-                gallery: it.gallery,
-              },
-            })),
+            items: order.items.map(mapToFoodDTO),
           },
         },
       }),

@@ -1,29 +1,14 @@
 import React from 'react';
-import {
-  FlatList,
-  ListRenderItemInfo,
-  ImageSourcePropType,
-} from 'react-native';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 
 import { Divider } from '../../components/OptionSelect/Divider';
 import { PaymentRow } from './PaymentRow';
-
-interface OptionValue {
-  id: number;
-  name: string;
-  value: string;
-  image: ImageSourcePropType;
-  bgColor: string;
-}
+import { PaymentOption } from '../../../domain/model/PaymentOption';
 
 interface PaymentOptionsProps {
-  options: Array<OptionValue>;
-  selectedOption: OptionValue;
-  onChangeOption: (optionValue: {
-    id: number;
-    name: string;
-    value: string;
-  }) => void;
+  options: Array<PaymentOption>;
+  selectedOption: PaymentOption;
+  onChangeOption: (optionValue: PaymentOption) => void;
 }
 
 export const PaymentOptions: React.FC<PaymentOptionsProps> = ({
@@ -31,11 +16,11 @@ export const PaymentOptions: React.FC<PaymentOptionsProps> = ({
   selectedOption,
   onChangeOption,
 }) => {
-  const keyExtractor = (option: OptionValue) => `Payment-${option.id}`;
+  const keyExtractor = (option: PaymentOption) => `Payment-${option.id}`;
 
-  const handlePressOption = (option: OptionValue) => onChangeOption(option);
+  const handlePressOption = (option: PaymentOption) => onChangeOption(option);
 
-  const renderItem = ({ item }: ListRenderItemInfo<OptionValue>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<PaymentOption>) => (
     <PaymentRow
       paymentOption={item}
       isSelected={item.id === selectedOption.id}

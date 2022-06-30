@@ -15,16 +15,11 @@ export const StylingText: React.FC<StylingTextProps> = ({
   children,
   style,
   ...props
-}) => {
-  const textStyle =
-    textType === TextType.Regular ? styles.regularText : styles.boldText;
-
-  return (
-    <Text {...props} style={[styles.common, textStyle, style]}>
-      {children}
-    </Text>
-  );
-};
+}) => (
+  <Text {...props} style={[styles.common, textStyle[textType], style]}>
+    {children}
+  </Text>
+);
 
 const styles = StyleSheet.create({
   common: {
@@ -44,3 +39,8 @@ const styles = StyleSheet.create({
     fontFamily: 'RobotoCondensed-Regular',
   },
 });
+
+const textStyle = {
+  [TextType.Bold]: styles.boldText,
+  [TextType.Regular]: styles.regularText,
+};
