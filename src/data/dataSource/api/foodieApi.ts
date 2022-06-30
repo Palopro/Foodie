@@ -40,6 +40,17 @@ const mapToFoodDTO = (cartFood: CartFood) => ({
   },
 });
 
+const mapToCreateOrderReq = (order: Order) => ({
+  data: {
+    address: order.address,
+    phone: order.phone,
+    delivery_method: order.deliveryMethod,
+    payment: order.paymentMethod,
+    users_permissions_user: order.userPermissionUser,
+    items: order.items.map(mapToFoodDTO),
+  },
+});
+
 export const foodieApi = createApi({
   reducerPath: 'FoodieApi',
   baseQuery: fetchBaseQuery({
@@ -119,7 +130,7 @@ export const foodieApi = createApi({
       transformResponse: (response: { data: Array<FoodDTO> }) =>
         response.data.map(mapToFood),
     }),
-    me: build.query<User, void>({
+    aboutMe: build.query<User, void>({
       query: () => ({
         url: '/users/me',
       }),
@@ -132,16 +143,7 @@ export const foodieApi = createApi({
         params: {
           populate: '*',
         },
-        body: {
-          data: {
-            address: order.address,
-            phone: order.phone,
-            delivery_method: order.deliveryMethod,
-            payment: order.paymentMethod,
-            users_permissions_user: order.userPermissionUser,
-            items: order.items.map(mapToFoodDTO),
-          },
-        },
+        body: mapToCreateOrderReq(order),
       }),
     }),
   }),

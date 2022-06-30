@@ -25,7 +25,7 @@ export const CheckoutScreen: React.FC<
 
   const total = useSelector(totalInCart);
 
-  const { data: user } = foodieApi.useMeQuery();
+  const { data: user } = foodieApi.useAboutMeQuery();
 
   const handleChangeOption = (optionValue: DeliveryNote) => {
     setDeliveryMethod(optionValue);

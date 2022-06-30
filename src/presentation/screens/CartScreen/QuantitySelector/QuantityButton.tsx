@@ -8,17 +8,16 @@ import {
 } from 'react-native';
 
 interface QuantityButtonProps extends PressableProps {
-  onPress: () => void;
   text: string;
 }
 
 const hitSlop: Insets = { top: 8, right: 8, bottom: 8, left: 8 };
 
 export const QuantityButton: React.FC<QuantityButtonProps> = ({
-  onPress,
   text,
+  ...rest
 }) => (
-  <Pressable hitSlop={hitSlop} onPress={onPress}>
+  <Pressable {...rest} hitSlop={hitSlop}>
     <Text style={styles.buttonText}>{text}</Text>
   </Pressable>
 );

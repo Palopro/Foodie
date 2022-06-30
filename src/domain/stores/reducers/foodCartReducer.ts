@@ -13,8 +13,8 @@ interface FoodCartState {
 const initialState: FoodCartState = {
   cart: [],
   deliveryNotes: [
-    { id: 1, name: 'Delivery to Mainland', desc: 'N1000 - N2000' },
-    { id: 2, name: 'Delivery to island', desc: 'N2000 - N3000' },
+    new DeliveryNote(1, 'Delivery to Mainland', 'N1000 - N2000'),
+    new DeliveryNote(2, 'Delivery to island', 'N2000 - N3000'),
   ],
 };
 

@@ -6,7 +6,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import { StyleSheet, View } from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 
 import { snapPoint } from '../../../utils/hepler/snapPoint';
 import { QuickAction } from '../Action/QuickAction';
@@ -20,6 +20,7 @@ interface GestureRowProps {
 }
 
 const snapPoints = [0, -130];
+const {width} = Dimensions.get('window');
 
 export const GestureRow: React.FC<GestureRowProps> = ({
   children,
@@ -69,7 +70,10 @@ export const GestureRow: React.FC<GestureRowProps> = ({
           <QuickAction iconName="delete-outline" onPress={handleDelete} />
         </View>
       </View>
-      <PanGestureHandler onGestureEvent={handleGestureHandler}>
+      <PanGestureHandler
+        failOffsetY={[-5, 5]}
+        activeOffsetX={[-5, 5]}
+        onGestureEvent={handleGestureHandler}>
         <Animated.View style={style}>{children}</Animated.View>
       </PanGestureHandler>
     </View>
