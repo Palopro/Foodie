@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  SafeAreaView,
-  View,
-  Text,
-  StyleSheet,
   FlatList,
-  StatusBar,
   ListRenderItemInfo,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  View,
 } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
@@ -19,6 +18,7 @@ import { AppScreen } from '../../../navigation/AppScreen';
 import { FoodCard } from './FoodCard';
 import { CategoryRow } from './CategoryRow';
 import { MainAppTabParams } from '../../../navigation/MainNavigation';
+import { StylingText, TextType } from '../../components/StylingText';
 
 export const HomeScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<MainAppTabParams>>();
@@ -81,11 +81,15 @@ export const HomeScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <AppBar onMenuPress={handleMenu} onCartPress={handleCart} />
       <StatusBar barStyle="dark-content" backgroundColor="#F2F2F2" animated />
+      <AppBar onMenuPress={handleMenu} onCartPress={handleCart} />
       <View style={styles.titleWrapper}>
-        <Text style={styles.title}>Delicious</Text>
-        <Text style={styles.title}>food for you</Text>
+        <StylingText textType={TextType.Bold} style={styles.title}>
+          Delicious
+        </StylingText>
+        <StylingText textType={TextType.Bold} style={styles.title}>
+          food for you
+        </StylingText>
       </View>
 
       <View style={styles.searchWrapper}>
@@ -133,11 +137,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 34,
-    color: '#000000',
     letterSpacing: -0.03,
-    fontWeight: '700',
-    fontFamily: 'RobotoCondensed-Bold',
-    textAlign: 'left',
+    lineHeight: 40,
   },
   searchWrapper: {
     paddingHorizontal: 50,
