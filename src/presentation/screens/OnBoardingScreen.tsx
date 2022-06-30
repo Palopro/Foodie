@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     letterSpacing: -0.03,
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     textAlign: 'left',
   },
   imageWrapper: {

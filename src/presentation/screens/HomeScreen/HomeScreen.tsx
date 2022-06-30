@@ -18,10 +18,10 @@ import { SearchButton } from './SearchButton';
 import { AppScreen } from '../../../navigation/AppScreen';
 import { FoodCard } from './FoodCard';
 import { CategoryRow } from './CategoryRow';
-import { HomeStackParams } from '../../../navigation/HomeNavigation';
+import { MainAppTabParams } from '../../../navigation/MainNavigation';
 
 export const HomeScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<HomeStackParams>>();
+  const navigation = useNavigation<NavigationProp<MainAppTabParams>>();
   const [selectedFilter, setFilter] = useState(0);
 
   const foodListRef = useRef<FlatList<Food>>();
@@ -40,7 +40,7 @@ export const HomeScreen: React.FC = () => {
   };
 
   const handleCart = () => {
-    // TODO: cart press
+    navigation.navigate(AppScreen.CartScreen);
   };
 
   const handleCategorySelect = (category: Category) => {
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     letterSpacing: -0.03,
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     textAlign: 'left',
   },
   searchWrapper: {

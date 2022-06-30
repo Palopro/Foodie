@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#EFEEEE',
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     fontSize: 17,
     lineHeight: 20,
     color: '#000000',

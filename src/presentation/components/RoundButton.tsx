@@ -10,6 +10,7 @@ interface Props {
   text: string;
   onPress: () => void;
   colorType: ColorType;
+  disabled?: boolean;
 }
 
 const colorScheme = {
@@ -23,14 +24,23 @@ const colorScheme = {
   },
 };
 
-export const RoundButton: React.FC<Props> = ({ text, onPress, colorType }) => {
+export const RoundButton: React.FC<Props> = ({
+  text,
+  onPress,
+  colorType,
+  disabled,
+}) => {
   const { color, backgroundColor } = colorScheme[colorType];
+
+  const bgColor = disabled ? 'rgba(177, 177, 179, 1)' : backgroundColor;
+  const textColor = disabled ? 'rgba(246, 246, 249, 1)' : color;
 
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.container, { backgroundColor }]}>
-      <Text style={[styles.text, { color }]}>{text}</Text>
+      disabled={disabled}
+      style={[styles.container, { backgroundColor: bgColor }]}>
+      <Text style={[styles.text, { color: textColor }]}>{text}</Text>
     </Pressable>
   );
 };
@@ -45,6 +55,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     fontSize: 16,
     lineHeight: 20,
   },

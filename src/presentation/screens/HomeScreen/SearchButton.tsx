@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'rgba(0, 0, 0, 0.5)',
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     fontSize: 17,
     lineHeight: 20,
     textAlign: 'left',

@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     lineHeight: 32,
     fontWeight: '700',
+    fontFamily: 'RobotoCondensed-Bold',
     color: '#000000',
   },
   listWrapper: {
