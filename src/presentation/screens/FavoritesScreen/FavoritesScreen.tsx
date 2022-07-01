@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -15,7 +14,9 @@ import { AppScreen } from '../../../navigation/AppScreen';
 import { MainAppTabParams } from '../../../navigation/MainNavigation';
 import { StylingText, TextType } from '../../components/StylingText';
 import { Food } from '../../../domain/model/Food';
+import { favoriteFoods } from '../../../domain/stores/reducers/foodReducer';
 import { useAppSelector } from '../../../hooks';
+import { FavoriteRow } from './FavoriteRow';
 
 interface FavoritesScreenProps
   extends NativeStackScreenProps<MainAppTabParams> {}
@@ -23,7 +24,8 @@ interface FavoritesScreenProps
 export const FavoritesScreen: React.FC<FavoritesScreenProps> = ({
   navigation,
 }) => {
-  const foods = useAppSelector(state => state.foodReducer.foods);
+  const foodState = useAppSelector(({ foodReducer }) => foodReducer);
+  const foods = favoriteFoods(foodState);
 
   const handleMenu = () => {
     // TODO: menu press
@@ -33,10 +35,12 @@ export const FavoritesScreen: React.FC<FavoritesScreenProps> = ({
     navigation.navigate(AppScreen.CartScreen);
   };
 
+  const handlePressFood = (food: Food) => {
+    navigation.navigate(AppScreen.FoodDetailsScreen, { food });
+  };
+
   const renderItem = ({ item }: ListRenderItemInfo<Food>) => (
-    <View>
-      <Text>{item.name}</Text>
-    </View>
+    <FavoriteRow food={item} onPress={handlePressFood} />
   );
 
   return (
@@ -50,7 +54,11 @@ export const FavoritesScreen: React.FC<FavoritesScreenProps> = ({
         </StylingText>
       </View>
 
-      <FlatList data={foods} renderItem={renderItem} />
+      <FlatList
+        data={foods}
+        renderItem={renderItem}
+        ItemSeparatorComponent={() => <View style={{ height: 14 }} />}
+      />
     </SafeAreaView>
   );
 };

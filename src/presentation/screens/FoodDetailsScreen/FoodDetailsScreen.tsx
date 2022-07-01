@@ -11,6 +11,7 @@ import { CartFood } from '../../../domain/model/CartFood';
 import { FavoriteButton } from './FavoriteButton';
 import { StylingText, TextType } from '../../components/StylingText';
 import { RootStackParams } from '../../../navigation/RootNavigation';
+import { foodReducer } from '../../../domain/stores/reducers/foodReducer';
 
 export const FoodDetailsScreen: React.FC<
   NativeStackScreenProps<RootStackParams>
@@ -32,11 +33,15 @@ export const FoodDetailsScreen: React.FC<
     dispatch(foodCartReducer.actions.addToCart({ cartItem }));
   };
 
+  const handleFavorite = () => {
+    dispatch(foodReducer.actions.handleFavorite(food.id));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <AppBarSearch onBackPress={navigation.goBack} style={styles.appBar}>
         <View style={styles.favContainer}>
-          <FavoriteButton />
+          <FavoriteButton onPress={handleFavorite} />
         </View>
       </AppBarSearch>
 

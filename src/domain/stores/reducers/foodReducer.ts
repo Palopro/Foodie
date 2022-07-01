@@ -7,11 +7,13 @@ import { Reducers } from './reducers';
 interface FoodState {
   isLoading: boolean;
   foods: Array<Food>;
+  favorites: Array<number>;
 }
 
 const initialState: FoodState = {
   isLoading: false,
   foods: [],
+  favorites: [],
 };
 
 export const reducerName = Reducers.FoodReducer;
@@ -19,7 +21,20 @@ export const reducerName = Reducers.FoodReducer;
 export const foodReducer = createSlice({
   name: reducerName,
   initialState,
-  reducers: {},
+  reducers: {
+    handleFavorite: (state, action: PayloadAction<number>) => {
+      const favIndex = state.favorites.findIndex(num => num === action.payload);
+      if (favIndex === -1) {
+        const favs = state.favorites;
+        favs.push(action.payload);
+        state.favorites = favs;
+      } else {
+        const favs = state.favorites;
+        favs.splice(action.payload, 1);
+        state.favorites = favs;
+      }
+    },
+  },
   extraReducers(builder) {
     builder
       .addMatcher(
@@ -48,3 +63,6 @@ export const findFoodByName = (name: string) => (state: FoodState) =>
   state.foods.filter(food =>
     food.name.toLowerCase().includes(name.toLowerCase()),
   );
+
+export const favoriteFoods = (state: FoodState) =>
+  state.foods.filter(food => state.favorites.includes(food.id));
