@@ -11,12 +11,10 @@ interface AppBarProps {
 
 export const AppBar: React.FC<AppBarProps> = ({ onMenuPress, onCartPress }) => (
   <View style={styles.container}>
-    {/*<AppBarButton name="menu" onPress={onMenuPress} />*/}
-    <Pressable hitSlop={{ top: 8, right: 8, bottom: 8, left: 8 }}>
-      <Image
-        source={menuIcon}
-        style={{ width: 22, height: 15, resizeMode: 'center' }}
-      />
+    <Pressable
+      onPress={onMenuPress}
+      hitSlop={{ top: 8, right: 8, bottom: 8, left: 8 }}>
+      <Image source={menuIcon} style={styles.image} />
     </Pressable>
     <AppBarButton
       name="cart-outline"
@@ -36,5 +34,10 @@ const styles = StyleSheet.create({
     paddingVertical: 25,
     position: 'relative',
     width: '100%',
+  },
+  image: {
+    width: 22,
+    height: 15,
+    resizeMode: 'center',
   },
 });

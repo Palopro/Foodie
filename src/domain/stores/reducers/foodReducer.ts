@@ -28,11 +28,11 @@ export const foodReducer = createSlice({
 
       if (favIndex === -1) {
         favs.push(action.payload);
-        state.favorites = favs;
       } else {
         favs.splice(favIndex, 1);
-        state.favorites = favs;
       }
+
+      state.favorites = favs;
     },
   },
   extraReducers(builder) {

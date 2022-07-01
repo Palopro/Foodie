@@ -22,12 +22,9 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { FavoriteRow } from './FavoriteRow';
 import { ListEmpty } from './ListEmpty';
 
-interface FavoritesScreenProps
-  extends NativeStackScreenProps<MainAppTabParams> {}
-
-export const FavoritesScreen: React.FC<FavoritesScreenProps> = ({
-  navigation,
-}) => {
+export const FavoritesScreen: React.FC<
+NativeStackScreenProps<MainAppTabParams>
+> = ({ navigation }) => {
   const foodState = useAppSelector(state => state.foodReducer);
   const foods = favoriteFoods(foodState);
   const dispatch = useAppDispatch();
@@ -58,6 +55,8 @@ export const FavoritesScreen: React.FC<FavoritesScreenProps> = ({
 
   const keyExtractor = (food: Food) => `food-${food.id}`;
 
+  const renderSeparator = () => <View style={styles.divider} />;
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F2F2F2" animated />
@@ -73,7 +72,7 @@ export const FavoritesScreen: React.FC<FavoritesScreenProps> = ({
         data={foods}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        ItemSeparatorComponent={() => <View style={styles.divider} />}
+        ItemSeparatorComponent={renderSeparator}
         ListEmptyComponent={ListEmpty}
         ListHeaderComponent={<View style={styles.header} />}
         contentContainerStyle={{ flex: foods.length === 0 ? 1 : undefined }}

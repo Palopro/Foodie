@@ -7,7 +7,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { Food } from '../../../domain/model/Food';
 import { AppBar } from '../../components/AppBar/AppBar';
@@ -20,8 +20,9 @@ import { CategoryRow } from './CategoryRow';
 import { MainAppTabParams } from '../../../navigation/MainNavigation';
 import { StylingText, TextType } from '../../components/StylingText';
 
-export const HomeScreen: React.FC = () => {
-  const navigation = useNavigation<NavigationProp<MainAppTabParams>>();
+export const HomeScreen: React.FC<NativeStackScreenProps<MainAppTabParams>> = ({
+  navigation,
+}) => {
   const [selectedFilter, setFilter] = useState(0);
 
   const foodListRef = useRef<FlatList<Food>>();

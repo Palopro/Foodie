@@ -14,8 +14,8 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
   <TouchableOpacity onPress={onPress}>
     <Icon
       name={isFavorite ? 'heart' : 'heart-outline'}
+      color={isFavorite ? '#FA4A0C' : '#000000'}
       size={24}
-      color="#000000"
     />
   </TouchableOpacity>
 );
