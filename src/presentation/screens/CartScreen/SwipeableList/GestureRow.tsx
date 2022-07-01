@@ -6,7 +6,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { snapPoint } from '../../../utils/hepler/snapPoint';
 import { QuickAction } from '../Action/QuickAction';
@@ -20,7 +20,6 @@ interface GestureRowProps {
 }
 
 const snapPoints = [0, -130];
-const {width} = Dimensions.get('window');
 
 export const GestureRow: React.FC<GestureRowProps> = ({
   children,

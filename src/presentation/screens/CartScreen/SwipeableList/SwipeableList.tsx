@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  FlatListProps,
-  ListRenderItemInfo,
-} from 'react-native';
+import { FlatList, FlatListProps, ListRenderItemInfo } from 'react-native';
 
 import { SwipeableRow } from './SwipeableRow';
 import { CartFood } from '../../../../domain/model/CartFood';
@@ -17,7 +13,6 @@ interface SwipeableListProps<ItemT = any> extends FlatListProps<ItemT> {
 }
 
 export const SwipeableList: React.FC<SwipeableListProps> = ({
-  data,
   onDecrementQty,
   onIncrementQty,
   onDelete,
@@ -43,7 +38,6 @@ export const SwipeableList: React.FC<SwipeableListProps> = ({
       {...rest}
       scrollEventThrottle={16}
       keyExtractor={keyExtractor}
-      data={data}
       renderItem={renderItem}
       ListEmptyComponent={CartEmpty}
     />

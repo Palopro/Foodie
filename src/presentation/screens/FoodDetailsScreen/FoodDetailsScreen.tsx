@@ -5,19 +5,25 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppBarSearch } from '../../components/AppBar/AppBarSearch';
 import { ImageCarousel } from '../../components/ImageCarousel/ImageCarousel';
 import { ColorType, RoundButton } from '../../components/RoundButton';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { foodCartReducer } from '../../../domain/stores/reducers/foodCartReducer';
 import { CartFood } from '../../../domain/model/CartFood';
 import { FavoriteButton } from './FavoriteButton';
 import { StylingText, TextType } from '../../components/StylingText';
 import { RootStackParams } from '../../../navigation/RootNavigation';
+import {
+  foodReducer,
+  isInFavorites,
+} from '../../../domain/stores/reducers/foodReducer';
 
 export const FoodDetailsScreen: React.FC<
   NativeStackScreenProps<RootStackParams>
 > = ({ route, navigation }) => {
   const dispatch = useAppDispatch();
+  const foodState = useAppSelector(state => state.foodReducer);
 
   const { food } = route.params;
+  const isFavorite = isInFavorites(food.id)(foodState);
 
   const handleAddToCard = () => {
     const cartItem: CartFood = new CartFood(
@@ -32,11 +38,15 @@ export const FoodDetailsScreen: React.FC<
     dispatch(foodCartReducer.actions.addToCart({ cartItem }));
   };
 
+  const handleFavorite = () => {
+    dispatch(foodReducer.actions.handleFavorite(food.id));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <AppBarSearch onBackPress={navigation.goBack} style={styles.appBar}>
         <View style={styles.favContainer}>
-          <FavoriteButton />
+          <FavoriteButton isFavorite={isFavorite} onPress={handleFavorite} />
         </View>
       </AppBarSearch>
 
@@ -48,7 +58,7 @@ export const FoodDetailsScreen: React.FC<
       </View>
       <View style={styles.priceWrapper}>
         <StylingText textType={TextType.Bold} style={styles.price}>
-          {food.price}
+          {food.price.toFixed(2)}
         </StylingText>
       </View>
 

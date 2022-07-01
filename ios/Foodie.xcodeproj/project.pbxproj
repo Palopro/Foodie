@@ -14,10 +14,10 @@
 		65510985B9B27FFB80B41CE4 /* libPods-Foodie.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F51DC4D5F4DD72051F1739 /* libPods-Foodie.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		91F16E4E6CCC4F1DEB7025F3 /* libPods-Foodie-FoodieTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77ECF07F40F655F414FA95DA /* libPods-Foodie-FoodieTests.a */; };
-		D768CBE62869ABFF00EE2CBC /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D768CBE42869ABFF00EE2CBC /* RobotoCondensed-Bold.ttf */; };
-		D768CBE72869ABFF00EE2CBC /* RobotoCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D768CBE52869ABFF00EE2CBC /* RobotoCondensed-Regular.ttf */; };
 		D78C307B2869B097003ED2E5 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D78C30792869B097003ED2E5 /* MaterialCommunityIcons.ttf */; };
 		D78C307C2869B097003ED2E5 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D78C307A2869B097003ED2E5 /* MaterialIcons.ttf */; };
+		D7F8BEEA286EC4C6007E29D8 /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7F8BEE9286EC49A007E29D8 /* RobotoCondensed-Bold.ttf */; };
+		D7F8BEEB286EC4C6007E29D8 /* RobotoCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7F8BEE8286EC49A007E29D8 /* RobotoCondensed-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,10 +47,10 @@
 		7B9C17D8B906E1A1567BEFF2 /* Pods-Foodie-FoodieTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Foodie-FoodieTests.debug.xcconfig"; path = "Target Support Files/Pods-Foodie-FoodieTests/Pods-Foodie-FoodieTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Foodie/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86333B3329DA07028AC1ACF8 /* Pods-Foodie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Foodie.debug.xcconfig"; path = "Target Support Files/Pods-Foodie/Pods-Foodie.debug.xcconfig"; sourceTree = "<group>"; };
-		D768CBE42869ABFF00EE2CBC /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Bold.ttf"; sourceTree = "<group>"; };
-		D768CBE52869ABFF00EE2CBC /* RobotoCondensed-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Regular.ttf"; sourceTree = "<group>"; };
 		D78C30792869B097003ED2E5 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		D78C307A2869B097003ED2E5 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		D7F8BEE8286EC49A007E29D8 /* RobotoCondensed-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Regular.ttf"; sourceTree = SOURCE_ROOT; };
+		D7F8BEE9286EC49A007E29D8 /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Bold.ttf"; sourceTree = SOURCE_ROOT; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -124,10 +124,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				D7F8BEE9286EC49A007E29D8 /* RobotoCondensed-Bold.ttf */,
+				D7F8BEE8286EC49A007E29D8 /* RobotoCondensed-Regular.ttf */,
 				D78C30792869B097003ED2E5 /* MaterialCommunityIcons.ttf */,
 				D78C307A2869B097003ED2E5 /* MaterialIcons.ttf */,
-				D768CBE42869ABFF00EE2CBC /* RobotoCondensed-Bold.ttf */,
-				D768CBE52869ABFF00EE2CBC /* RobotoCondensed-Regular.ttf */,
 				13B07FAE1A68108700A75B9A /* Foodie */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* FoodieTests */,
@@ -254,11 +254,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7F8BEEB286EC4C6007E29D8 /* RobotoCondensed-Regular.ttf in Resources */,
 				D78C307B2869B097003ED2E5 /* MaterialCommunityIcons.ttf in Resources */,
+				D7F8BEEA286EC4C6007E29D8 /* RobotoCondensed-Bold.ttf in Resources */,
 				D78C307C2869B097003ED2E5 /* MaterialIcons.ttf in Resources */,
-				D768CBE62869ABFF00EE2CBC /* RobotoCondensed-Bold.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				D768CBE72869ABFF00EE2CBC /* RobotoCondensed-Regular.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

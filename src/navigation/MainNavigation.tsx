@@ -2,34 +2,33 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { AppScreen } from './AppScreen';
 import { HomeScreen } from '../presentation/screens/HomeScreen/HomeScreen';
+import { FavoritesScreen } from '../presentation/screens/FavoritesScreen/FavoritesScreen';
 import { ProfileScreen } from '../presentation/screens/ProfileScreen/ProfileScreen';
 
+enum TabRoutes {
+  Home = 'HomeScreen',
+  Favorites = 'FavoritesScreen',
+  Profile = 'ProfileScreen',
+}
+
 export type MainAppTabParams = {
-  [AppScreen.HomeScreen]: undefined;
-  [AppScreen.ProfileScreen]: undefined;
+  [TabRoutes.Home]: undefined;
+  [TabRoutes.Favorites]: undefined;
+  [TabRoutes.Profile]: undefined;
+};
+
+const icons: { [key in TabRoutes]: any } = {
+  [TabRoutes.Home]: 'home',
+  [TabRoutes.Favorites]: 'favorite-outline',
+  [TabRoutes.Profile]: 'person-outline',
 };
 
 const TabNavigator = createBottomTabNavigator<MainAppTabParams>();
 
-const renderTabIcon =
-  (name: string) =>
-    ({ color }: { color: string }) =>
-      <Icon name={name} color={color} size={28} />;
-
-const tabOptions = {
-  [AppScreen.HomeScreen]: {
-    tabBarIcon: renderTabIcon('home'),
-  },
-  [AppScreen.ProfileScreen]: {
-    tabBarIcon: renderTabIcon('person-outline'),
-  },
-};
-
 export const MainNavigation = () => (
   <TabNavigator.Navigator
-    screenOptions={{
+    screenOptions={({ route }) => ({
       tabBarStyle: {
         backgroundColor: '#F2F2F2',
         borderTopWidth: 0,
@@ -38,17 +37,16 @@ export const MainNavigation = () => (
       tabBarActiveTintColor: '#FA4A0C',
       tabBarInactiveTintColor: '#ADADAF',
       tabBarShowLabel: false,
-    }}
-    initialRouteName={AppScreen.HomeScreen}>
+      tabBarIcon: ({ color }) => (
+        <Icon name={icons[route.name]} color={color} size={28} />
+      ),
+    })}
+    initialRouteName={TabRoutes.Home}>
+    <TabNavigator.Screen name={TabRoutes.Home} component={HomeScreen} />
     <TabNavigator.Screen
-      name={AppScreen.HomeScreen}
-      component={HomeScreen}
-      options={tabOptions[AppScreen.HomeScreen]}
+      name={TabRoutes.Favorites}
+      component={FavoritesScreen}
     />
-    <TabNavigator.Screen
-      name={AppScreen.ProfileScreen}
-      component={ProfileScreen}
-      options={tabOptions[AppScreen.ProfileScreen]}
-    />
+    <TabNavigator.Screen name={TabRoutes.Profile} component={ProfileScreen} />
   </TabNavigator.Navigator>
 );
