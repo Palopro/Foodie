@@ -2,29 +2,29 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { AppScreen } from './AppScreen';
 import { HomeScreen } from '../presentation/screens/HomeScreen/HomeScreen';
+import { FavoritesScreen } from '../presentation/screens/FavoritesScreen/FavoritesScreen';
+
+enum TabRoutes {
+  Home = 'HomeScreen',
+  Favorites = 'FavoritesScreen',
+}
 
 export type MainAppTabParams = {
-  [AppScreen.HomeScreen]: undefined;
+  [TabRoutes.Home]: undefined;
+  [TabRoutes.Favorites]: undefined;
+};
+
+const icons: { [key in TabRoutes]: any } = {
+  [TabRoutes.Home]: 'home',
+  [TabRoutes.Favorites]: 'favorite-outline',
 };
 
 const TabNavigator = createBottomTabNavigator<MainAppTabParams>();
 
-const renderTabIcon =
-  (name: string) =>
-    ({ color }: { color: string }) =>
-      <Icon name={name} color={color} size={28} />;
-
-const tabOptions = {
-  [AppScreen.HomeScreen]: {
-    tabBarIcon: renderTabIcon('home'),
-  },
-};
-
 export const MainNavigation = () => (
   <TabNavigator.Navigator
-    screenOptions={{
+    screenOptions={({ route }) => ({
       tabBarStyle: {
         backgroundColor: '#F2F2F2',
         borderTopWidth: 0,
@@ -33,12 +33,15 @@ export const MainNavigation = () => (
       tabBarActiveTintColor: '#FA4A0C',
       tabBarInactiveTintColor: '#ADADAF',
       tabBarShowLabel: false,
-    }}
-    initialRouteName={AppScreen.HomeScreen}>
+      tabBarIcon: ({ color }) => (
+        <Icon name={icons[route.name]} color={color} size={28} />
+      ),
+    })}
+    initialRouteName={TabRoutes.Home}>
+    <TabNavigator.Screen name={TabRoutes.Home} component={HomeScreen} />
     <TabNavigator.Screen
-      name={AppScreen.HomeScreen}
-      component={HomeScreen}
-      options={tabOptions[AppScreen.HomeScreen]}
+      name={TabRoutes.Favorites}
+      component={FavoritesScreen}
     />
   </TabNavigator.Navigator>
 );
