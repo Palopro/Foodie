@@ -14,9 +14,13 @@ import { AppScreen } from '../../../navigation/AppScreen';
 import { MainAppTabParams } from '../../../navigation/MainNavigation';
 import { StylingText, TextType } from '../../components/StylingText';
 import { Food } from '../../../domain/model/Food';
-import { favoriteFoods } from '../../../domain/stores/reducers/foodReducer';
-import { useAppSelector } from '../../../hooks';
+import {
+  favoriteFoods,
+  foodReducer,
+} from '../../../domain/stores/reducers/foodReducer';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { FavoriteRow } from './FavoriteRow';
+import { ListEmpty } from './ListEmpty';
 
 interface FavoritesScreenProps
   extends NativeStackScreenProps<MainAppTabParams> {}
@@ -24,8 +28,9 @@ interface FavoritesScreenProps
 export const FavoritesScreen: React.FC<FavoritesScreenProps> = ({
   navigation,
 }) => {
-  const foodState = useAppSelector(({ foodReducer }) => foodReducer);
+  const foodState = useAppSelector(state => state.foodReducer);
   const foods = favoriteFoods(foodState);
+  const dispatch = useAppDispatch();
 
   const handleMenu = () => {
     // TODO: menu press
@@ -39,9 +44,19 @@ export const FavoritesScreen: React.FC<FavoritesScreenProps> = ({
     navigation.navigate(AppScreen.FoodDetailsScreen, { food });
   };
 
+  const handleFavorite = (food: Food) => {
+    dispatch(foodReducer.actions.handleFavorite(food.id));
+  };
+
   const renderItem = ({ item }: ListRenderItemInfo<Food>) => (
-    <FavoriteRow food={item} onPress={handlePressFood} />
+    <FavoriteRow
+      food={item}
+      onFavorite={handleFavorite}
+      onPress={handlePressFood}
+    />
   );
+
+  const keyExtractor = (food: Food) => `food-${food.id}`;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,8 +71,12 @@ export const FavoritesScreen: React.FC<FavoritesScreenProps> = ({
 
       <FlatList
         data={foods}
+        keyExtractor={keyExtractor}
         renderItem={renderItem}
-        ItemSeparatorComponent={() => <View style={{ height: 14 }} />}
+        ItemSeparatorComponent={() => <View style={styles.divider} />}
+        ListEmptyComponent={ListEmpty}
+        ListHeaderComponent={<View style={styles.header} />}
+        contentContainerStyle={{ flex: foods.length === 0 ? 1 : undefined }}
       />
     </SafeAreaView>
   );
@@ -75,5 +94,11 @@ const styles = StyleSheet.create({
     fontSize: 34,
     letterSpacing: -0.03,
     lineHeight: 40,
+  },
+  header: {
+    height: 40,
+  },
+  divider: {
+    height: 14,
   },
 });
