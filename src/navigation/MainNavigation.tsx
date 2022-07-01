@@ -4,9 +4,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { AppScreen } from './AppScreen';
 import { HomeScreen } from '../presentation/screens/HomeScreen/HomeScreen';
+import { ProfileScreen } from '../presentation/screens/ProfileScreen/ProfileScreen';
 
 export type MainAppTabParams = {
   [AppScreen.HomeScreen]: undefined;
+  [AppScreen.ProfileScreen]: undefined;
 };
 
 const TabNavigator = createBottomTabNavigator<MainAppTabParams>();
@@ -19,6 +21,9 @@ const renderTabIcon =
 const tabOptions = {
   [AppScreen.HomeScreen]: {
     tabBarIcon: renderTabIcon('home'),
+  },
+  [AppScreen.ProfileScreen]: {
+    tabBarIcon: renderTabIcon('person-outline'),
   },
 };
 
@@ -39,6 +44,11 @@ export const MainNavigation = () => (
       name={AppScreen.HomeScreen}
       component={HomeScreen}
       options={tabOptions[AppScreen.HomeScreen]}
+    />
+    <TabNavigator.Screen
+      name={AppScreen.ProfileScreen}
+      component={ProfileScreen}
+      options={tabOptions[AppScreen.ProfileScreen]}
     />
   </TabNavigator.Navigator>
 );
