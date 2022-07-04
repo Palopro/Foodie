@@ -7,10 +7,8 @@ import { AppBar } from '../../components/AppBar/AppBar';
 import { MainAppTabParams } from '../../../navigation/MainNavigation';
 import { AppScreen } from '../../../navigation/AppScreen';
 import { StylingText, TextType } from '../../components/StylingText';
-import cardIcon from '../../../assets/images/creditCard.png';
-import bankIcon from '../../../assets/images/bank.png';
-import paypalIcon from '../../../assets/images/paypal.png';
 import { PaymentOptions } from '../CheckoutScreen/PaymentOptions';
+import { useAppSelector } from '../../../hooks';
 
 interface OptionValue {
   id: number;
@@ -18,33 +16,13 @@ interface OptionValue {
   value: string;
 }
 
-const paymentOptions = [
-  {
-    id: 1,
-    name: 'Card',
-    value: 'card',
-    image: cardIcon,
-    bgColor: '#F47B0A',
-  },
-  {
-    id: 2,
-    name: 'Bank account',
-    value: 'bank',
-    image: bankIcon,
-    bgColor: '#EB4796',
-  },
-  {
-    id: 3,
-    name: 'Paypal',
-    value: 'paypal',
-    image: paypalIcon,
-    bgColor: '#0038FF',
-  },
-];
-
 export const ProfileScreen: React.FC<
-NativeStackScreenProps<MainAppTabParams>
+  NativeStackScreenProps<MainAppTabParams>
 > = ({ navigation }) => {
+  const paymentOptions = useAppSelector(
+    ({ authReducer }) => authReducer.paymentOptions,
+  );
+
   const [payment, setPayment] = useState(paymentOptions[0]);
 
   const handleCartPress = () => {
@@ -79,9 +57,7 @@ NativeStackScreenProps<MainAppTabParams>
                 Marvis Ighedosa
               </StylingText>
 
-              <View style={{}}>
-                <Icon name={'edit'} size={21} color="#000000" />
-              </View>
+              <Icon name={'edit'} size={21} color="#000000" />
             </View>
             <StylingText style={styles.email} textType={TextType.Regular}>
               dosamarvis@gmail.com
