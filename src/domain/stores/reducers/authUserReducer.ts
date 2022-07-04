@@ -4,17 +4,27 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { User } from '../../model/user';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Reducers } from './reducers';
+import { PaymentOption } from '../../model/PaymentOption';
+import cardIcon from '../../../assets/images/creditCard.png';
+import bankIcon from '../../../assets/images/bank.png';
+import paypalIcon from '../../../assets/images/paypal.png';
 
 interface AuthState {
   isLoading: boolean;
   error: string | null;
   user: User | null;
+  paymentOptions: Array<PaymentOption>;
 }
 
 const initialState: AuthState = {
   user: null,
   isLoading: false,
   error: null,
+  paymentOptions: [
+    new PaymentOption(1, 'Card', 'card', cardIcon, '#F47B0A'),
+    new PaymentOption(2, 'Bank account', 'bank', bankIcon, '#EB4796'),
+    new PaymentOption(3, 'Paypal', 'paypal', paypalIcon, '#0038FF'),
+  ],
 };
 
 export const reducerName = Reducers.AuthReducer;

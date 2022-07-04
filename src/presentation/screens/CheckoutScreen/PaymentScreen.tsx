@@ -6,9 +6,6 @@ import { useSelector } from 'react-redux';
 import { AppBarWithTitle } from '../../components/AppBar/AppBarWithTitle';
 import { PaymentOptions } from './PaymentOptions';
 import { OptionSelect } from '../../components/OptionSelect/OptionSelect';
-import cardIcon from '../../../assets/images/creditCard.png';
-import bankIcon from '../../../assets/images/bank.png';
-import paypalIcon from '../../../assets/images/paypal.png';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { totalInCart } from '../../../domain/stores/reducers/foodCartReducer';
 import { NoteModal } from './NoteModal/NoteModal';
@@ -23,38 +20,15 @@ interface OptionValue {
   value: string;
 }
 
-const deliveryOptions = [
-  { id: 1, name: 'Door delivery', value: 'DoorDelivery' },
-  { id: 2, name: 'Pick up', value: 'pickUp' },
-];
-
-const paymentOptions = [
-  {
-    id: 1,
-    name: 'Card',
-    value: 'card',
-    image: cardIcon,
-    bgColor: '#F47B0A',
-  },
-  {
-    id: 2,
-    name: 'Bank account',
-    value: 'bank',
-    image: bankIcon,
-    bgColor: '#EB4796',
-  },
-  {
-    id: 3,
-    name: 'Paypal',
-    value: 'paypal',
-    image: paypalIcon,
-    bgColor: '#0038FF',
-  },
-];
-
 export const PaymentScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
-  const [delivery, setDelivery] = useState(deliveryOptions[0]);
+  const paymentOptions = useAppSelector(
+    ({ authReducer }) => authReducer.paymentOptions,
+  );
+  const deliveryNotes = useAppSelector(
+    state => state.cartReducer.deliveryNotes,
+  );
+  const [delivery, setDelivery] = useState(deliveryNotes[0]);
   const [payment, setPayment] = useState(paymentOptions[0]);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -120,7 +94,7 @@ export const PaymentScreen: React.FC = () => {
         <Text style={styles.infoTitle}>Delivery method</Text>
         <View style={styles.infoBox}>
           <OptionSelect
-            options={deliveryOptions}
+            options={deliveryNotes}
             selectedOption={delivery}
             onChangeOption={handleChangeDelivery}
           />
