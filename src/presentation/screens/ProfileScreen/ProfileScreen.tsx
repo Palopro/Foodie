@@ -1,17 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { AppBar } from '../../components/AppBar/AppBar';
 import { MainAppTabParams } from '../../../navigation/MainNavigation';
 import { AppScreen } from '../../../navigation/AppScreen';
 import { StylingText, TextType } from '../../components/StylingText';
+import cardIcon from '../../../assets/images/creditCard.png';
+import bankIcon from '../../../assets/images/bank.png';
+import paypalIcon from '../../../assets/images/paypal.png';
+import { PaymentOptions } from '../CheckoutScreen/PaymentOptions';
+
+interface OptionValue {
+  id: number;
+  name: string;
+  value: string;
+}
+
+const paymentOptions = [
+  {
+    id: 1,
+    name: 'Card',
+    value: 'card',
+    image: cardIcon,
+    bgColor: '#F47B0A',
+  },
+  {
+    id: 2,
+    name: 'Bank account',
+    value: 'bank',
+    image: bankIcon,
+    bgColor: '#EB4796',
+  },
+  {
+    id: 3,
+    name: 'Paypal',
+    value: 'paypal',
+    image: paypalIcon,
+    bgColor: '#0038FF',
+  },
+];
 
 export const ProfileScreen: React.FC<
 NativeStackScreenProps<MainAppTabParams>
 > = ({ navigation }) => {
+  const [payment, setPayment] = useState(paymentOptions[0]);
+
   const handleCartPress = () => {
     navigation.navigate(AppScreen.CartScreen);
+  };
+
+  const handleChangePayment = (option: OptionValue) => {
+    setPayment(option);
   };
 
   return (
@@ -24,35 +65,45 @@ NativeStackScreenProps<MainAppTabParams>
         </StylingText>
       </View>
 
-      <View>
+      <View style={styles.informationContainer}>
         <StylingText style={styles.infoTitle} textType={TextType.Bold}>
           Information
         </StylingText>
 
         <View style={styles.infoContainer}>
-          <View
-            style={{
-              width: 60,
-              height: 60,
-              backgroundColor: 'red',
-              borderRadius: 10,
-            }}
-          />
+          <View style={styles.image} />
 
-          <View style={{ flex: 1, marginStart: 15, marginEnd: 9 }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
+          <View style={styles.content}>
+            <View style={styles.usernameRow}>
               <StylingText textType={TextType.Bold} style={styles.username}>
                 Marvis Ighedosa
               </StylingText>
 
-              <View style={{ width: 17, height: 17, backgroundColor: 'red' }} />
+              <View style={{}}>
+                <Icon name={'edit'} size={21} color="#000000" />
+              </View>
             </View>
+            <StylingText style={styles.email} textType={TextType.Regular}>
+              dosamarvis@gmail.com
+            </StylingText>
+            <StylingText style={styles.address} textType={TextType.Regular}>
+              No 15 uti street off ovie palace road effurun delta state
+            </StylingText>
           </View>
+        </View>
+      </View>
+
+      <View style={styles.paymentContainer}>
+        <StylingText style={styles.infoTitle} textType={TextType.Bold}>
+          Payment method
+        </StylingText>
+
+        <View style={[styles.infoContainer, { paddingVertical: 0 }]}>
+          <PaymentOptions
+            options={paymentOptions}
+            selectedOption={payment}
+            onChangeOption={handleChangePayment}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -82,9 +133,44 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 16,
     paddingVertical: 20,
+    marginTop: 12,
+  },
+  usernameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginEnd: 9,
+  },
+  content: {
+    flex: 1,
+    marginStart: 15,
   },
   username: {
     fontSize: 18,
     lineHeight: 21,
+  },
+  email: {
+    fontSize: 13,
+    lineHeight: 15,
+    marginTop: 10,
+  },
+  address: {
+    fontSize: 13,
+    lineHeight: 15,
+    marginTop: 10,
+  },
+  informationContainer: {
+    paddingHorizontal: 50,
+    marginTop: 66,
+  },
+  paymentContainer: {
+    paddingHorizontal: 50,
+    marginTop: 48,
+  },
+  image: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'red',
+    borderRadius: 10,
   },
 });
