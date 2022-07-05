@@ -10,6 +10,10 @@ import { storage, StorageKeys } from '../storage';
 import { LoginUserCredentials, RegisterUserCredentials } from './types';
 import { Order } from '../../../domain/model/Order';
 import { CartFood } from '../../../domain/model/CartFood';
+import { OrderHistoryDTO } from './dto/OrderHistoryDTO';
+import { OrderHistory } from '../../../domain/model/OrderHistory';
+import { OrderHistoryFoodDTO } from './dto/OrderHistoryFoodDTO';
+import { OrderHistoryFood } from '../../../domain/model/OrderHistoryFood';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
@@ -39,6 +43,26 @@ const mapToFoodDTO = (cartFood: CartFood) => ({
     gallery: cartFood.gallery,
   },
 });
+
+const mapToOrderHistory = (orderHistory: OrderHistoryDTO) =>
+  new OrderHistory(
+    orderHistory.id,
+    orderHistory.attributes.address,
+    orderHistory.attributes.phone,
+    orderHistory.attributes.delivery_method,
+    orderHistory.attributes.payment,
+    orderHistory.attributes.items.map(mapToOrderHistoryFood),
+  );
+
+const mapToOrderHistoryFood = (orderHistoryFood: OrderHistoryFoodDTO) =>
+  new OrderHistoryFood(
+    orderHistoryFood.id,
+    orderHistoryFood.qty,
+    orderHistoryFood.attributes.name,
+    orderHistoryFood.attributes.photo,
+    orderHistoryFood.attributes.price,
+    orderHistoryFood.attributes.gallery,
+  );
 
 const mapToCreateOrderReq = (order: Order) => ({
   address: order.address,
@@ -145,6 +169,17 @@ export const foodieApi = createApi({
           data: mapToCreateOrderReq(order),
         },
       }),
+    }),
+    orderHistory: build.query<any, number>({
+      query: userId => ({
+        url: '/orders',
+        params: {
+          populate: '*',
+          ['filters[users_permissions_user][id][$eq]']: userId,
+        },
+      }),
+      transformResponse: (response: { data: Array<OrderHistoryDTO> }) =>
+        response.data.map(mapToOrderHistory),
     }),
   }),
 });
