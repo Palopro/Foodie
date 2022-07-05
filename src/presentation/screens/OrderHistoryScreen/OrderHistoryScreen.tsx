@@ -62,10 +62,10 @@ export const OrderHistoryScreen: React.FC<
         ItemSeparatorComponent={renderSeparator}
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={EmptyList}
-        contentContainerStyle={{
-          paddingHorizontal: 50,
-          flex: orderHistoryList.length === 0 ? 1 : undefined,
-        }}
+        contentContainerStyle={[
+          styles.contentList,
+          { flex: orderHistoryList.length === 0 ? 1 : undefined },
+        ]}
       />
     </SafeAreaView>
   );
@@ -89,5 +89,8 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 20,
+  },
+  contentList: {
+    paddingHorizontal: 50,
   },
 });
