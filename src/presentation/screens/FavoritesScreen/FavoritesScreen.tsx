@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { DrawerActions } from '@react-navigation/native';
 
 import { AppBar } from '../../components/AppBar/AppBar';
 import { AppScreen } from '../../../navigation/AppScreen';
@@ -30,7 +31,7 @@ NativeStackScreenProps<MainAppTabParams>
   const dispatch = useAppDispatch();
 
   const handleMenu = () => {
-    // TODO: menu press
+    navigation.dispatch(DrawerActions.toggleDrawer());
   };
 
   const handleCart = () => {

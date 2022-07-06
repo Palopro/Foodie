@@ -18,6 +18,10 @@ class Storage {
       return null;
     }
   };
+
+  public removeFromStorage = async (key: StorageKeys) => {
+    await AsyncStorage.removeItem(key);
+  };
 }
 
 export const storage = new Storage();

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { DrawerActions } from '@react-navigation/native';
 
 import { AppBar } from '../../components/AppBar/AppBar';
 import { MainAppTabParams } from '../../../navigation/MainNavigation';
@@ -25,6 +26,10 @@ export const ProfileScreen: React.FC<
 
   const [payment, setPayment] = useState(paymentOptions[0]);
 
+  const handleMenu = () => {
+    navigation.dispatch(DrawerActions.toggleDrawer());
+  };
+
   const handleCartPress = () => {
     navigation.navigate(AppScreen.CartScreen);
   };
@@ -36,7 +41,7 @@ export const ProfileScreen: React.FC<
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F2F2F2" animated />
-      <AppBar onMenuPress={navigation.goBack} onCartPress={handleCartPress} />
+      <AppBar onMenuPress={handleMenu} onCartPress={handleCartPress} />
       <View style={styles.titleWrapper}>
         <StylingText style={styles.title} textType={TextType.Bold}>
           Profile
