@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { DrawerActions } from '@react-navigation/native';
 
 import { AppBar } from '../../components/AppBar/AppBar';
 import { AppScreen } from '../../../navigation/AppScreen';
@@ -29,6 +30,10 @@ export const OrderHistoryScreen: React.FC<
     refetchOnFocus: true,
   });
 
+  const handleMenu = () => {
+    navigation.dispatch(DrawerActions.toggleDrawer());
+  };
+
   const handleCartPress = () => {
     navigation.navigate(AppScreen.CartScreen);
   };
@@ -46,7 +51,7 @@ export const OrderHistoryScreen: React.FC<
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F2F2F2" animated />
-      <AppBar onMenuPress={navigation.goBack} onCartPress={handleCartPress} />
+      <AppBar onMenuPress={handleMenu} onCartPress={handleCartPress} />
 
       <View style={styles.titleWrapper}>
         <StylingText style={styles.title} textType={TextType.Bold}>

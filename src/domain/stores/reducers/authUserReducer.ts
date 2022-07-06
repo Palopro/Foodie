@@ -32,7 +32,12 @@ export const reducerName = Reducers.AuthReducer;
 export const authUserReducer = createSlice({
   name: reducerName,
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state: AuthState) => {
+      state.user = null;
+      state.error = null;
+    },
+  },
   extraReducers(builder) {
     builder
       .addMatcher(

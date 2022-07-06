@@ -1,8 +1,8 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { DrawerNavigation } from './DrawerNavigation';
 import { AppScreen } from './AppScreen';
-import { MainNavigation } from './MainNavigation';
 import { useAppSelector } from '../hooks';
 import { AuthNavigation } from './AuthNavigation';
 import { SearchScreen } from '../presentation/screens/SearchScreen/SearchScreen';
@@ -35,7 +35,7 @@ export const RootNavigation = () => {
       screenOptions={{ headerShown: false }}>
       <RootStack.Screen
         name={AppScreen.MainNavigation}
-        component={MainNavigation}
+        component={DrawerNavigation}
       />
       <RootStack.Screen
         name={AppScreen.AuthNavigation}
