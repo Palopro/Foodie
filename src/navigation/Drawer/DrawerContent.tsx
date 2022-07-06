@@ -1,20 +1,13 @@
 import React from 'react';
-import {
-  FlatList,
-  ListRenderItemInfo,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from 'react-native';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { AppScreen } from '../AppScreen';
 import { DrawerItem } from './DrawerItem';
 import { useAppDispatch } from '../../hooks';
 import { authUserReducer } from '../../domain/stores/reducers/authUserReducer';
 import { storage, StorageKeys } from '../../data/dataSource/storage';
+import { SignOutButton } from './SignOutButton';
 
 interface DrawerRow {
   icon: string;
@@ -91,12 +84,7 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = ({
       />
 
       <View style={styles.footer}>
-        <View style={styles.signOutBtn}>
-          <TouchableOpacity onPress={handleLogout} style={styles.signOut}>
-            <Text style={styles.signOutText}>Sign-out</Text>
-            <Icon name={'arrow-forward'} color="#FFFFFF" size={25} />
-          </TouchableOpacity>
-        </View>
+        <SignOutButton onPress={handleLogout} />
       </View>
     </View>
   );
@@ -113,28 +101,11 @@ const styles = StyleSheet.create({
     marginStart: 74,
     marginEnd: 48,
   },
-  signOut: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  signOutText: {
-    fontSize: 17,
-    lineHeight: 25,
-    fontWeight: '600',
-    fontStyle: 'normal',
-    textAlign: 'left',
-    color: '#FFFFFF',
-    marginEnd: 12,
-  },
   header: {
     flex: 1,
   },
   footer: {
     flex: 1,
-  },
-  signOutBtn: {
-    marginStart: 40,
-    marginEnd: 40,
+    marginHorizontal: 40,
   },
 });

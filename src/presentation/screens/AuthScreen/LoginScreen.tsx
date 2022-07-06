@@ -50,7 +50,7 @@ export const LoginScreen = () => {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               label="Username"
-              autoCapitalize={'none'}
+              autoCapitalize="none"
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
@@ -73,7 +73,7 @@ export const LoginScreen = () => {
             <TextInput
               label="Password"
               value={value}
-              autoCapitalize={'none'}
+              autoCapitalize="none"
               onChangeText={onChange}
               onBlur={onBlur}
               error={errors.password && 'Password must be from 6 to 32 symbols'}

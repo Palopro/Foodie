@@ -3,6 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { MainNavigation } from './MainNavigation';
 import { DrawerContent } from './Drawer/DrawerContent';
+import { AppScreen } from './AppScreen';
 
 export type DrawerParams = {
   MainNavigation: undefined;
@@ -18,6 +19,9 @@ export const DrawerNavigation = () => (
       headerShown: false,
       overlayColor: 'transparent',
     }}>
-    <DrawerNav.Screen name={'MainNavigation'} component={MainNavigation} />
+    <DrawerNav.Screen
+      name={AppScreen.MainNavigation}
+      component={MainNavigation}
+    />
   </DrawerNav.Navigator>
 );

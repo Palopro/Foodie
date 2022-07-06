@@ -3,7 +3,6 @@ export enum AppScreen {
   AuthNavigation = 'AuthNavigation',
   OnBoardingScreen = 'OnBoardingScreen',
   AuthScreen = 'AuthScreen',
-  HomeScreen = 'HomeScreen',
   SearchScreen = 'SearchScreen',
   FoodDetailsScreen = 'FoodDetailsScreen',
   CartScreen = 'CartScreen',

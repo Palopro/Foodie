@@ -19,9 +19,7 @@ class Storage {
     }
   };
 
-  public removeFromStorage = async (key: StorageKeys) => {
-    await AsyncStorage.removeItem(key);
-  };
+  public removeFromStorage = (key: StorageKeys) => AsyncStorage.removeItem(key);
 }
 
 export const storage = new Storage();
