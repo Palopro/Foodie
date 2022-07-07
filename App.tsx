@@ -26,7 +26,7 @@ export const App = () => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setIsReachable(state.isConnected);
     });
-    return () => unsubscribe();
+    return unsubscribe;
   }, []);
 
   const handleTryAgain = async () => {
