@@ -23,16 +23,19 @@ export const App = () => {
   const [isReachable, setIsReachable] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state =>
-      setIsReachable(state.isConnected),
-    );
+    const unsubscribe = NetInfo.addEventListener(state => {
+      if (state.isConnected !== isReachable) {
+        setIsReachable(state.isConnected);
+      }
+    });
     return () => {
       unsubscribe();
     };
-  });
+  }, [isReachable]);
 
-  const handleTryAgain = () => {
-    setIsReachable(true);
+  const handleTryAgain = async () => {
+    const networkState = await NetInfo.refresh();
+    setIsReachable(networkState.isConnected);
   };
 
   if (!isReachable) {
