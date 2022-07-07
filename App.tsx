@@ -24,14 +24,10 @@ export const App = () => {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      if (state.isConnected !== isReachable) {
-        setIsReachable(state.isConnected);
-      }
+      setIsReachable(state.isConnected);
     });
-    return () => {
-      unsubscribe();
-    };
-  }, [isReachable]);
+    return () => unsubscribe();
+  }, []);
 
   const handleTryAgain = async () => {
     const networkState = await NetInfo.refresh();
