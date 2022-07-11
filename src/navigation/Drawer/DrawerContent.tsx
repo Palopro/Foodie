@@ -8,6 +8,8 @@ import { useAppDispatch } from '../../hooks';
 import { authUserReducer } from '../../domain/stores/reducers/authUserReducer';
 import { storage, StorageKeys } from '../../data/dataSource/storage';
 import { SignOutButton } from './SignOutButton';
+import { foodCartReducer } from '../../domain/stores/reducers/foodCartReducer';
+import { foodReducer } from '../../domain/stores/reducers/foodReducer';
 
 interface DrawerRow {
   icon: string;
@@ -57,6 +59,8 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = ({
   const handleLogout = async () => {
     await storage.removeFromStorage(StorageKeys.JWT);
     dispatch(authUserReducer.actions.logout());
+    dispatch(foodCartReducer.actions.clearCart());
+    dispatch(foodReducer.actions.clear());
 
     navigation.reset({
       index: 0,

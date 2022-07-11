@@ -77,6 +77,9 @@ export const foodCartReducer = createSlice({
 
       state.cart[itemIndex] = { ...item };
     },
+    clearCart: (state: FoodCartState) => {
+      state.cart = [];
+    },
   },
 });
 

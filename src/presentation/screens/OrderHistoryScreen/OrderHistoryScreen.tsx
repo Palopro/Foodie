@@ -1,7 +1,9 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   ListRenderItemInfo,
+  RefreshControl,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -21,11 +23,16 @@ import { OrderHistory } from '../../../domain/model/OrderHistory';
 import { EmptyList } from './EmptyList';
 
 export const OrderHistoryScreen: React.FC<
-  NativeStackScreenProps<MainAppTabParams>
+NativeStackScreenProps<MainAppTabParams>
 > = ({ navigation }) => {
   const user = useAppSelector(state => state.authReducer.user);
 
-  const { data: orderHistoryList } = foodieApi.useOrderHistoryQuery(user?.id, {
+  const {
+    data: orderHistoryList = [],
+    isLoading,
+    isFetching,
+    refetch,
+  } = foodieApi.useOrderHistoryQuery(user?.id, {
     refetchOnMountOrArgChange: true,
     refetchOnFocus: true,
   });
@@ -48,6 +55,15 @@ export const OrderHistoryScreen: React.FC<
 
   const renderHeader = () => <View style={styles.header} />;
 
+  const renderRefreshControl = () => (
+    <RefreshControl
+      refreshing={isFetching}
+      onRefresh={refetch}
+      tintColor="#FA4A0C"
+      colors={['#FA4A0C']}
+    />
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F2F2F2" animated />
@@ -58,20 +74,28 @@ export const OrderHistoryScreen: React.FC<
           History
         </StylingText>
       </View>
-
-      <FlatList
-        scrollEventThrottle={16}
-        keyExtractor={keyExtractor}
-        data={orderHistoryList}
-        renderItem={renderRow}
-        ItemSeparatorComponent={renderSeparator}
-        ListHeaderComponent={renderHeader}
-        ListEmptyComponent={EmptyList}
-        contentContainerStyle={[
-          styles.contentList,
-          { flex: orderHistoryList.length === 0 ? 1 : undefined },
-        ]}
-      />
+      {isLoading ? (
+        <View
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <ActivityIndicator animating color="#FA4A0C" size="large" />
+        </View>
+      ) : (
+        <FlatList
+          refreshControl={renderRefreshControl()}
+          scrollEventThrottle={16}
+          keyExtractor={keyExtractor}
+          data={orderHistoryList}
+          renderItem={renderRow}
+          showsVerticalScrollIndicator={false}
+          ItemSeparatorComponent={renderSeparator}
+          ListHeaderComponent={renderHeader}
+          ListEmptyComponent={EmptyList}
+          contentContainerStyle={[
+            styles.contentList,
+            { flex: orderHistoryList.length === 0 ? 1 : undefined },
+          ]}
+        />
+      )}
     </SafeAreaView>
   );
 };

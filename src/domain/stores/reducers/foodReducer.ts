@@ -22,7 +22,7 @@ export const foodReducer = createSlice({
   name: reducerName,
   initialState,
   reducers: {
-    handleFavorite: (state, action: PayloadAction<number>) => {
+    handleFavorite: (state: FoodState, action: PayloadAction<number>) => {
       const favs = state.favorites;
       const favIndex = state.favorites.findIndex(num => num === action.payload);
 
@@ -33,6 +33,10 @@ export const foodReducer = createSlice({
       }
 
       state.favorites = favs;
+    },
+    clear: (state: FoodState) => {
+      state.foods = [];
+      state.favorites = [];
     },
   },
   extraReducers(builder) {
