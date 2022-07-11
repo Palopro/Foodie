@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StatusBar, StyleSheet, View } from 'react-native';
+import { Dimensions, Image, StatusBar, StyleSheet, View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import { LoginScreen } from '../presentation/screens/AuthScreen/LoginScreen';
@@ -7,6 +7,8 @@ import { SignUpScreen } from '../presentation/screens/AuthScreen/SignUpScreen';
 import logo from '../assets/images/BellaLogo.png';
 
 const AuthTab = createMaterialTopTabNavigator();
+
+const { width } = Dimensions.get('window');
 
 export const AuthTabs = () => (
   <>
@@ -26,6 +28,18 @@ export const AuthTabs = () => (
           tabBarActiveTintColor: '#FA4A0C',
           tabBarInactiveTintColor: '#ADADAF',
           swipeEnabled: false,
+          tabBarStyle: {
+            borderBottomStartRadius: 30,
+            borderBottomEndRadius: 30,
+            backgroundColor: '#FFFFFF',
+          },
+          tabBarIndicatorStyle: {
+            height: 3,
+            borderRadius: 12,
+            backgroundColor: '#FA4A0C',
+            width: width / 2 - 100,
+            marginHorizontal: 50,
+          },
           tabBarLabelStyle: {
             color: 'rgba(0, 0, 0, 1)',
             fontStyle: 'normal',
@@ -47,14 +61,13 @@ export const AuthTabs = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F2F2F2',
   },
   imageWrapper: {
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 128,
-    marginBottom: 48,
+    flex: 0.7,
   },
   image: {
     width: 130,
