@@ -1,14 +1,18 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { OrderHistory } from '../../../domain/model/OrderHistory';
 import { StylingText, TextType } from '../../components/StylingText';
 
 interface HistoryRowProps {
   orderHistory: OrderHistory;
+  onPress: (orderHistory: OrderHistory) => void;
 }
 
-export const HistoryRow: React.FC<HistoryRowProps> = ({ orderHistory }) => {
+export const HistoryRow: React.FC<HistoryRowProps> = ({
+  orderHistory,
+  onPress,
+}) => {
   const qty = orderHistory.items.length;
 
   const total = orderHistory.items.reduce(
@@ -16,8 +20,10 @@ export const HistoryRow: React.FC<HistoryRowProps> = ({ orderHistory }) => {
     0,
   );
 
+  const handlePress = () => onPress(orderHistory);
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={handlePress} style={styles.container}>
       <Image
         source={{ uri: orderHistory.items[0].photo }}
         style={styles.image}
@@ -35,7 +41,7 @@ export const HistoryRow: React.FC<HistoryRowProps> = ({ orderHistory }) => {
           style={styles.total}
           textType={TextType.Bold}>{`total: ${total.toFixed(2)}`}</StylingText>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

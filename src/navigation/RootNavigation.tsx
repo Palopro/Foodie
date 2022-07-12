@@ -11,6 +11,8 @@ import { CartScreen } from '../presentation/screens/CartScreen/CartScreen';
 import { CheckoutScreen } from '../presentation/screens/CheckoutScreen/CheckoutScreen';
 import { PaymentScreen } from '../presentation/screens/CheckoutScreen/PaymentScreen';
 import { Food } from '../domain/model/Food';
+import { OrderHistory } from '../domain/model/OrderHistory';
+import { OrderHistoryDetailsScreen } from '../presentation/screens/OrderHistoryDetailsScreen/OrderHistoryDetailsScreen';
 
 export type RootStackParams = {
   [AppScreen.MainNavigation]: undefined;
@@ -20,6 +22,7 @@ export type RootStackParams = {
   [AppScreen.CartScreen]: undefined;
   [AppScreen.CheckoutScreen]: undefined;
   [AppScreen.PaymentScreen]: undefined;
+  [AppScreen.OrderHistoryDetailsScreen]: { orderHistory: OrderHistory };
 };
 
 const RootStack = createNativeStackNavigator<RootStackParams>();
@@ -58,6 +61,10 @@ export const RootNavigation = () => {
       <RootStack.Screen
         name={AppScreen.PaymentScreen}
         component={PaymentScreen}
+      />
+      <RootStack.Screen
+        name={AppScreen.OrderHistoryDetailsScreen}
+        component={OrderHistoryDetailsScreen}
       />
     </RootStack.Navigator>
   );

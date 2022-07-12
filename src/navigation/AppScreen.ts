@@ -10,4 +10,5 @@ export enum AppScreen {
   PaymentScreen = 'PaymentScreen',
   FavoritesScreen = 'FavoritesScreen',
   ProfileScreen = 'ProfileScreen',
+  OrderHistoryDetailsScreen = 'OrderHistoryDetailsScreen',
 }

@@ -45,8 +45,12 @@ NativeStackScreenProps<MainAppTabParams>
     navigation.navigate(AppScreen.CartScreen);
   };
 
+  const handlePressOrder = (orderHistory: OrderHistory) => {
+    navigation.navigate(AppScreen.OrderHistoryDetailsScreen, { orderHistory });
+  };
+
   const renderRow = ({ item }: ListRenderItemInfo<OrderHistory>) => (
-    <HistoryRow orderHistory={item} />
+    <HistoryRow orderHistory={item} onPress={handlePressOrder} />
   );
 
   const keyExtractor = (order: OrderHistory) => `order-${order.id}`;
