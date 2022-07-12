@@ -20,7 +20,7 @@ export const OrderHistoryDetailsScreen: React.FC<Props> = ({
   route,
   navigation,
 }) => {
-  const { orderHistory } = route.params;
+  const { order } = route.params;
 
   const renderListRow = ({ item }: ListRenderItemInfo<OrderHistoryFood>) => (
     <OrderFoodRow orderHistoryFood={item} />
@@ -28,7 +28,7 @@ export const OrderHistoryDetailsScreen: React.FC<Props> = ({
 
   const renderHeader = () => <View style={styles.header} />;
 
-  const total = orderHistory.items.reduce(
+  const total = order.items.reduce(
     (acc, food) => acc + food.price * food.qty,
     0,
   );
@@ -38,27 +38,27 @@ export const OrderHistoryDetailsScreen: React.FC<Props> = ({
       <AppBarWithTitle onBackPress={navigation.goBack} title="Order Details" />
       <View style={styles.detailContainer}>
         <StylingText textType={TextType.Bold} style={styles.title}>
-          {`Order #${orderHistory.id}`}
+          {`Order #${order.id}`}
         </StylingText>
 
         <StylingText textType={TextType.Regular} style={styles.text}>
-          {`phone number: ${orderHistory!.phone}`}
+          {`phone number: ${order!.phone}`}
         </StylingText>
 
         <StylingText textType={TextType.Regular} style={styles.text}>
-          {`Address: ${orderHistory!.address}`}
+          {`Address: ${order!.address}`}
         </StylingText>
 
         <StylingText textType={TextType.Regular} style={styles.text}>
-          {`Delivery method: ${orderHistory!.deliveryMethod}`}
+          {`Delivery method: ${order!.deliveryMethod}`}
         </StylingText>
 
         <StylingText textType={TextType.Regular} style={styles.text}>
-          {`Payment method: ${orderHistory!.paymentMethod}`}
+          {`Payment method: ${order!.paymentMethod}`}
         </StylingText>
 
         <StylingText textType={TextType.Regular} style={styles.text}>
-          {`Payment method: ${orderHistory!.paymentMethod}`}
+          {`Payment method: ${order!.paymentMethod}`}
         </StylingText>
 
         <StylingText textType={TextType.Regular} style={styles.text}>
@@ -69,7 +69,7 @@ export const OrderHistoryDetailsScreen: React.FC<Props> = ({
       <FlatList
         scrollEventThrottle={16}
         ListHeaderComponent={renderHeader}
-        data={orderHistory.items}
+        data={order.items}
         renderItem={renderListRow}
       />
     </SafeAreaView>

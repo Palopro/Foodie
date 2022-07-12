@@ -28,12 +28,10 @@ export const OrderFoodRow: React.FC<OrderFoodRow> = ({ orderHistoryFood }) => (
       </View>
     </View>
 
-    <View style={styles.qtyContainer}>
-      <View style={styles.qtyView}>
-        <StylingText textType={TextType.Bold} style={styles.qtyText}>
-          {orderHistoryFood.qty}
-        </StylingText>
-      </View>
+    <View style={styles.qtyView}>
+      <StylingText textType={TextType.Bold} style={styles.qtyText}>
+        {orderHistoryFood.qty}
+      </StylingText>
     </View>
   </View>
 );
@@ -76,6 +74,9 @@ const styles = StyleSheet.create({
     right: 24,
   },
   qtyView: {
+    position: 'absolute',
+    bottom: 18,
+    right: 24,
     backgroundColor: '#FA4A0C',
     borderRadius: 30,
     alignItems: 'center',

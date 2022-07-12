@@ -46,7 +46,7 @@ NativeStackScreenProps<MainAppTabParams>
   };
 
   const handlePressOrder = (orderHistory: OrderHistory) => {
-    navigation.navigate(AppScreen.OrderHistoryDetailsScreen, { orderHistory });
+    navigation.navigate(AppScreen.OrderHistoryDetailsScreen, { order: orderHistory });
   };
 
   const renderRow = ({ item }: ListRenderItemInfo<OrderHistory>) => (

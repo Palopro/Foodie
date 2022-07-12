@@ -22,7 +22,7 @@ export type RootStackParams = {
   [AppScreen.CartScreen]: undefined;
   [AppScreen.CheckoutScreen]: undefined;
   [AppScreen.PaymentScreen]: undefined;
-  [AppScreen.OrderHistoryDetailsScreen]: { orderHistory: OrderHistory };
+  [AppScreen.OrderHistoryDetailsScreen]: { order: OrderHistory };
 };
 
 const RootStack = createNativeStackNavigator<RootStackParams>();
