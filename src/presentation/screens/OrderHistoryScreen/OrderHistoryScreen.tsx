@@ -75,8 +75,7 @@ NativeStackScreenProps<MainAppTabParams>
         </StylingText>
       </View>
       {isLoading ? (
-        <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={styles.loadingView}>
           <ActivityIndicator animating color="#FA4A0C" size="large" />
         </View>
       ) : (
@@ -121,5 +120,10 @@ const styles = StyleSheet.create({
   },
   contentList: {
     paddingHorizontal: 50,
+  },
+  loadingView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
