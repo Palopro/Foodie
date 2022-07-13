@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Food } from '../../model/Food';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Reducers } from './reducers';
+import { Order } from '../../model/Order';
 
 interface FoodState {
   isLoading: boolean;
@@ -73,3 +74,6 @@ export const favoriteFoods = (state: FoodState) =>
 
 export const isInFavorites = (foodId: number) => (state: FoodState) =>
   state.favorites.includes(foodId);
+
+export const totalValue = (order: Order) => (state: FoodState) =>
+  order.items.reduce((acc, food) => acc + food.price * food.qty, 0);

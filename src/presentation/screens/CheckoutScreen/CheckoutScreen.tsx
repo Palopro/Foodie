@@ -21,7 +21,9 @@ export const CheckoutScreen: React.FC<
     state => state.cartReducer.deliveryMethods,
   );
 
-  const [deliveryMethod, setDeliveryMethod] = useState(deliveryMethods[0]);
+  const [deliveryMethod, setDeliveryMethod] = useState(
+    deliveryMethods[0] || new DeliveryType(2, 'Pick up', 'PickUp'),
+  );
 
   const total = useSelector(totalInCart);
 

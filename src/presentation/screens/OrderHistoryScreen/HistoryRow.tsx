@@ -3,7 +3,6 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { StylingText, TextType } from '../../components/StylingText';
 import { Order } from '../../../domain/model/Order';
-import reactotron from 'reactotron-react-native';
 
 interface HistoryRowProps {
   order: Order;
@@ -11,8 +10,6 @@ interface HistoryRowProps {
 }
 
 export const HistoryRow: React.FC<HistoryRowProps> = ({ order, onPress }) => {
-  reactotron.log({ order });
-
   const qty = order.items.length;
 
   const total = order.items.reduce(

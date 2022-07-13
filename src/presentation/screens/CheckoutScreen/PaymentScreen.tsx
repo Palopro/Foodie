@@ -15,6 +15,7 @@ import { Order } from '../../../domain/model/Order';
 import { RootStackParams } from '../../../navigation/RootNavigation';
 import { DeliveryType } from '../../../domain/model/DeliveryType';
 import { PaymentOption } from '../../../domain/model/PaymentOption';
+import cardIcon from '../../../assets/images/creditCard.png';
 
 export const PaymentScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
@@ -24,8 +25,13 @@ export const PaymentScreen: React.FC = () => {
   const deliveryMethods = useAppSelector(
     state => state.cartReducer.deliveryMethods,
   );
-  const [delivery, setDelivery] = useState(deliveryMethods[0]);
-  const [payment, setPayment] = useState(paymentOptions[0]);
+  const [delivery, setDelivery] = useState(
+    deliveryMethods[0] || new DeliveryType(2, 'Pick up', 'PickUp'),
+  );
+  const [payment, setPayment] = useState(
+    paymentOptions[0] ||
+      new PaymentOption(1, 'Card', 'card', cardIcon, '#F47B0A'),
+  );
   const [modalVisible, setModalVisible] = useState(false);
 
   const total = useSelector(totalInCart);

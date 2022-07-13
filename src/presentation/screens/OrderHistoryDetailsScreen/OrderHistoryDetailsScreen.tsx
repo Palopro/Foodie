@@ -13,6 +13,8 @@ import { AppBarWithTitle } from '../../components/AppBar/AppBarWithTitle';
 import { StylingText, TextType } from '../../components/StylingText';
 import { OrderFoodRow } from './OrderFoodRow';
 import { CartFood } from '../../../domain/model/CartFood';
+import { totalValue } from '../../../domain/stores/reducers/foodReducer';
+import { useAppSelector } from '../../../hooks';
 
 interface Props extends NativeStackScreenProps<RootStackParams> {}
 
@@ -22,16 +24,14 @@ export const OrderHistoryDetailsScreen: React.FC<Props> = ({
 }) => {
   const { order } = route.params;
 
+  const foodState = useAppSelector(state => state.foodReducer);
+  const total = totalValue(order)(foodState);
+
   const renderListRow = ({ item }: ListRenderItemInfo<CartFood>) => (
     <OrderFoodRow orderHistoryFood={item} />
   );
 
   const renderHeader = () => <View style={styles.header} />;
-
-  const total = order.items.reduce(
-    (acc, food) => acc + food.price * food.qty,
-    0,
-  );
 
   return (
     <SafeAreaView style={styles.container}>
