@@ -15,7 +15,6 @@ import { Order } from '../../../domain/model/Order';
 import { RootStackParams } from '../../../navigation/RootNavigation';
 import { DeliveryType } from '../../../domain/model/DeliveryType';
 import { PaymentOption } from '../../../domain/model/PaymentOption';
-import cardIcon from '../../../assets/images/creditCard.png';
 
 export const PaymentScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
@@ -25,13 +24,8 @@ export const PaymentScreen: React.FC = () => {
   const deliveryMethods = useAppSelector(
     state => state.cartReducer.deliveryMethods,
   );
-  const [delivery, setDelivery] = useState(
-    deliveryMethods[0] || new DeliveryType(2, 'Pick up', 'PickUp'),
-  );
-  const [payment, setPayment] = useState(
-    paymentOptions[0] ||
-      new PaymentOption(1, 'Card', 'card', cardIcon, '#F47B0A'),
-  );
+  const [delivery, setDelivery] = useState(deliveryMethods[0] || null);
+  const [payment, setPayment] = useState(paymentOptions[0] || null);
   const [modalVisible, setModalVisible] = useState(false);
 
   const total = useSelector(totalInCart);
@@ -80,29 +74,30 @@ export const PaymentScreen: React.FC = () => {
         <Text style={styles.title}>Payment</Text>
       </View>
 
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Payment method</Text>
-
-        <View style={styles.infoBox}>
-          <PaymentOptions
-            options={paymentOptions}
-            selectedOption={payment}
-            onChangeOption={handleChangePayment}
-          />
+      {payment && (
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoTitle}>Payment method</Text>
+          <View style={styles.infoBox}>
+            <PaymentOptions
+              options={paymentOptions}
+              selectedOption={payment}
+              onChangeOption={handleChangePayment}
+            />
+          </View>
         </View>
-      </View>
-
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoTitle}>Delivery method</Text>
-        <View style={styles.infoBox}>
-          <OptionSelect
-            options={deliveryMethods}
-            selectedOption={delivery}
-            onChangeOption={handleChangeDelivery}
-          />
+      )}
+      {delivery && (
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoTitle}>Delivery method</Text>
+          <View style={styles.infoBox}>
+            <OptionSelect
+              options={deliveryMethods}
+              selectedOption={delivery}
+              onChangeOption={handleChangeDelivery}
+            />
+          </View>
         </View>
-      </View>
-
+      )}
       <View style={styles.totalRow}>
         <Text style={styles.totalText}>Total</Text>
         <Text style={styles.totalValue}>{total.toFixed(2)}</Text>
@@ -110,6 +105,7 @@ export const PaymentScreen: React.FC = () => {
 
       <View style={styles.buttonWrapper}>
         <RoundButton
+          disabled={!payment || !delivery}
           text="Proceed to payment"
           onPress={handleToPayment}
           colorType={ColorType.Orange}

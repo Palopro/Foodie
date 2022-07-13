@@ -75,5 +75,5 @@ export const favoriteFoods = (state: FoodState) =>
 export const isInFavorites = (foodId: number) => (state: FoodState) =>
   state.favorites.includes(foodId);
 
-export const totalValue = (order: Order) => (state: FoodState) =>
+export const totalValue = (order: Order) =>
   order.items.reduce((acc, food) => acc + food.price * food.qty, 0);

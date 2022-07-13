@@ -14,7 +14,6 @@ import { StylingText, TextType } from '../../components/StylingText';
 import { OrderFoodRow } from './OrderFoodRow';
 import { CartFood } from '../../../domain/model/CartFood';
 import { totalValue } from '../../../domain/stores/reducers/foodReducer';
-import { useAppSelector } from '../../../hooks';
 
 interface Props extends NativeStackScreenProps<RootStackParams> {}
 
@@ -23,9 +22,7 @@ export const OrderHistoryDetailsScreen: React.FC<Props> = ({
   navigation,
 }) => {
   const { order } = route.params;
-
-  const foodState = useAppSelector(state => state.foodReducer);
-  const total = totalValue(order)(foodState);
+  const total = totalValue(order);
 
   const renderListRow = ({ item }: ListRenderItemInfo<CartFood>) => (
     <OrderFoodRow orderHistoryFood={item} />

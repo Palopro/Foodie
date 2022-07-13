@@ -3,6 +3,7 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { StylingText, TextType } from '../../components/StylingText';
 import { Order } from '../../../domain/model/Order';
+import { totalValue } from '../../../domain/stores/reducers/foodReducer';
 
 interface HistoryRowProps {
   order: Order;
@@ -11,18 +12,14 @@ interface HistoryRowProps {
 
 export const HistoryRow: React.FC<HistoryRowProps> = ({ order, onPress }) => {
   const qty = order.items.length;
-
-  const total = order.items.reduce(
-    (acc, food) => acc + food.price * food.qty,
-    0,
-  );
+  const total = totalValue(order);
 
   const handlePress = () => onPress(order);
 
   return (
     <TouchableOpacity onPress={handlePress} style={styles.container}>
       <Image source={{ uri: order.items[0].photo }} style={styles.image} />
-      <View style={{ marginStart: 16, justifyContent: 'space-between' }}>
+      <View style={styles.content}>
         <StylingText
           textType={TextType.Bold}
           style={styles.order}
@@ -66,5 +63,9 @@ const styles = StyleSheet.create({
     color: '#FA4A0C',
     fontSize: 15,
     lineHeight: 18,
+  },
+  content: {
+    marginStart: 16,
+    justifyContent: 'space-between',
   },
 });

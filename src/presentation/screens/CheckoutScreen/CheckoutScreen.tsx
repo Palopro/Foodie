@@ -22,7 +22,7 @@ export const CheckoutScreen: React.FC<
   );
 
   const [deliveryMethod, setDeliveryMethod] = useState(
-    deliveryMethods[0] || new DeliveryType(2, 'Pick up', 'PickUp'),
+    deliveryMethods[0] || null,
   );
 
   const total = useSelector(totalInCart);
@@ -67,19 +67,20 @@ export const CheckoutScreen: React.FC<
         </View>
       </View>
 
-      <View style={styles.infoContainer}>
-        <StylingText textType={TextType.Bold} style={styles.infoTitle}>
-          Delivery method
-        </StylingText>
-        <View style={styles.infoBox}>
-          <OptionSelect
-            options={deliveryMethods}
-            selectedOption={deliveryMethod}
-            onChangeOption={handleChangeOption}
-          />
+      {deliveryMethod && (
+        <View style={styles.infoContainer}>
+          <StylingText textType={TextType.Bold} style={styles.infoTitle}>
+            Delivery method
+          </StylingText>
+          <View style={styles.infoBox}>
+            <OptionSelect
+              options={deliveryMethods}
+              selectedOption={deliveryMethod}
+              onChangeOption={handleChangeOption}
+            />
+          </View>
         </View>
-      </View>
-
+      )}
       <View style={styles.totalRow}>
         <StylingText textType={TextType.Regular} style={styles.totalText}>
           Total
@@ -91,6 +92,7 @@ export const CheckoutScreen: React.FC<
 
       <View style={styles.buttonWrapper}>
         <RoundButton
+          disabled={!deliveryMethod}
           text="Proceed to payment"
           onPress={handlePayment}
           colorType={ColorType.Orange}
