@@ -1,11 +1,11 @@
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
-import { OrderHistoryFood } from '../../../domain/model/OrderHistoryFood';
 import { StylingText, TextType } from '../../components/StylingText';
+import { CartFood } from '../../../domain/model/CartFood';
 
 interface OrderFoodRow {
-  orderHistoryFood: OrderHistoryFood;
+  orderHistoryFood: CartFood;
 }
 
 export const OrderFoodRow: React.FC<OrderFoodRow> = ({ orderHistoryFood }) => (

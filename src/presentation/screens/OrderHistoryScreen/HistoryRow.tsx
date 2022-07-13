@@ -1,38 +1,35 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { OrderHistory } from '../../../domain/model/OrderHistory';
 import { StylingText, TextType } from '../../components/StylingText';
+import { Order } from '../../../domain/model/Order';
+import reactotron from 'reactotron-react-native';
 
 interface HistoryRowProps {
-  orderHistory: OrderHistory;
-  onPress: (orderHistory: OrderHistory) => void;
+  order: Order;
+  onPress: (orderHistory: Order) => void;
 }
 
-export const HistoryRow: React.FC<HistoryRowProps> = ({
-  orderHistory,
-  onPress,
-}) => {
-  const qty = orderHistory.items.length;
+export const HistoryRow: React.FC<HistoryRowProps> = ({ order, onPress }) => {
+  reactotron.log({ order });
 
-  const total = orderHistory.items.reduce(
+  const qty = order.items.length;
+
+  const total = order.items.reduce(
     (acc, food) => acc + food.price * food.qty,
     0,
   );
 
-  const handlePress = () => onPress(orderHistory);
+  const handlePress = () => onPress(order);
 
   return (
     <TouchableOpacity onPress={handlePress} style={styles.container}>
-      <Image
-        source={{ uri: orderHistory.items[0].photo }}
-        style={styles.image}
-      />
+      <Image source={{ uri: order.items[0].photo }} style={styles.image} />
       <View style={{ marginStart: 16, justifyContent: 'space-between' }}>
         <StylingText
           textType={TextType.Bold}
           style={styles.order}
-          numberOfLines={1}>{`Order #${orderHistory.id}`}</StylingText>
+          numberOfLines={1}>{`Order #${order.id}`}</StylingText>
 
         <StylingText
           style={styles.qty}

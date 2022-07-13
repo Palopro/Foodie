@@ -11,9 +11,7 @@ import { LoginUserCredentials, RegisterUserCredentials } from './types';
 import { Order } from '../../../domain/model/Order';
 import { CartFood } from '../../../domain/model/CartFood';
 import { OrderHistoryDTO } from './dto/OrderHistoryDTO';
-import { OrderHistory } from '../../../domain/model/OrderHistory';
 import { OrderHistoryFoodDTO } from './dto/OrderHistoryFoodDTO';
-import { OrderHistoryFood } from '../../../domain/model/OrderHistoryFood';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
@@ -44,23 +42,23 @@ const mapToFoodDTO = (cartFood: CartFood) => ({
   },
 });
 
-const mapToOrderHistory = (orderHistory: OrderHistoryDTO) =>
-  new OrderHistory(
-    orderHistory.id,
-    orderHistory.attributes.address,
-    orderHistory.attributes.phone,
-    orderHistory.attributes.delivery_method,
-    orderHistory.attributes.payment,
-    orderHistory.attributes.items.map(mapToOrderHistoryFood),
+const mapToOrder = (order: OrderHistoryDTO) =>
+  new Order(
+    order.attributes.address,
+    order.attributes.phone,
+    order.attributes.delivery_method,
+    order.attributes.payment,
+    order.attributes.items.map(mapToCartFood),
+    order.id,
   );
 
-const mapToOrderHistoryFood = (orderHistoryFood: OrderHistoryFoodDTO) =>
-  new OrderHistoryFood(
+const mapToCartFood = (orderHistoryFood: OrderHistoryFoodDTO) =>
+  new CartFood(
     orderHistoryFood.id,
     orderHistoryFood.qty,
     orderHistoryFood.attributes.name,
-    orderHistoryFood.attributes.photo,
     orderHistoryFood.attributes.price,
+    orderHistoryFood.attributes.photo,
     orderHistoryFood.attributes.gallery,
   );
 
@@ -170,7 +168,7 @@ export const foodieApi = createApi({
         },
       }),
     }),
-    orderHistory: build.query<any, number>({
+    orderHistory: build.query<Array<Order>, number>({
       query: userId => ({
         url: '/orders',
         params: {
@@ -179,7 +177,7 @@ export const foodieApi = createApi({
         },
       }),
       transformResponse: (response: { data: Array<OrderHistoryDTO> }) =>
-        response.data.map(mapToOrderHistory),
+        response.data.map(mapToOrder),
     }),
   }),
 });

@@ -13,22 +13,18 @@ import { useAppSelector } from '../../../hooks';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Order } from '../../../domain/model/Order';
 import { RootStackParams } from '../../../navigation/RootNavigation';
-
-interface OptionValue {
-  id: number;
-  name: string;
-  value: string;
-}
+import { DeliveryType } from '../../../domain/model/DeliveryType';
+import { PaymentOption } from '../../../domain/model/PaymentOption';
 
 export const PaymentScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
   const paymentOptions = useAppSelector(
     ({ authReducer }) => authReducer.paymentOptions,
   );
-  const deliveryNotes = useAppSelector(
-    state => state.cartReducer.deliveryNotes,
+  const deliveryMethods = useAppSelector(
+    state => state.cartReducer.deliveryMethods,
   );
-  const [delivery, setDelivery] = useState(deliveryNotes[0]);
+  const [delivery, setDelivery] = useState(deliveryMethods[0]);
   const [payment, setPayment] = useState(paymentOptions[0]);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -42,11 +38,11 @@ export const PaymentScreen: React.FC = () => {
     navigation.goBack();
   };
 
-  const handleChangeDelivery = (optionValue: OptionValue) => {
+  const handleChangeDelivery = (optionValue: DeliveryType) => {
     setDelivery(optionValue);
   };
 
-  const handleChangePayment = (option: OptionValue) => {
+  const handleChangePayment = (option: PaymentOption) => {
     setPayment(option);
   };
 
@@ -60,8 +56,8 @@ export const PaymentScreen: React.FC = () => {
       '+380999999999',
       delivery.value,
       payment.value,
-      user!.id,
       cart,
+      user!.id,
     );
 
     createOrder({ order });
@@ -94,7 +90,7 @@ export const PaymentScreen: React.FC = () => {
         <Text style={styles.infoTitle}>Delivery method</Text>
         <View style={styles.infoBox}>
           <OptionSelect
-            options={deliveryNotes}
+            options={deliveryMethods}
             selectedOption={delivery}
             onChangeOption={handleChangeDelivery}
           />

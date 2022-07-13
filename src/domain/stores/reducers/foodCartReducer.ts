@@ -4,10 +4,12 @@ import { CartFood } from '../../model/CartFood';
 import { Reducers } from './reducers';
 import { RootState } from '../store';
 import { DeliveryNote } from '../../model/DeliveryNote';
+import { DeliveryType } from '../../model/DeliveryType';
 
 interface FoodCartState {
   cart: Array<CartFood>;
   deliveryNotes: Array<DeliveryNote>;
+  deliveryMethods: Array<DeliveryType>;
 }
 
 const initialState: FoodCartState = {
@@ -15,6 +17,10 @@ const initialState: FoodCartState = {
   deliveryNotes: [
     new DeliveryNote(1, 'Delivery to Mainland', 'N1000 - N2000'),
     new DeliveryNote(2, 'Delivery to island', 'N2000 - N3000'),
+  ],
+  deliveryMethods: [
+    new DeliveryType(1, 'Door delivery', 'DoorDelivery'),
+    new DeliveryType(2, 'Pick up', 'PickUp'),
   ],
 };
 

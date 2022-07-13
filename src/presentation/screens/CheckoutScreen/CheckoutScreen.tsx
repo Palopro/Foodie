@@ -12,22 +12,22 @@ import { AppScreen } from '../../../navigation/AppScreen';
 import { StylingText, TextType } from '../../components/StylingText';
 import { RootStackParams } from '../../../navigation/RootNavigation';
 import { useAppSelector } from '../../../hooks';
-import { DeliveryNote } from '../../../domain/model/DeliveryNote';
+import { DeliveryType } from '../../../domain/model/DeliveryType';
 
 export const CheckoutScreen: React.FC<
   NativeStackScreenProps<RootStackParams>
 > = ({ navigation }) => {
-  const deliveryNotes = useAppSelector(
-    state => state.cartReducer.deliveryNotes,
+  const deliveryMethods = useAppSelector(
+    state => state.cartReducer.deliveryMethods,
   );
 
-  const [deliveryMethod, setDeliveryMethod] = useState(deliveryNotes[0]);
+  const [deliveryMethod, setDeliveryMethod] = useState(deliveryMethods[0]);
 
   const total = useSelector(totalInCart);
 
   const { data: user } = foodieApi.useAboutMeQuery();
 
-  const handleChangeOption = (optionValue: DeliveryNote) => {
+  const handleChangeOption = (optionValue: DeliveryType) => {
     setDeliveryMethod(optionValue);
   };
 
@@ -71,7 +71,7 @@ export const CheckoutScreen: React.FC<
         </StylingText>
         <View style={styles.infoBox}>
           <OptionSelect
-            options={deliveryNotes}
+            options={deliveryMethods}
             selectedOption={deliveryMethod}
             onChangeOption={handleChangeOption}
           />

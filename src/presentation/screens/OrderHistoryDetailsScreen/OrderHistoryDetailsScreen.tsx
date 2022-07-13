@@ -11,8 +11,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '../../../navigation/RootNavigation';
 import { AppBarWithTitle } from '../../components/AppBar/AppBarWithTitle';
 import { StylingText, TextType } from '../../components/StylingText';
-import { OrderHistoryFood } from '../../../domain/model/OrderHistoryFood';
 import { OrderFoodRow } from './OrderFoodRow';
+import { CartFood } from '../../../domain/model/CartFood';
 
 interface Props extends NativeStackScreenProps<RootStackParams> {}
 
@@ -22,7 +22,7 @@ export const OrderHistoryDetailsScreen: React.FC<Props> = ({
 }) => {
   const { order } = route.params;
 
-  const renderListRow = ({ item }: ListRenderItemInfo<OrderHistoryFood>) => (
+  const renderListRow = ({ item }: ListRenderItemInfo<CartFood>) => (
     <OrderFoodRow orderHistoryFood={item} />
   );
 

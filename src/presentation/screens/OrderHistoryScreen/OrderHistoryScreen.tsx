@@ -19,8 +19,8 @@ import { StylingText, TextType } from '../../components/StylingText';
 import { HistoryRow } from './HistoryRow';
 import { useAppSelector } from '../../../hooks';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
-import { OrderHistory } from '../../../domain/model/OrderHistory';
 import { EmptyList } from './EmptyList';
+import { Order } from '../../../domain/model/Order';
 
 export const OrderHistoryScreen: React.FC<
 NativeStackScreenProps<MainAppTabParams>
@@ -45,15 +45,15 @@ NativeStackScreenProps<MainAppTabParams>
     navigation.navigate(AppScreen.CartScreen);
   };
 
-  const handlePressOrder = (orderHistory: OrderHistory) => {
-    navigation.navigate(AppScreen.OrderHistoryDetailsScreen, { order: orderHistory });
+  const handlePressOrder = (order: Order) => {
+    navigation.navigate(AppScreen.OrderHistoryDetailsScreen, { order });
   };
 
-  const renderRow = ({ item }: ListRenderItemInfo<OrderHistory>) => (
-    <HistoryRow orderHistory={item} onPress={handlePressOrder} />
+  const renderRow = ({ item }: ListRenderItemInfo<Order>) => (
+    <HistoryRow order={item} onPress={handlePressOrder} />
   );
 
-  const keyExtractor = (order: OrderHistory) => `order-${order.id}`;
+  const keyExtractor = (order: Order) => `order-${order.id}`;
 
   const renderSeparator = () => <View style={styles.divider} />;
 
