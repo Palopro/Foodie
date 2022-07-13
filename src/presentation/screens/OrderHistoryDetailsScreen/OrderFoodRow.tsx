@@ -18,14 +18,12 @@ export const OrderFoodRow: React.FC<OrderFoodRow> = ({ orderHistoryFood }) => (
         style={styles.name}>
         {orderHistoryFood.name}
       </StylingText>
-      <View style={styles.priceWrapper}>
-        <StylingText
-          textType={TextType.Regular}
-          numberOfLines={1}
-          style={styles.price}>
-          {orderHistoryFood.price.toFixed(2)}
-        </StylingText>
-      </View>
+      <StylingText
+        textType={TextType.Regular}
+        numberOfLines={1}
+        style={styles.price}>
+        {orderHistoryFood.price.toFixed(2)}
+      </StylingText>
     </View>
 
     <View style={styles.qtyView}>
@@ -60,10 +58,8 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 20,
   },
-  priceWrapper: {
-    marginTop: 12,
-  },
   price: {
+    marginTop: 12,
     color: 'rgba(250, 74, 12, 1)',
     fontSize: 15,
     lineHeight: 18,
