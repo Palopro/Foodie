@@ -14,6 +14,7 @@ interface AuthState {
   error: string | null;
   user: User | null;
   paymentOptions: Array<PaymentOption>;
+  selectedPayment: PaymentOption;
 }
 
 const initialState: AuthState = {
@@ -25,6 +26,7 @@ const initialState: AuthState = {
     new PaymentOption(2, 'Bank account', 'bank', bankIcon, '#EB4796'),
     new PaymentOption(3, 'Paypal', 'paypal', paypalIcon, '#0038FF'),
   ],
+  selectedPayment: new PaymentOption(1, 'Card', 'card', cardIcon, '#F47B0A'),
 };
 
 export const reducerName = Reducers.AuthReducer;
@@ -36,6 +38,12 @@ export const authUserReducer = createSlice({
     logout: (state: AuthState) => {
       state.user = null;
       state.error = null;
+    },
+    setPayment: (
+      state: AuthState,
+      action: PayloadAction<{ payment: PaymentOption }>,
+    ) => {
+      state.selectedPayment = action.payload.payment;
     },
   },
   extraReducers(builder) {

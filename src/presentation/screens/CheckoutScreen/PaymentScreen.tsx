@@ -9,23 +9,32 @@ import { OptionSelect } from '../../components/OptionSelect/OptionSelect';
 import { ColorType, RoundButton } from '../../components/RoundButton';
 import { totalInCart } from '../../../domain/stores/reducers/foodCartReducer';
 import { NoteModal } from './NoteModal/NoteModal';
-import { useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Order } from '../../../domain/model/Order';
 import { RootStackParams } from '../../../navigation/RootNavigation';
 import { DeliveryType } from '../../../domain/model/DeliveryType';
 import { PaymentOption } from '../../../domain/model/PaymentOption';
+import { authUserReducer } from '../../../domain/stores/reducers/authUserReducer';
 
 export const PaymentScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
+
+  const dispatch = useAppDispatch();
+
   const paymentOptions = useAppSelector(
     ({ authReducer }) => authReducer.paymentOptions,
   );
   const deliveryMethods = useAppSelector(
     state => state.cartReducer.deliveryMethods,
   );
+
+  const defaultPayment = useAppSelector(
+    ({ authReducer }) => authReducer.selectedPayment,
+  );
+
   const [delivery, setDelivery] = useState(deliveryMethods[0] || null);
-  const [payment, setPayment] = useState(paymentOptions[0] || null);
+  const [payment, setPayment] = useState(defaultPayment);
   const [modalVisible, setModalVisible] = useState(false);
 
   const total = useSelector(totalInCart);
@@ -44,6 +53,7 @@ export const PaymentScreen: React.FC = () => {
 
   const handleChangePayment = (option: PaymentOption) => {
     setPayment(option);
+    dispatch(authUserReducer.actions.setPayment({ payment: option }));
   };
 
   const handleCancel = () => setModalVisible(false);

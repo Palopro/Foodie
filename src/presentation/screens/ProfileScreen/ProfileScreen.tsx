@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -9,22 +9,21 @@ import { MainAppTabParams } from '../../../navigation/MainNavigation';
 import { AppScreen } from '../../../navigation/AppScreen';
 import { StylingText, TextType } from '../../components/StylingText';
 import { PaymentOptions } from '../CheckoutScreen/PaymentOptions';
-import { useAppSelector } from '../../../hooks';
-
-interface OptionValue {
-  id: number;
-  name: string;
-  value: string;
-}
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { PaymentOption } from '../../../domain/model/PaymentOption';
+import { authUserReducer } from '../../../domain/stores/reducers/authUserReducer';
 
 export const ProfileScreen: React.FC<
   NativeStackScreenProps<MainAppTabParams>
 > = ({ navigation }) => {
+  const dispatch = useAppDispatch();
+
   const paymentOptions = useAppSelector(
     ({ authReducer }) => authReducer.paymentOptions,
   );
-
-  const [payment, setPayment] = useState(paymentOptions[0]);
+  const defaultPayment = useAppSelector(
+    ({ authReducer }) => authReducer.selectedPayment,
+  );
 
   const handleMenu = () => {
     navigation.dispatch(DrawerActions.toggleDrawer());
@@ -34,8 +33,8 @@ export const ProfileScreen: React.FC<
     navigation.navigate(AppScreen.CartScreen);
   };
 
-  const handleChangePayment = (option: OptionValue) => {
-    setPayment(option);
+  const handleChangePayment = (paymentOption: PaymentOption) => {
+    dispatch(authUserReducer.actions.setPayment({ payment: paymentOption }));
   };
 
   return (
@@ -82,7 +81,7 @@ export const ProfileScreen: React.FC<
         <View style={[styles.infoContainer, { paddingVertical: 0 }]}>
           <PaymentOptions
             options={paymentOptions}
-            selectedOption={payment}
+            selectedOption={defaultPayment}
             onChangeOption={handleChangePayment}
           />
         </View>
