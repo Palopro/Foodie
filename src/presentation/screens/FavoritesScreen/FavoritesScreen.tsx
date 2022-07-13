@@ -26,8 +26,7 @@ import { ListEmpty } from './ListEmpty';
 export const FavoritesScreen: React.FC<
 NativeStackScreenProps<MainAppTabParams>
 > = ({ navigation }) => {
-  const foodState = useAppSelector(state => state.foodReducer);
-  const foods = favoriteFoods(foodState);
+  const foods = useAppSelector(favoriteFoods);
   const dispatch = useAppDispatch();
 
   const handleMenu = () => {

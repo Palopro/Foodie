@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -20,21 +20,8 @@ import { EmptyList } from './EmptyList';
 export const SearchScreen: React.FC = () => {
   const navigation = useNavigation();
   const [searchValue, setSearchValue] = useState('');
-  const [foods, setFoods] = useState<Array<Food>>([]);
 
-  const foodState = useAppSelector(({ foodReducer }) => foodReducer);
-
-  const searchFood = useCallback(
-    (name: string) => {
-      const filterFoods = findFoodByName(name)(foodState);
-      setFoods(filterFoods);
-    },
-    [foodState],
-  );
-
-  useEffect(() => {
-    searchFood(searchValue);
-  }, [searchFood, searchValue]);
+  const filterFoods = useAppSelector(findFoodByName(searchValue));
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -42,7 +29,6 @@ export const SearchScreen: React.FC = () => {
 
   const handleSearch = (text: string) => {
     setSearchValue(text);
-    searchFood(text);
   };
 
   const foodKey = (food: Food) => `food-${food.id}`;
@@ -53,7 +39,7 @@ export const SearchScreen: React.FC = () => {
 
   const renderHeader = () => (
     <View style={styles.titleWrapper}>
-      <Text style={styles.title}>{`Found ${foods.length} results`}</Text>
+      <Text style={styles.title}>{`Found ${filterFoods.length} results`}</Text>
     </View>
   );
 
@@ -71,15 +57,17 @@ export const SearchScreen: React.FC = () => {
 
       <View style={styles.listContainer}>
         <FlatList
-          data={foods}
+          data={filterFoods}
           numColumns={2}
           keyExtractor={foodKey}
           bounces={false}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
           renderItem={renderRow}
-          contentContainerStyle={{ flex: foods.length > 0 ? 0 : 1 }}
-          ListHeaderComponent={foods.length > 0 ? renderHeader : undefined}
+          contentContainerStyle={{ flex: filterFoods.length > 0 ? 0 : 1 }}
+          ListHeaderComponent={
+            filterFoods.length > 0 ? renderHeader : undefined
+          }
           ListEmptyComponent={EmptyList}
         />
       </View>

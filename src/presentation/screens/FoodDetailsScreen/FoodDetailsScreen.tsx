@@ -20,10 +20,9 @@ export const FoodDetailsScreen: React.FC<
   NativeStackScreenProps<RootStackParams>
 > = ({ route, navigation }) => {
   const dispatch = useAppDispatch();
-  const foodState = useAppSelector(state => state.foodReducer);
 
   const { food } = route.params;
-  const isFavorite = isInFavorites(food.id)(foodState);
+  const isFavorite = useAppSelector(isInFavorites(food.id));
 
   const handleAddToCard = () => {
     const cartItem: CartFood = new CartFood(

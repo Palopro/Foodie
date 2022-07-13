@@ -42,7 +42,7 @@ export const authUserReducer = createSlice({
     builder
       .addMatcher(
         foodieApi.endpoints.login.matchPending,
-        (state: AuthState, action) => {
+        (state: AuthState) => {
           state.isLoading = true;
           state.error = null;
         },
@@ -67,7 +67,7 @@ export const authUserReducer = createSlice({
       )
       .addMatcher(
         foodieApi.endpoints.register.matchPending,
-        (state: AuthState, action) => {
+        (state: AuthState) => {
           state.isLoading = true;
           state.error = null;
         },

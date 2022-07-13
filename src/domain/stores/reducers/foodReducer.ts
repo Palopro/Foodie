@@ -4,6 +4,7 @@ import { Food } from '../../model/Food';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Reducers } from './reducers';
 import { Order } from '../../model/Order';
+import { RootState } from '../store';
 
 interface FoodState {
   isLoading: boolean;
@@ -64,16 +65,20 @@ export const foodReducer = createSlice({
   },
 });
 
-export const findFoodByName = (name: string) => (state: FoodState) =>
-  state.foods.filter(food =>
-    food.name.toLowerCase().includes(name.toLowerCase()),
-  );
+export const findFoodByName =
+  (name: string) =>
+    ({ foodReducer }: RootState) =>
+      foodReducer.foods.filter(food =>
+        food.name.toLowerCase().includes(name.toLowerCase()),
+      );
 
-export const favoriteFoods = (state: FoodState) =>
-  state.foods.filter(food => state.favorites.includes(food.id));
+export const favoriteFoods = ({ foodReducer }: RootState) =>
+  foodReducer.foods.filter(food => foodReducer.favorites.includes(food.id));
 
-export const isInFavorites = (foodId: number) => (state: FoodState) =>
-  state.favorites.includes(foodId);
+export const isInFavorites =
+  (foodId: number) =>
+    ({ foodReducer }: RootState) =>
+      foodReducer.favorites.includes(foodId);
 
 export const totalValue = (order: Order) =>
   order.items.reduce((acc, food) => acc + food.price * food.qty, 0);
