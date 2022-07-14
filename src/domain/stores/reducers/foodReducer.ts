@@ -1,4 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 
 import { Food } from '../../model/Food';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
@@ -41,7 +45,7 @@ export const foodReducer = createSlice({
       state.favorites = [];
     },
   },
-  extraReducers(builder) {
+  extraReducers(builder: ActionReducerMapBuilder<FoodState>) {
     builder
       .addMatcher(
         foodieApi.endpoints.getFoods.matchPending,

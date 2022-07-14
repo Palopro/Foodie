@@ -1,4 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 import { User } from '../../model/user';
@@ -38,6 +42,13 @@ export const authUserReducer = createSlice({
     logout: (state: AuthState) => {
       state.user = null;
       state.error = null;
+      state.selectedPayment = new PaymentOption(
+        1,
+        'Card',
+        'card',
+        cardIcon,
+        '#F47B0A',
+      );
     },
     setPayment: (
       state: AuthState,
@@ -46,7 +57,7 @@ export const authUserReducer = createSlice({
       state.selectedPayment = action.payload.payment;
     },
   },
-  extraReducers(builder) {
+  extraReducers(builder: ActionReducerMapBuilder<AuthState>) {
     builder
       .addMatcher(
         foodieApi.endpoints.login.matchPending,
