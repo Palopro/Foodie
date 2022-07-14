@@ -1,8 +1,4 @@
-import {
-  ActionReducerMapBuilder,
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { ActionReducerMapBuilder, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Food } from '../../model/Food';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
@@ -47,42 +43,29 @@ export const foodReducer = createSlice({
   },
   extraReducers(builder: ActionReducerMapBuilder<FoodState>) {
     builder
-      .addMatcher(
-        foodieApi.endpoints.getFoods.matchPending,
-        (state: FoodState) => {
-          state.isLoading = true;
-        },
-      )
-      .addMatcher(
-        foodieApi.endpoints.getFoods.matchFulfilled,
-        (state: FoodState, action: PayloadAction<Array<Food>>) => {
-          state.isLoading = false;
-          state.foods = action.payload;
-        },
-      )
-      .addMatcher(
-        foodieApi.endpoints.getFoods.matchRejected,
-        (state: FoodState) => {
-          state.isLoading = false;
-        },
-      );
+      .addMatcher(foodieApi.endpoints.getFoods.matchPending, (state: FoodState) => {
+        state.isLoading = true;
+      })
+      .addMatcher(foodieApi.endpoints.getFoods.matchFulfilled, (state: FoodState, action: PayloadAction<Array<Food>>) => {
+        state.isLoading = false;
+        state.foods = action.payload;
+      })
+      .addMatcher(foodieApi.endpoints.getFoods.matchRejected, (state: FoodState) => {
+        state.isLoading = false;
+      });
   },
 });
 
 export const findFoodByName =
   (name: string) =>
     ({ foodReducer }: RootState) =>
-      foodReducer.foods.filter(food =>
-        food.name.toLowerCase().includes(name.toLowerCase()),
-      );
+      foodReducer.foods.filter(food => food.name.toLowerCase().includes(name.toLowerCase()));
 
-export const favoriteFoods = ({ foodReducer }: RootState) =>
-  foodReducer.foods.filter(food => foodReducer.favorites.includes(food.id));
+export const favoriteFoods = ({ foodReducer }: RootState) => foodReducer.foods.filter(food => foodReducer.favorites.includes(food.id));
 
 export const isInFavorites =
   (foodId: number) =>
     ({ foodReducer }: RootState) =>
       foodReducer.favorites.includes(foodId);
 
-export const totalValue = (order: Order) =>
-  order.items.reduce((acc, food) => acc + food.price * food.qty, 0);
+export const totalValue = (order: Order) => order.items.reduce((acc, food) => acc + food.price * food.qty, 0);

@@ -1,19 +1,16 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { PaymentOption } from '../../../domain/model/PaymentOption';
 
 interface PaymentRowProps {
   paymentOption: PaymentOption;
+  paymentIcon: { image: ImageSourcePropType; bgColor: string };
   isSelected: boolean;
   onPress: (paymentOption: PaymentOption) => void;
 }
 
-export const PaymentRow: React.FC<PaymentRowProps> = ({
-  paymentOption,
-  isSelected,
-  onPress,
-}) => {
+export const PaymentRow: React.FC<PaymentRowProps> = ({ paymentOption, paymentIcon, isSelected, onPress }) => {
   const handlePress = () => onPress(paymentOption);
 
   const selectCircleColor = isSelected ? '#FA4A0C' : '#9F9F9F';
@@ -33,8 +30,8 @@ export const PaymentRow: React.FC<PaymentRowProps> = ({
         />
       </View>
 
-      <View style={[styles.icon, { backgroundColor: paymentOption.bgColor }]}>
-        <Image source={paymentOption.image} style={styles.image} />
+      <View style={[styles.icon, { backgroundColor: paymentIcon.bgColor }]}>
+        <Image source={paymentIcon.image} style={styles.image} />
       </View>
       <Text style={styles.text}>{paymentOption.name}</Text>
     </TouchableOpacity>

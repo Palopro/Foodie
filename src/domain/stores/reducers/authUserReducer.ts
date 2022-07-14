@@ -1,17 +1,10 @@
-import {
-  ActionReducerMapBuilder,
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { ActionReducerMapBuilder, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 import { User } from '../../model/user';
 import { foodieApi } from '../../../data/dataSource/api/foodieApi';
 import { Reducers } from './reducers';
 import { PaymentOption } from '../../model/PaymentOption';
-import cardIcon from '../../../assets/images/creditCard.png';
-import bankIcon from '../../../assets/images/bank.png';
-import paypalIcon from '../../../assets/images/paypal.png';
 
 interface AuthState {
   isLoading: boolean;
@@ -26,11 +19,11 @@ const initialState: AuthState = {
   isLoading: false,
   error: null,
   paymentOptions: [
-    new PaymentOption(1, 'Card', 'card', cardIcon, '#F47B0A'),
-    new PaymentOption(2, 'Bank account', 'bank', bankIcon, '#EB4796'),
-    new PaymentOption(3, 'Paypal', 'paypal', paypalIcon, '#0038FF'),
+    new PaymentOption(1, 'Card', 'card'),
+    new PaymentOption(2, 'Bank account', 'bank'),
+    new PaymentOption(3, 'Paypal', 'paypal'),
   ],
-  selectedPayment: new PaymentOption(1, 'Card', 'card', cardIcon, '#F47B0A'),
+  selectedPayment: new PaymentOption(1, 'Card', 'card'),
 };
 
 export const reducerName = Reducers.AuthReducer;
@@ -42,30 +35,18 @@ export const authUserReducer = createSlice({
     logout: (state: AuthState) => {
       state.user = null;
       state.error = null;
-      state.selectedPayment = new PaymentOption(
-        1,
-        'Card',
-        'card',
-        cardIcon,
-        '#F47B0A',
-      );
+      state.selectedPayment = new PaymentOption(1, 'Card', 'card');
     },
-    setPayment: (
-      state: AuthState,
-      action: PayloadAction<{ payment: PaymentOption }>,
-    ) => {
+    setPayment: (state: AuthState, action: PayloadAction<{ payment: PaymentOption }>) => {
       state.selectedPayment = action.payload.payment;
     },
   },
   extraReducers(builder: ActionReducerMapBuilder<AuthState>) {
     builder
-      .addMatcher(
-        foodieApi.endpoints.login.matchPending,
-        (state: AuthState) => {
-          state.isLoading = true;
-          state.error = null;
-        },
-      )
+      .addMatcher(foodieApi.endpoints.login.matchPending, (state: AuthState) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addMatcher(
         foodieApi.endpoints.login.matchFulfilled,
         (state: AuthState, action: PayloadAction<{ user: User }>) => {
@@ -76,34 +57,22 @@ export const authUserReducer = createSlice({
       )
       .addMatcher(
         foodieApi.endpoints.login.matchRejected,
-        (
-          state: AuthState,
-          action: PayloadAction<FetchBaseQueryError | undefined>,
-        ) => {
+        (state: AuthState, action: PayloadAction<FetchBaseQueryError | undefined>) => {
           state.isLoading = false;
           state.error = action.payload.data.error.message;
         },
       )
-      .addMatcher(
-        foodieApi.endpoints.register.matchPending,
-        (state: AuthState) => {
-          state.isLoading = true;
-          state.error = null;
-        },
-      )
-      .addMatcher(
-        foodieApi.endpoints.register.matchFulfilled,
-        (state: AuthState, action) => {
-          state.isLoading = false;
-          state.user = action.payload.user;
-        },
-      )
+      .addMatcher(foodieApi.endpoints.register.matchPending, (state: AuthState) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addMatcher(foodieApi.endpoints.register.matchFulfilled, (state: AuthState, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+      })
       .addMatcher(
         foodieApi.endpoints.register.matchRejected,
-        (
-          state: AuthState,
-          action: PayloadAction<FetchBaseQueryError | undefined>,
-        ) => {
+        (state: AuthState, action: PayloadAction<FetchBaseQueryError | undefined>) => {
           state.isLoading = false;
           state.error = action.payload.data.error.message;
         },
