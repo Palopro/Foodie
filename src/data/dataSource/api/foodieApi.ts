@@ -14,7 +14,7 @@ import { OrderHistoryFoodDTO } from './dto/OrderHistoryFoodDTO';
 import { LoginUserCredentials } from './types/LoginUserCredentials';
 import { RegisterUserCredentials } from './types/RegisterUserCredentials';
 
-const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
+const baseUrl = 'https://strapi-url/api';
 
 const mapToUser = (userDTO: UserDTO) => new User(userDTO.id, userDTO.username, userDTO.email);
 
