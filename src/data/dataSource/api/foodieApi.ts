@@ -7,19 +7,18 @@ import { CategoryDTO } from './dto/CategoryDTO';
 import { UserDTO } from './dto/UserDTO';
 import { Category } from '../../../domain/model/Category';
 import { storage, StorageKeys } from '../storage';
-import { LoginUserCredentials, RegisterUserCredentials } from './types';
 import { Order } from '../../../domain/model/Order';
 import { CartFood } from '../../../domain/model/CartFood';
 import { OrderHistoryDTO } from './dto/OrderHistoryDTO';
 import { OrderHistoryFoodDTO } from './dto/OrderHistoryFoodDTO';
+import { LoginUserCredentials } from './types/LoginUserCredentials';
+import { RegisterUserCredentials } from './types/RegisterUserCredentials';
 
 const baseUrl = 'https://rn-food-delivery.herokuapp.com/api';
 
-const mapToUser = (userDTO: UserDTO) =>
-  new User(userDTO.id, userDTO.username, userDTO.email);
+const mapToUser = (userDTO: UserDTO) => new User(userDTO.id, userDTO.username, userDTO.email);
 
-const mapToCategory = (categoryDTO: CategoryDTO) =>
-  new Category(categoryDTO.id, categoryDTO.attributes.name);
+const mapToCategory = (categoryDTO: CategoryDTO) => new Category(categoryDTO.id, categoryDTO.attributes.name);
 
 const mapToFood = (foodDTO: FoodDTO) =>
   new Food(
@@ -126,8 +125,7 @@ export const foodieApi = createApi({
           populate: '*',
         },
       }),
-      transformResponse: (response: { data: Array<CategoryDTO> }) =>
-        response.data.map(mapToCategory),
+      transformResponse: (response: { data: Array<CategoryDTO> }) => response.data.map(mapToCategory),
     }),
     getFoods: build.query<Array<Food>, void>({
       query: () => ({
@@ -136,8 +134,7 @@ export const foodieApi = createApi({
           populate: '*',
         },
       }),
-      transformResponse: (response: { data: Array<FoodDTO> }) =>
-        response.data.map(mapToFood),
+      transformResponse: (response: { data: Array<FoodDTO> }) => response.data.map(mapToFood),
     }),
     searchFoods: build.query<Array<Food>, string>({
       query: name => ({
@@ -147,8 +144,7 @@ export const foodieApi = createApi({
           ['filters[name][$containsi]']: name,
         },
       }),
-      transformResponse: (response: { data: Array<FoodDTO> }) =>
-        response.data.map(mapToFood),
+      transformResponse: (response: { data: Array<FoodDTO> }) => response.data.map(mapToFood),
     }),
     aboutMe: build.query<User, void>({
       query: () => ({
@@ -176,8 +172,7 @@ export const foodieApi = createApi({
           ['filters[users_permissions_user][id][$eq]']: userId,
         },
       }),
-      transformResponse: (response: { data: Array<OrderHistoryDTO> }) =>
-        response.data.map(mapToOrder),
+      transformResponse: (response: { data: Array<OrderHistoryDTO> }) => response.data.map(mapToOrder),
     }),
   }),
 });
