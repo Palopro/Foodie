@@ -8,6 +8,8 @@ import NetInfo from '@react-native-community/netinfo';
 import { persistor } from './src/domain/stores/store';
 import { RootNavigation } from './src/navigation/RootNavigation';
 import { NetworkScreen } from './src/presentation/screens/NetworkScreen';
+import { ApolloProvider } from '@apollo/client';
+import { apollo } from './src/graphql/apolloClient';
 
 if (__DEV__) {
   import('./ReactotronConfig');
@@ -41,9 +43,11 @@ export const App = () => {
   return (
     <GestureHandlerRootView style={styles.gestureContainer}>
       <PersistGate loading={<Loader />} persistor={persistor}>
-        <NavigationContainer>
-          <RootNavigation />
-        </NavigationContainer>
+        <ApolloProvider client={apollo}>
+          <NavigationContainer>
+            <RootNavigation />
+          </NavigationContainer>
+        </ApolloProvider>
       </PersistGate>
     </GestureHandlerRootView>
   );

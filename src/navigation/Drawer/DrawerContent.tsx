@@ -43,6 +43,12 @@ const items: Array<DrawerRow> = [
     label: 'Security',
     screen: AppScreen.FavoritesScreen,
   },
+
+  {
+    icon: 'security',
+    label: 'Upload image',
+    screen: AppScreen.UploadImageScreen,
+  },
 ];
 
 export const DrawerContent: React.FC<DrawerContentComponentProps> = ({
@@ -50,8 +56,12 @@ export const DrawerContent: React.FC<DrawerContentComponentProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
+  const handleNavigation = (screen: AppScreen) => {
+    navigation.navigate(screen);
+  };
+
   const renderItem = ({ item }: ListRenderItemInfo<DrawerRow>) => (
-    <DrawerItem {...item} />
+    <DrawerItem onPress={handleNavigation} {...item} />
   );
 
   const renderDivider = () => <View style={styles.divider} />;
