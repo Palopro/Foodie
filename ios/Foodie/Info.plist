@@ -58,5 +58,7 @@
 		<string>RobotoCondensed-Bold.ttf</string>
 		<string>RobotoCondensed-Regular.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) need access to gallery</string>
 </dict>
 </plist>
